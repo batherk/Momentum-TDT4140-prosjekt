@@ -1,1 +1,20 @@
+# Pycharm and IDEA
 .idea
+
+# VSCode
+.vscode
+
+# MacOS
+.DS_Store
+
+# Virutualt environment
+env
+
+# Django
+db.sqlite3
+
+# Migrations
+*/migrations/
+
+# Python shit
+*/__pycache__/
