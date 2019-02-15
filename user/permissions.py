@@ -19,4 +19,3 @@ class IsGet(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.user.admin:
             return True
-        return request.method == 'GET'
