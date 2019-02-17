@@ -35,8 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'company',
-    'user',
+    'api',
     'rest_framework',
     'django_extensions',
     'rest_framework.authtoken'
@@ -120,8 +119,8 @@ STATIC_URL = '/static/'
 
 # Code put by Momentum for further customization
 
-AUTH_USER_MODEL = 'user.User'
+AUTH_USER_MODEL = 'api.User'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',)
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',)
 }
