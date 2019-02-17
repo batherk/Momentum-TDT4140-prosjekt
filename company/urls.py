@@ -8,6 +8,10 @@ router.register('position',views.PositionView)
 router.register('user',views.UserView)
 
 
+
 urlpatterns = [
-    path('',include(router.urls)),
+    #path('',),
+    path('api/',include(router.urls)),
+    path('api/login',views.LoginView.as_view()),
+    path('api/logout',views.LogoutView.as_view())
 ]

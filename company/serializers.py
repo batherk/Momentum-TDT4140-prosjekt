@@ -1,6 +1,7 @@
-from rest_framework.serializers import ModelSerializer, CharField, EmailField
+from rest_framework.serializers import Serializer,ModelSerializer, CharField, EmailField
 from .models import Company, Position
-# from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from rest_framework import exceptions
 
 from django.contrib.auth import get_user_model
 
@@ -27,21 +28,27 @@ class CompanySerializer(ModelSerializer):
         fields = ('id', 'url', 'name', 'email', 'info', 'positions')
         depth = 1
 
-"""
 
-class UserLoginSerializer(ModelSerializer):
-    token = CharField(allow_blank=True, read_only=True)
-    email = EmailField(label='Email Address')
-
-    class Meta:
-        model = User
-        fields = [
-            'email',
-            'password',
-            'token'
-        ]
-        extra_kwargs = {'password': {'write_only': True}}
+class LoginSerializer(Serializer):
+    username = EmailField()
+    password = CharField()
 
     def validate(self, data):
+        username = data.get("username", "")
+        password = data.get("password", "")
+
+        if username and password:
+            user = authenticate(username=username, password=password)
+            if user:
+                if user.is_active:
+                    data["user"] = user
+                else:
+                    msg = "User is deactivated."
+                    raise exceptions.ValidationError(msg)
+            else:
+                msg = "Unable to login with given credentials."
+                raise exceptions.ValidationError(msg)
+        else:
+            msg = "Must provide username and password both."
+            raise exceptions.ValidationError(msg)
         return data
-"""
