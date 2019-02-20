@@ -34,3 +34,8 @@ class IsInvestor(permissions.BasePermission):
 class IsGet(permissions.BasePermission):
     def has_permission(self, request, view):
         return request.method == 'GET'
+
+
+class IsAnonymous(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return not request.user.is_authenticated
