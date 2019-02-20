@@ -11,10 +11,10 @@
 env
 
 # Django
-db.sqlite3
+*.sqlite3
 
 # Migrations
 */migrations/
 
 # Python shit
-*/__pycache__/
+__pycache__
