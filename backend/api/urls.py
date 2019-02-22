@@ -7,11 +7,13 @@ from api.views.position import PositionView
 from api.views.login import LoginView
 from api.views.logout import *
 from api.views.user_create import *
+from api.views.company_owner import CompanyOwnerView
 
 router = routers.DefaultRouter()
 router.register('api/startups', CompanyView)
 router.register('api/positions', PositionView)
 router.register('api/applicants', ApplicantView)
+router.register('api/mycomanies',CompanyOwnerView)
 
 urlpatterns = [
     path('', include(router.urls)),
