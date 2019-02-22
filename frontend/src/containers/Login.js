@@ -14,7 +14,7 @@ class NormalLoginForm extends React.Component {
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
 				console.log('Received values of form: ', values);
-				this.props.onAuth(values.userName, values.password);
+				this.props.onAuth(values.email, values.password);
 			}
 		});
 		this.props.history.push('/');
@@ -43,10 +43,14 @@ class NormalLoginForm extends React.Component {
 
 					<Form onSubmit={this.handleSubmit} className="login-form">
 						<Form.Item>
-							{getFieldDecorator('userName', {
-								rules: [{ required: true, message: 'Please input your username!' }],
+							{getFieldDecorator('email', {
+								rules: [{
+									type: 'email', message: 'The input is not valid E-mail!',
+								}, {
+									required: true, message: 'Please input your E-mail!',
+								}],
 							})(
-								<Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
+								<Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email" />
 							)}
 						</Form.Item>
 						<Form.Item>
@@ -84,7 +88,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onAuth: (username, password) => dispatch(actions.authLogin(username, password))
+		onAuth: (email, password) => dispatch(actions.authLogin(email, password))
 	};
 };
 

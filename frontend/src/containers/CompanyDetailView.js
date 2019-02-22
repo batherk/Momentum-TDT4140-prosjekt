@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import axios from 'axios';
-
 import { Button, Card } from 'antd';
 
 import CustomForm from '../components/Form';
@@ -18,13 +18,28 @@ class CompanyDetail extends Component {
 	};
 
 	componentDidMount() {
+		// this.getCompany(this.props.token);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (this.props.token === null && nextProps.token !== null) {
+			this.getCompany(nextProps.token);
+		}
+	}
+
+	getCompany = (token) => {
 		const companyID = this.props.match.params.companyID;
-		axios.get(`http://127.0.0.1:8000/api/startups/${companyID}/`) 
+		axios.get(`http://127.0.0.1:8000/api/startups/${companyID}/`, {
+			headers: {
+				'Authorization' : 'Token ' + token
+			}
+		}) 
 		.then(res => {
+			// console.log('Data om bedriften: ', res);
 			this.setState({
 				company: res.data
 			});
-		})
+		});
 	}
 
 	handleDelete = (event) => {
@@ -58,4 +73,10 @@ class CompanyDetail extends Component {
 	}
 }
 
-export default CompanyDetail;
+const mapStateToProps = (state) => {
+	return {
+		token: state.token
+	};
+};
+
+export default connect(mapStateToProps)(CompanyDetail);
