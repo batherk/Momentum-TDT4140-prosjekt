@@ -13,7 +13,7 @@ router = routers.DefaultRouter()
 router.register('api/startups', CompanyView)
 router.register('api/positions', PositionView)
 router.register('api/applicants', ApplicantView)
-router.register('api/mycomanies',CompanyOwnerView)
+router.register('api/mycomanies',CompanyOwnerView,base_name='CompanyOwner')
 
 urlpatterns = [
     path('', include(router.urls)),

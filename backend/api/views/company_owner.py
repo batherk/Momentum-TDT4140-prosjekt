@@ -10,6 +10,8 @@ User = get_user_model()
 
 class CompanyOwnerView(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.UpdateModelMixin,
                        mixins.DestroyModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin):
-    queryset = Company.objects.all()
     serializer_class = CompanyOwnerSerializer
     permission_classes = [custom_perm.IsBusinessOwner]
+
+    def get_queryset(self):
+        return Company.objects.filter(owner=self.request.user)
