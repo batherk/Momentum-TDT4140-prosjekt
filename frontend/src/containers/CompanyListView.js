@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import axios from 'axios';
 
 import Companys from '../components/Companys';
@@ -37,6 +38,31 @@ class CompanyList extends Component {
 	    })
 	}
 
+	componentWillReceiveProps(nextProps) {
+	    if (this.props.token === null && nextProps.token !== null) {
+			// this.getCompany(nextProps.token);
+			axios.get('http://localhost:8000/api/positions/', {
+				headers: {
+					Authorization : 'Token ' + nextProps.token
+				}
+			})
+
+			// axios({
+			// 	method: 'get',
+			// 	url: 'http://localhost:8000/api/positions/',
+			// 	headers: { Authorization : 'Token ' + nextProps.token }
+			// })
+			.then(res => {
+				console.log('positions', res);
+			})
+			.catch(err => {
+				console.error(err);
+			});
+
+
+		}
+	}
+
 	render() {
 		return (
 			<div>
@@ -53,4 +79,11 @@ class CompanyList extends Component {
 	}
 }
 
-export default CompanyList;
+const mapStateToProps = (state) => {
+	console.log('This state: ', state);
+	return {
+		token: state.token
+	};
+};
+
+export default connect(mapStateToProps)(CompanyList);
