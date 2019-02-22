@@ -10,9 +10,6 @@
 # Virutualt environment
 env
 
-# Django
-*.sqlite3
-
 # Migrations
 */migrations/
 
