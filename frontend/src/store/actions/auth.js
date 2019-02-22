@@ -70,17 +70,20 @@ export const authLogin = (email, password) => {
 }
 
 // Add type later (startup, user, investor)
-export const authSignup = (username, email, password1, password2) => {
+export const authSignup = (firstName, lastName, email, password, role) => {
 	return dispatch => {
 		dispatch(authStart());
-		axios.post('http://127.0.0.1:8000/rest-auth/login/', {
-			username: username,
+		axios.post('http://127.0.0.1:8000/api/register', {
+			first_name: firstName,
+			last_name: lastName,
 			email: email, 
-			password1: password1, 
-			password2: password2
+			password: password,
+			role: role
 		})
 		.then((res) => {
-			storeUserData(dispatch, res);
+			// console.log('registerd', res);
+			// storeUserData(dispatch, res);
+			dispatch(authLogin(email, password));
 		})
 		.catch((err) => {
 			dispatch(authFail(err));

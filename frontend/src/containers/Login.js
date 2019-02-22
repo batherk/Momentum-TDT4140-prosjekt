@@ -42,6 +42,8 @@ class NormalLoginForm extends React.Component {
 					:
 
 					<Form onSubmit={this.handleSubmit} className="login-form">
+						<h1>Login</h1>
+						<br/>	
 						<Form.Item>
 							{getFieldDecorator('email', {
 								rules: [{
