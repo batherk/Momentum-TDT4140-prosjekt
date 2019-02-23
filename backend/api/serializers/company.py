@@ -10,7 +10,7 @@ class CompanySerializer(ModelSerializer):
 
     class Meta:
         model = Company
-        fields = ('id', 'url', 'name', 'email', 'info', 'positions')
+        fields = ('id', 'url', 'name', 'email', 'info', 'positions','slug')
         depth = 1
 
     def get_positions(self, obj):
