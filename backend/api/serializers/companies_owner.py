@@ -1,6 +1,8 @@
 from api.models.company import *
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
-#from api.urls import *
+
+
+# from api.urls import *
 
 
 class CompanyOwnerSerializer(ModelSerializer):
@@ -12,3 +14,9 @@ class CompanyOwnerSerializer(ModelSerializer):
 
     def get_owner_url(self, obj):
         return 'http://' + str(self.context['request'].get_host()) + '/api/mycompanies/' + str(obj.id)
+
+    def create(self, validated_data):
+        company = Company.objects.create(**validated_data)
+        company.owner = self.context['request'].user
+        company.save()
+        return company
