@@ -8,8 +8,7 @@ import api.permissions as custom_perm
 User = get_user_model()
 
 
-class CompanyOwnerView(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.UpdateModelMixin,
-                       mixins.DestroyModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin):
+class CompanyOwnerView(viewsets.ModelViewSet):
     serializer_class = CompanyOwnerSerializer
     permission_classes = [custom_perm.IsBusinessOwner]
 

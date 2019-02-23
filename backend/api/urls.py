@@ -9,11 +9,14 @@ from api.views.logout import *
 from api.views.user_create import *
 from api.views.company_owner import CompanyOwnerView
 
+
+company_owner_url = 'api/mycompanies'
+
 router = routers.DefaultRouter()
 router.register('api/startups', CompanyView)
 router.register('api/positions', PositionView)
 router.register('api/applicants', ApplicantView)
-router.register('api/mycompanies',CompanyOwnerView,base_name='CompanyOwner')
+router.register(company_owner_url,CompanyOwnerView,base_name='CompanyOwner')
 
 urlpatterns = [
     path('', include(router.urls)),
