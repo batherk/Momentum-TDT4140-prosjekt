@@ -10,3 +10,4 @@ User = get_user_model()
 class CompanyView(viewsets.GenericViewSet, mixins.ListModelMixin,mixins.RetrieveModelMixin):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
+    #lookup_field = 'slug'
