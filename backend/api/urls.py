@@ -18,11 +18,11 @@ router.register('api/startups', CompanyView)
 router.register('api/positions', PositionView)
 router.register('api/applicants', ApplicantView)
 router.register(company_owner_url,CompanyOwnerView,base_name='CompanyOwner')
-router.register('api/profile', ProfileView,base_name='profile')
+router.register('api/profile',ProfileView,base_name='profile')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('api/login', LoginView.as_view()),
-    path('api/logout', LogoutView.as_view()),
-    path('api/register', CreateUserView.as_view()),
+    path('api/login/', LoginView.as_view()),
+    path('api/logout/', LogoutView.as_view()),
+    path('api/register/', CreateUserView.as_view()),
 ]
