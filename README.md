@@ -40,10 +40,6 @@ python manage.py runserver
 ----FRONTEND----
 Open another terminal
 
-#Activate virtual environment
-Windows: source env/Scripts/activate
-Mac/Linux: source env/bin/activate
-
 cd frontend
 npm install
 
