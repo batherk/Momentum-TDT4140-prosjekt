@@ -11,7 +11,7 @@ import Signup from './containers/Signup';
 const BaseRouter = () => (
 	<div>
 		<Route exact path='/' component={CompanyList} />
-		<Route exact path='/companys/:companyID/' component={CompanyDetail} />
+		<Route exact path='/companys/:companySlug/' component={CompanyDetail} />
 		<Route exact path='/positions' component={PositionList} />
 		<Route exact path='/positions/:positionID/' component={PositionDetail} />
 		<Route exact path='/login/' component={Login} />

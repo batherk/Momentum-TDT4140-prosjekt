@@ -56,7 +56,7 @@ const storeUserData = (dispatch, res) => {
 export const authLogin = (email, password) => {
 	return dispatch => {
 		dispatch(authStart());
-		axios.post('http://127.0.0.1:8000/api/login', {
+		axios.post('http://127.0.0.1:8000/api/login/', {
 			username: email, 	// TODO: endre til email når det er endret på backend
 			password: password
 		})
@@ -74,7 +74,7 @@ export const authLogin = (email, password) => {
 export const authSignup = (firstName, lastName, email, password, role) => {
 	return dispatch => {
 		dispatch(authStart());
-		axios.post('http://127.0.0.1:8000/api/register', {
+		axios.post('http://127.0.0.1:8000/api/register/', {
 			first_name: firstName,
 			last_name: lastName,
 			email: email, 

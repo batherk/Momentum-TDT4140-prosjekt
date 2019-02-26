@@ -32,9 +32,9 @@ class CompanyDetail extends Component {
 	}
 
 	getCompany(token) {
-		const companyID = this.props.match.params.companyID;
+		const companySlug = this.props.match.params.companySlug;
 		// const header = (token === undefined) ? null : { headers: { 'Authorization' : 'Token ' + token }};
-		axios.get(`http://127.0.0.1:8000/api/startups/${companyID}/`, {
+		axios.get(`http://127.0.0.1:8000/api/startups/${companySlug}/`, {
 			headers: { 'Authorization' : 'Token ' + token }
 		})
 		.then(res => {
