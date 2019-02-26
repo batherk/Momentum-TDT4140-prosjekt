@@ -24,6 +24,7 @@ export const authFail = (error) => {
 
 export const logout = () => {
 	localStorage.removeItem('user');
+	localStorage.removeItem('token');
 	localStorage.removeItem('expirationDate');
 	return {
 		type: actionTypes.AUTH_LOGOUT
@@ -60,7 +61,7 @@ export const authLogin = (email, password) => {
 			password: password
 		})
 		.then((res) => {
-			console.log('Done with login: ', res);
+			// console.log('Done with login: ', res);
 			storeUserData(dispatch, res);
 		})
 		.catch((err) => {

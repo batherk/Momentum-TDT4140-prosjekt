@@ -18,7 +18,11 @@ class CompanyDetail extends Component {
 	};
 
 	componentDidMount() {
-		// this.getCompany(this.props.token);
+		if (this.props.token) {
+			this.getCompany(this.props.token);
+		} // else {
+		// 		this.getCompany();
+		// }
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -27,29 +31,50 @@ class CompanyDetail extends Component {
 		}
 	}
 
-	getCompany = (token) => {
+	getCompany(token) {
 		const companyID = this.props.match.params.companyID;
+		// const header = (token === undefined) ? null : { headers: { 'Authorization' : 'Token ' + token }};
 		axios.get(`http://127.0.0.1:8000/api/startups/${companyID}/`, {
-			headers: {
-				'Authorization' : 'Token ' + token
-			}
-		}) 
+			headers: { 'Authorization' : 'Token ' + token }
+		})
 		.then(res => {
-			// console.log('Data om bedriften: ', res);
+			console.log('Data om bedriften: ', res);
 			this.setState({
 				company: res.data
 			});
+		})
+		.catch(err => {
+			console.error(err);
 		});
 	}
 
-	handleDelete = (event) => {
+	// getCompany() {
+	// 	const companyID = this.props.match.params.companyID;
+	// 	axios.get(`http://127.0.0.1:8000/api/startups/${companyID}/`)
+	// 	.then(res => {
+	// 		console.log('Data om bedriften: ', res);
+	// 		this.setState({
+	// 			company: res.data
+	// 		});
+	// 	})
+	// 	.catch(err => {
+	// 		console.error(err);
+	// 	});
+	// }
+
+	handleDelete(event) {
 		const companyID = this.props.match.params.companyID;
 		axios.delete(`http://127.0.0.1:8000/api/startups/${companyID}/`);
+		// kan bruke noe .then, og se om det er sukksess, og så gjøre noe
+
 		// Kunne brukt denne, men den refresher ikke den '/' siden!
 		// this.props.history.push('/');
 		// Kunne også brukt denne
 		// this.forceUpdate();
 		// men det blir litt 'messy'
+	}
+
+	renderUpdateDeleteForm() {
 
 	}
 
@@ -60,14 +85,23 @@ class CompanyDetail extends Component {
 					<p>{this.state.company.info}</p>
 					<p>{this.state.company.email}</p>
 				</Card>
-				<CustomForm 
-					requestType='put'
-					companyID={this.props.match.params.companyID}
-					buttonText='Update'
-				/>
-				<form onSubmit={this.handleDelete}>
-					<Button type='danger' htmlType='submit'>Delete</Button>
-				</form>
+				{
+					(this.props.token)  ? 
+					<div>
+						<CustomForm 
+							requestType='put'
+							companyID={this.props.match.params.companyID}
+							buttonText='Update'
+						/>
+						<form onSubmit={this.handleDelete}>
+							<Button type='danger' htmlType='submit'>Delete</Button>
+						</form>
+					</div>
+					:
+
+					null
+					
+				}	
 			</div>
 		);
 	}
