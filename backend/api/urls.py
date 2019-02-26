@@ -11,13 +11,11 @@ from api.views.company_owner import CompanyOwnerView
 from api.views.profile import ProfileView
 
 
-company_owner_url = 'api/mycompanies'
-
 router = routers.DefaultRouter()
 router.register('api/startups', CompanyView)
 router.register('api/positions', PositionView)
 router.register('api/applicants', ApplicantView)
-router.register(company_owner_url,CompanyOwnerView,base_name='CompanyOwner')
+router.register('api/mycompanies',CompanyOwnerView,base_name='CompanyOwner')
 router.register('api/profile',ProfileView,base_name='profile')
 
 urlpatterns = [

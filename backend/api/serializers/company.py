@@ -12,6 +12,10 @@ class CompanySerializer(ModelSerializer):
         model = Company
         fields = ('id', 'url', 'name', 'email', 'info', 'positions','slug')
         depth = 1
+        lookup_field = 'slug'
+        extra_kwargs = {
+            'url': {'lookup_field': 'slug'}
+        }
 
     def get_positions(self, obj):
         req = self.context['request']
