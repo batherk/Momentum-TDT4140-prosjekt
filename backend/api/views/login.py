@@ -14,4 +14,4 @@ class LoginView(APIView):
         user = serializer.validated_data["user"]
         django_login(request, user)
         token, created = Token.objects.get_or_create(user=user)
-        return Response({"token": token.key}, status=200)
+        return Response({"token": token.key, 'id': user.id}, status=200)
