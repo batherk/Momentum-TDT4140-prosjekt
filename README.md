@@ -14,6 +14,7 @@ git clone https://gitlab.stud.idi.ntnu.no/programvareutvikling-v19/gruppe-42.git
 
 ----BACKEND----
 
+cd backend
 
 #Install and start virtual environment
 
@@ -26,7 +27,6 @@ virtualenv env
 Windows: source env/Scripts/activate
 Mac/Linux: source env/bin/activate
 
-cd backend
 
 #Install required python libraries
 
