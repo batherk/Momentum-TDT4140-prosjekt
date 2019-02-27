@@ -4,6 +4,13 @@ from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
 from .position import *
 
+class CompanyDetailsSerializer(ModelSerializer):
+    class Meta:
+        model = Company
+        fields = ('name', 'email', 'info')
+        depth = 0
+
+
 
 class CompanySerializer(ModelSerializer):
     positions = SerializerMethodField()

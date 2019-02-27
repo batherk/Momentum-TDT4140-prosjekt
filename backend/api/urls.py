@@ -8,6 +8,7 @@ from api.views.login import LoginView
 from api.views.logout import *
 from api.views.user_create import *
 from api.views.company_owner import CompanyOwnerView
+from api.views.positions_owner import PositionsOwnerView
 from api.views.profile import ProfileView
 
 
@@ -16,6 +17,7 @@ router.register('api/startups', CompanyView)
 router.register('api/positions', PositionView)
 router.register('api/applicants', ApplicantView)
 router.register('api/mycompanies',CompanyOwnerView,base_name='CompanyOwner')
+router.register('api/mypositions',PositionsOwnerView,base_name='PositionsOwner')
 router.register('api/profile',ProfileView,base_name='profile')
 
 urlpatterns = [
