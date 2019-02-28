@@ -8,10 +8,11 @@ export const authStart = () => {
 	};
 }
 
-export const authSuccess = (token) => {
+export const authSuccess = (token, id) => {
 	return {
 		type: actionTypes.AUTH_SUCCESS,
-		token: token
+		token: token,
+		id: id
 	};
 }
 
@@ -23,8 +24,8 @@ export const authFail = (error) => {
 }
 
 export const logout = () => {
-	localStorage.removeItem('user');
 	localStorage.removeItem('token');
+	// localStorage.removeItem('id');
 	localStorage.removeItem('expirationDate');
 	return {
 		type: actionTypes.AUTH_LOGOUT
@@ -41,13 +42,15 @@ export const checkAuthTimeout = (expirationTime) => {
 
 const storeUserData = (dispatch, res) => {
 	const token = res.data.token;
+	const id = res.data.id;
 
 	// En time i fremtiden
 	const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
 
 	localStorage.setItem('token', token);
+	// localStorage.setItem('id', id);
 	localStorage.setItem('expirationDate', expirationDate);
-	dispatch(authSuccess(token));
+	dispatch(authSuccess(token, id));
 
 	// Logger deg ut etter 3600 sekunder
 	dispatch(checkAuthTimeout(3600));

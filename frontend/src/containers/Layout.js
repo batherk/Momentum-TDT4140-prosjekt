@@ -43,7 +43,7 @@ class CustomLayout extends React.Component {
 				<Header>
 					<div className="logo">
 						<Link to='/'>
-							<img height='100%' src={logo} alt='' />
+							<img height='100%' style={{ maxHeight: 50 }} src={logo} alt='' />
 						</Link>
 					</div>
 					<Menu

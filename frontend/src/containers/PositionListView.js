@@ -18,13 +18,15 @@ class PositionList extends Component {
 	};
 
 	componentDidMount() {
-	    // axios.get('http://127.0.0.1:8000/api/positions/')
-	    // .then(res => {
-	    // 	this.setState({
-	    // 		positions: res.data
-	    // 	});
-	    // 	console.log(res.data);
-	    // })
+	    axios.get('http://127.0.0.1:8000/api/positions/', {
+				headers: { Authorization : 'Token ' + this.props.token }
+		})
+		.then(res => {
+			this.setState({
+				positions: res.data
+			});
+			console.log(res.data);
+		});
 	    // console.log(this.props);
 	}
 
