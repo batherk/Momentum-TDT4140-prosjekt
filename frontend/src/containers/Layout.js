@@ -37,6 +37,17 @@ class CustomLayout extends React.Component {
 		);
 	}
 
+	renderProfilePage() {
+		if (this.props.isAuthenticated) {
+			return (
+				<Menu.Item key='4'>
+					<Link to='/profile' >Profile</Link>
+				</Menu.Item>
+			);
+		}
+
+	}
+
 	render () {
 		return (
 			<Layout className="layout">
@@ -54,6 +65,7 @@ class CustomLayout extends React.Component {
 					>
 						{ this.renderPositions() }
 						{ this.renderLoginLogout() }
+						{ this.renderProfilePage()}
 					</Menu>
 				</Header>
 				<Content style={{ padding: '20px 20px' }}>

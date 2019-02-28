@@ -27,7 +27,8 @@ class ProfilePage extends React.Component {
     componentDidMount() {
         if (this.props.token) {
             this.getUserData(this.props.token);
-        } // else {
+        }
+        // else {
         // 		this.getCompany();
         // }
     }
@@ -76,7 +77,7 @@ class ProfilePage extends React.Component {
                                             />
                                         </Card>
                                     </Col>
-                                    <Col span={12}>Card content  {this.state.userdata.detail}</Col>
+                                    <Col span={12}>Card content  {this.state.userdata.email}</Col>
                                 </Row>
 
                             </Card>
@@ -90,6 +91,7 @@ class ProfilePage extends React.Component {
 
 
 const mapStateToProps = (state) => {
+    console.log(state);
     return {
         token: state.token,
         id: state.id
