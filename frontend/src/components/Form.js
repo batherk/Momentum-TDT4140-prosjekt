@@ -46,7 +46,7 @@ class CustomForm extends React.Component {
 
 		switch (requestType) {
 			case 'post':
-				axios.post('http://127.0.0.1:8000/startup/', {
+				axios.post('http://127.0.0.1:8000/api/startup/', {
 					name: name,
 					email: email,
 					info: info

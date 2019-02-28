@@ -8,10 +8,11 @@ export const authStart = () => {
 	};
 }
 
-export const authSuccess = (token) => {
+export const authSuccess = (token, id) => {
 	return {
 		type: actionTypes.AUTH_SUCCESS,
-		token: token
+		token: token,
+		id: id
 	};
 }
 
@@ -23,7 +24,8 @@ export const authFail = (error) => {
 }
 
 export const logout = () => {
-	localStorage.removeItem('user');
+	localStorage.removeItem('token');
+	// localStorage.removeItem('id');
 	localStorage.removeItem('expirationDate');
 	return {
 		type: actionTypes.AUTH_LOGOUT
@@ -40,13 +42,15 @@ export const checkAuthTimeout = (expirationTime) => {
 
 const storeUserData = (dispatch, res) => {
 	const token = res.data.token;
+	const id = res.data.id;
 
 	// En time i fremtiden
 	const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
 
 	localStorage.setItem('token', token);
+	// localStorage.setItem('id', id);
 	localStorage.setItem('expirationDate', expirationDate);
-	dispatch(authSuccess(token));
+	dispatch(authSuccess(token, id));
 
 	// Logger deg ut etter 3600 sekunder
 	dispatch(checkAuthTimeout(3600));
@@ -55,12 +59,12 @@ const storeUserData = (dispatch, res) => {
 export const authLogin = (email, password) => {
 	return dispatch => {
 		dispatch(authStart());
-		axios.post('http://127.0.0.1:8000/api/login', {
+		axios.post('http://127.0.0.1:8000/api/login/', {
 			username: email, 	// TODO: endre til email når det er endret på backend
 			password: password
 		})
 		.then((res) => {
-			console.log('Done with login: ', res);
+			// console.log('Done with login: ', res);
 			storeUserData(dispatch, res);
 		})
 		.catch((err) => {
@@ -70,17 +74,20 @@ export const authLogin = (email, password) => {
 }
 
 // Add type later (startup, user, investor)
-export const authSignup = (username, email, password1, password2) => {
+export const authSignup = (firstName, lastName, email, password, role) => {
 	return dispatch => {
 		dispatch(authStart());
-		axios.post('http://127.0.0.1:8000/rest-auth/login/', {
-			username: username,
+		axios.post('http://127.0.0.1:8000/api/register/', {
+			first_name: firstName,
+			last_name: lastName,
 			email: email, 
-			password1: password1, 
-			password2: password2
+			password: password,
+			role: role
 		})
 		.then((res) => {
-			storeUserData(dispatch, res);
+			// console.log('registerd', res);
+			// storeUserData(dispatch, res);
+			dispatch(authLogin(email, password));
 		})
 		.catch((err) => {
 			dispatch(authFail(err));

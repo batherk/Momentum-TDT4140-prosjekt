@@ -31,7 +31,7 @@ const Companys = (props) => {
 				>
 					<List.Item.Meta
 						avatar={<Avatar src={item.avatar} />}
-						title={<a href={`/companys/${item.id}`}>{item.name}</a>}
+						title={<a href={`/companys/${item.slug}`}>{item.name}</a>}
 						description={item.info}
 					/>
 					{item.content}
