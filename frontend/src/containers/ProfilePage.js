@@ -35,7 +35,7 @@ class ProfilePage extends React.Component {
     getUserData(token) {
         // const header = (token === undefined) ? null : { headers: { 'Authorization' : 'Token ' + token }};
 
-        const id = this.state.id;
+        const id = this.props.id;
         axios.get(`http://127.0.0.1:8000/api/profile/${id}/`, {
             headers: { 'Authorization' : 'Token ' + token }
         })
@@ -90,7 +90,6 @@ class ProfilePage extends React.Component {
 
 
 const mapStateToProps = (state) => {
-    // console.log('This state: ', state);
     return {
         token: state.token,
         id: state.id
