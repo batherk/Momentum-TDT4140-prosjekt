@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import axios from 'axios';
 
 import Companys from '../components/Companys';
-import CustomForm from '../components/Form';
+// import CompanyForm from '../components/CompanyForm';
 
 // const listData = [];
 // for (let i = 0; i < 23; i++) {
@@ -18,71 +18,55 @@ import CustomForm from '../components/Form';
 
 class CompanyList extends Component {
 
-	// constructor(props) {
-	// 	super(props);
-
-	// 	this.state({})
-	// }
-
 	state = {
-		companys: []
+		companys: [],
+		profile: {}
 	};
 
 	componentDidMount() {
-	    axios.get('http://127.0.0.1:8000/api/startups/')
-	    .then(res => {
-	    	this.setState({
-	    		companys: res.data
-	    	});
-	    	console.log(res.data);
-	    })
+		this.getCompanys();
 	}
 
-	componentWillReceiveProps(nextProps) {
-	    if (this.props.token === null && nextProps.token !== null) {
-			// this.getCompany(nextProps.token);
-			axios.get('http://localhost:8000/api/positions/', {
-				headers: {
-					Authorization : 'Token ' + nextProps.token
-				}
-			})
+	// componentWillReceiveProps(nextProps) {
+	//  //    if (this.props.token === null && nextProps.token !== null) {
+	//  //		this.getProfile(nextProps.token, nextProps.id);
+	// 	// }
+	// }
 
-			// axios({
-			// 	method: 'get',
-			// 	url: 'http://localhost:8000/api/positions/',
-			// 	headers: { Authorization : 'Token ' + nextProps.token }
-			// })
-			.then(res => {
-				console.log('positions', res);
-			})
-			.catch(err => {
-				console.error(err);
-			});
-
-
-		}
+	getCompanys() {
+		axios.get('http://127.0.0.1:8000/api/startups/')
+		.then(res => this.setState({ companys: res.data }))
+		.catch(err => console.error(err));
 	}
 
 	render() {
 		return (
 			<div>
 				<Companys data={this.state.companys} />
-				<br />
-				<h2>Create a company</h2>
-				<CustomForm 
-					requestType='post'
-					companyID={null}
-					buttonText='Create'
-				/>
 			</div>
 		);
 	}
 }
 
+/*
+
+Skal brukes inn på en BO sin profilside, der han kan velge å lage en ny profil
+
+				<br />
+				<h2>Create a company</h2>
+				<CompanyForm 
+					requestType='post'
+					companyID={null}
+					buttonText='Create'
+				/>
+
+*/
+
 const mapStateToProps = (state) => {
 	console.log('This state: ', state);
 	return {
-		token: state.token
+		token: state.token,
+		id: state.id
 	};
 };
 
