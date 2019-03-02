@@ -19,15 +19,15 @@ const Companys = (props) => {
 				onChange: (page) => {
 					console.log(page);
 				},
-				pageSize: 3,
+				pageSize: 10,
 			}}
 			dataSource={props.data}
 			// footer={<div><b>ant design</b> footer part</div>}
 			renderItem={item => (
 				<List.Item
 					key={item.title}
-					actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
-					extra={<img width={272} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
+					// actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
+					extra={<img width={136} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
 				>
 					<List.Item.Meta
 						avatar={<Avatar src={item.avatar} />}

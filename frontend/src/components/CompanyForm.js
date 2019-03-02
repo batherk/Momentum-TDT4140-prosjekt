@@ -5,16 +5,8 @@ import {
 
 import axios from 'axios';
 
-/*
 
-Skal bruke denne når vi skal lage og oppdatere en bedrift
-Må derfor spesifisere om vi skal lage eller oppdatere når vi bruker denne komponenten
-
-*/
-
-
-
-class CustomForm extends React.Component {
+class CompanyForm extends React.Component {
 	// constructor() {
 	// 	super();
 	// 	this.state = {
@@ -68,14 +60,6 @@ class CustomForm extends React.Component {
 	}
 
 	render() {
-		// const { formLayout } = this.state;
-		// const formItemLayout = formLayout === 'horizontal' ? {
-		// 	labelCol: { span: 4 },
-		// 	wrapperCol: { span: 14 },
-		// } : null;
-		// const buttonItemLayout = formLayout === 'horizontal' ? {
-		// 	wrapperCol: { span: 14, offset: 4 },
-		// } : null;
 		return (
 			<div>
 				<Form onSubmit={(event) => 
@@ -109,4 +93,4 @@ class CustomForm extends React.Component {
 	}
 }
 
-export default CustomForm;
+export default CompanyForm;
