@@ -7,7 +7,11 @@ import { connect } from 'react-redux'
 import axios from "axios";
 import * as actions from "../store/actions/auth";
 
+import ProfilePageAvatarUpload from '../containers/ProfilePageAvatarUpload';
+
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
+/*
+import FormData from 'form-data'*/
 
 
 class EditProfilePage extends React.Component {
@@ -16,10 +20,13 @@ class EditProfilePage extends React.Component {
         userdata: {}
     };
 
+
+
     componentWillReceiveProps(nextProps) {
         if (this.props.token === null && nextProps.token !== null) {
             this.getUserData(nextProps.token);
         }
+
 
     }
 
@@ -144,6 +151,19 @@ class EditProfilePage extends React.Component {
                         :
 
                         <Form onSubmit={this.handleSubmit}>
+
+                            <Form.Item
+                                {...formItemLayout}
+                                label={(
+                                    <span> Avatar </span>
+                                )}
+                            >
+                                {getFieldDecorator('first_name', {
+                                    rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
+                                })(
+                                    <ProfilePageAvatarUpload/>
+                                )}
+                            </Form.Item>
 
                             <Form.Item
                                 {...formItemLayout}
