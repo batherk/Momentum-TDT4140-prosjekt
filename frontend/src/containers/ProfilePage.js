@@ -73,7 +73,7 @@ class ProfilePage extends React.Component {
                                         >
                                             <Meta
                                                 title={`${this.state.userdata.first_name} ${this.state.userdata.last_name}`}
-                                                description="www.instagram.com"
+                                                description=""
                                             />
                                         </Card>
                                     </Col>

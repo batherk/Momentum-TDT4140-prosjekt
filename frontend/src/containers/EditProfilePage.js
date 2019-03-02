@@ -5,6 +5,7 @@ import {
 import { connect } from 'react-redux'
 
 import axios from "axios";
+import * as actions from "../store/actions/auth";
 
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
@@ -29,6 +30,7 @@ class EditProfilePage extends React.Component {
     }
 
     handleSubmit = (e) => {
+
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
@@ -53,6 +55,23 @@ class EditProfilePage extends React.Component {
             console.error(err);
         });
 
+    }
+
+    handleDelete = (e) => {
+
+        const id = this.props.id;
+        axios.delete(`http://127.0.0.1:8000/api/profile/${id}/`,
+            {
+                headers: {
+                    'Authorization' : 'Token ' + this.props.token
+                }
+            }
+        )
+            .then((res) => {console.log(res); this.props.logout();  this.props.history.push('/')})
+            .catch((err) => {
+                console.log('We got an error');
+                console.error(err);
+            });
     }
 
 
@@ -171,6 +190,7 @@ class EditProfilePage extends React.Component {
 
                             <Form.Item {...tailFormItemLayout}>
                                 <Button type="primary" htmlType="submit">Submit Changes</Button>
+                                <Button type="danger" onClick={this.handleDelete.bind(this)} style ={{"float":"right",}}>Delete me</Button>
                             </Form.Item>
                         </Form>
                 }
@@ -189,9 +209,17 @@ const mapStateToProps = (state) => {
     };
 };
 
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        logout: () => dispatch(actions.logout())
+    };
+};
+
+
 const WrappedEditProfilePage = Form.create({ name: 'editprofilepage' })(EditProfilePage);
 
-export default connect(mapStateToProps)(WrappedEditProfilePage);
+export default connect(mapStateToProps,mapDispatchToProps)(WrappedEditProfilePage);
 
 
 /*
