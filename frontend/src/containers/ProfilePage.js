@@ -1,7 +1,7 @@
 import React from 'react';
 import {Form, Icon, Input, Button, Spin, Card, Row, Col} from 'antd';
 import { connect } from 'react-redux'
-import {NavLink, withRouter} from 'react-router-dom';
+import {Link, NavLink, withRouter} from 'react-router-dom';
 
 import * as actions from '../store/actions/auth';
 import axios from "axios";
@@ -62,7 +62,7 @@ class ProfilePage extends React.Component {
 
                         <div>
 
-                            <Card style={{ width: 1200, margin:0}}>
+                            <Card type ="flex" style={{ "width": "100%", margin:0,alignItems: 'center'}}>
 
                                 <Row>
                                     <Col span={12}>
@@ -77,7 +77,9 @@ class ProfilePage extends React.Component {
                                             />
                                         </Card>
                                     </Col>
-                                    <Col span={12}>Card content  {this.state.userdata.email}</Col>
+                                    <Col span={12}>Card content  {this.state.userdata.email}
+
+                                        <Button type="primary"><Link to='/profile/edit/' >Edit profile</Link></Button></Col>
                                 </Row>
 
                             </Card>
