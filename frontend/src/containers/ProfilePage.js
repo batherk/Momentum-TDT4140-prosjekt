@@ -72,7 +72,7 @@ class ProfilePage extends React.Component {
                                             cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
                                         >
                                             <Meta
-                                                title="Europe Street beat"
+                                                title={this.state.userdata.first_name}
                                                 description="www.instagram.com"
                                             />
                                         </Card>
