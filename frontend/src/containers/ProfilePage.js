@@ -69,7 +69,7 @@ class ProfilePage extends React.Component {
                                         <Card
                                             hoverable
                                             style={{ width: 300}}
-                                            cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+                                            cover={<img alt="example" src={this.state.userdata.photo}/>}
                                         >
                                             <Meta
                                                 title={`${this.state.userdata.first_name} ${this.state.userdata.last_name}`}

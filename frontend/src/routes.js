@@ -8,7 +8,7 @@ import PositionDetail from './containers/PositionDetailView';
 import Login from './containers/Login';
 import Signup from './containers/Signup';
 import ProfilePage from './containers/ProfilePage';
-import EditProfilePage from './containers/EditProfilePage';
+import EditProfilePage from './containers/ProfilePageEdit';
 
 const BaseRouter = () => (
 	<div>

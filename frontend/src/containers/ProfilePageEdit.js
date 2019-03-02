@@ -14,10 +14,11 @@ const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 import FormData from 'form-data'*/
 
 
-class EditProfilePage extends React.Component {
+class ProfilePageEdit extends React.Component {
 
     state = {
-        userdata: {}
+        userdata: {},
+        image : null
     };
 
 
@@ -36,6 +37,10 @@ class EditProfilePage extends React.Component {
         }
     }
 
+    handleImageChange = (image) => {
+        this.state.image = image;
+    }
+
     handleSubmit = (e) => {
 
         e.preventDefault();
@@ -48,8 +53,12 @@ class EditProfilePage extends React.Component {
         const id = this.props.id;
         const { form } = this.props;
 
+        let data = form.getFieldsValue();
+        data["role"] = null;
+        data["photo"] = this.state.image;
+        console.log("TEST:",data)
         axios.put(`http://127.0.0.1:8000/api/profile/${id}/`,
-            form.getFieldsValue(),
+            data,
             {
                 headers: {
                     'Authorization' : 'Token ' + this.props.token
@@ -161,7 +170,7 @@ class EditProfilePage extends React.Component {
                                 {getFieldDecorator('first_name', {
                                     rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
                                 })(
-                                    <ProfilePageAvatarUpload/>
+                                    <ProfilePageAvatarUpload handleImageChange={this.handleImageChange}/>
                                 )}
                             </Form.Item>
 
@@ -237,7 +246,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-const WrappedEditProfilePage = Form.create({ name: 'editprofilepage' })(EditProfilePage);
+const WrappedEditProfilePage = Form.create({ name: 'editprofilepage' })(ProfilePageEdit);
 
 export default connect(mapStateToProps,mapDispatchToProps)(WrappedEditProfilePage);
 

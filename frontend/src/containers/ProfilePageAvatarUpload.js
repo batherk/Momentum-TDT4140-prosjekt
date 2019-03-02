@@ -36,32 +36,18 @@ class ProfilePageAvatarUpload extends React.Component {
         }
         if (info.file.status === 'done') {
             // Get this url from response in real world.
-            getBase64(info.file.originFileObj, imageUrl => this.setState({
+            getBase64(info.file.originFileObj, imageUrl => {this.setState({
                 imageUrl,
                 loading: false,
-            }));
+            })
+                this.props.handleImageChange(this.state.imageUrl);
+                console.log("THIS IS THE IMAGE URL AT UPLOAD ", this.state.imageUrl);
+
+            });
+
+
         }
     }
-    /*
-
-        let data = new FormData();
-        data.append('file', file, file.fileName);
-
-        return (dispatch) => {
-            axios.post(URL, data, {
-                headers: {
-                    'accept': 'application/json',
-                    'Accept-Language': 'en-US,en;q=0.8',
-                    'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-                }
-            })
-                .then((response) => {
-                    //handle success
-                }).catch((error) => {
-                //handle error
-            });
-        };}
-    */
 
     render() {
         const uploadButton = (
