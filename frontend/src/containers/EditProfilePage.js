@@ -3,17 +3,11 @@ import {
     Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, Spin, Card
 } from 'antd';
 import { connect } from 'react-redux'
-import {Link, NavLink, withRouter} from 'react-router-dom';
 
-import * as actions from '../store/actions/auth';
 import axios from "axios";
 
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
-const { Meta } = Card;
-
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
 
 class EditProfilePage extends React.Component {
 
@@ -36,47 +30,29 @@ class EditProfilePage extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        /*this.props.form.validateFields((err, values) => {
+        this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
             }
-        });*/
+        });
 
         const id = this.props.id;
-        const userdata = this.state.userdata;
         const { form } = this.props;
 
-
-        console.log('SUBMIT id', id);
-        console.log('SUBMIT data', form.getFieldsValue());
-
-        axios.put(`http://127.0.0.1:8000/api/profile/${id}/`, form.getFieldsValue()
-            /*{
-                email: userdata.email,
-                first_name: userdata.first_name,
-                last_name: userdata.last_name,
-                role: null
-            }*/,
+        axios.put(`http://127.0.0.1:8000/api/profile/${id}/`,
+            form.getFieldsValue(),
             {
                 headers: {
                     'Authorization' : 'Token ' + this.props.token
                 }
             }
         )
-        .then((res) => console.log(res))
+        .then((res) => {console.log(res); this.props.history.push('/profile/')})
         .catch((err) => {
             console.log('We got an error');
             console.error(err);
         });
-/*
-        axios.put(`http://127.0.0.1:8000/api/profile/${id}/`, data, {
-            headers: { 'Authorization' : 'Token ' + this.props.token }
-        })
-            .then((res) => console.log(res))
-            .catch((err) => {
-                console.log('We got an error');
-                console.error(err);
-            });*/
+
     }
 
 
@@ -190,6 +166,35 @@ class EditProfilePage extends React.Component {
                                     <Input />
                                 )}
                             </Form.Item>
+
+
+
+                            <Form.Item {...tailFormItemLayout}>
+                                <Button type="primary" htmlType="submit">Submit Changes</Button>
+                            </Form.Item>
+                        </Form>
+                }
+            </div>
+        );
+    }
+}
+
+
+
+const mapStateToProps = (state) => {
+    console.log(state);
+    return {
+        token: state.token,
+        id: state.id
+    };
+};
+
+const WrappedEditProfilePage = Form.create({ name: 'editprofilepage' })(EditProfilePage);
+
+export default connect(mapStateToProps)(WrappedEditProfilePage);
+
+
+/*
                             <Form.Item
                                 {...formItemLayout}
                                 label="Password"
@@ -234,29 +239,4 @@ class EditProfilePage extends React.Component {
                                 })(
                                     <Input />
                                 )}
-                            </Form.Item>
-
-
-                            <Form.Item {...tailFormItemLayout}>
-                                <Button type="primary" htmlType="submit">Submit Changes</Button>
-                            </Form.Item>
-                        </Form>
-                }
-            </div>
-        );
-    }
-}
-
-
-
-const mapStateToProps = (state) => {
-    console.log(state);
-    return {
-        token: state.token,
-        id: state.id
-    };
-};
-
-const WrappedEditProfilePage = Form.create({ name: 'editprofilepage' })(EditProfilePage);
-
-export default connect(mapStateToProps)(WrappedEditProfilePage);
+                            </Form.Item>*/
