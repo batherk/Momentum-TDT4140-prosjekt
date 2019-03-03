@@ -7,6 +7,8 @@ import PositionList from './containers/PositionListView';
 import PositionDetail from './containers/PositionDetailView';
 import Login from './containers/Login';
 import Signup from './containers/Signup';
+import ProfilePage from './containers/ProfilePage';
+import EditProfilePage from './containers/ProfilePageEdit';
 
 const BaseRouter = () => (
 	<div>
@@ -16,6 +18,8 @@ const BaseRouter = () => (
 		<Route exact path='/positions/:positionID/' component={PositionDetail} />
 		<Route exact path='/login/' component={Login} />
 		<Route exact path='/signup/' component={Signup} />
+		<Route exact path='/profile/' component={ProfilePage} />
+		<Route exact path='/profile/edit/' component={EditProfilePage} />
 	</div>
 );
 
