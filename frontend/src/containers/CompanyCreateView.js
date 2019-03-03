@@ -7,6 +7,7 @@ import CompanyForm from '../components/CompanyForm';
 
 class CompanyCreate extends Component {
 
+
 	state = {
 		
 	};

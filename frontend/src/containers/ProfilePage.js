@@ -135,13 +135,12 @@ class ProfilePage extends React.Component {
 									>
 										<Meta
 											title={`${this.state.userdata.first_name} ${this.state.userdata.last_name}`}
-											description=""
+											description={`Email:  ${this.state.userdata.email}`}
 										/>
 									</Card>
 								</Col>
-								<Col span={12}>
-									Card content  {this.state.userdata.email}
-								</Col>
+								
+
 							</Row>
 							<Row type ="flex" justify="space-between" style={{ marginTop: '20px' }}>
 								
