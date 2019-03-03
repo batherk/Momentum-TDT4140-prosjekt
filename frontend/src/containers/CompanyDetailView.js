@@ -21,6 +21,8 @@ class CompanyDetail extends Component {
 	componentDidMount() {
 		if (this.props.token) {
 			this.getCompany(this.props.token, this.props.id);
+		} else {
+			this.getOnlyTheCompany();
 		}
 		// if (this.props.profile) {
 		// 	// this.getProfile(nextProps.token, nextProps.id);
@@ -60,6 +62,21 @@ class CompanyDetail extends Component {
 			console.log('company', res);
 			this.setState({ company: res.data });
 			this.getProfile(token, id);
+		})
+		.catch(err => {
+			console.error(err);
+			this.props.history.push('/');
+		});
+	}
+
+	getOnlyTheCompany() {
+		const companySlug = this.props.match.params.companySlug;
+		// console.log(companySlug);
+		axios.get(`http://127.0.0.1:8000/api/startups/${companySlug}/`)
+		.then(res => {
+			console.log('company', res);
+			this.setState({ company: res.data });
+			// this.getProfile(token, id);
 		})
 		.catch(err => {
 			console.error(err);
