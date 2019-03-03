@@ -50,7 +50,7 @@ class ProfilePageEdit extends React.Component {
             }
         });
 
-        const id = this.props.id;
+        const id = parseInt(localStorage.getItem('id'));
         const { form } = this.props;
 
         let data = form.getFieldsValue();
@@ -75,7 +75,7 @@ class ProfilePageEdit extends React.Component {
 
     handleDelete = (e) => {
 
-        const id = this.props.id;
+        const id = parseInt(localStorage.getItem('id'));
         axios.delete(`http://127.0.0.1:8000/api/profile/${id}/`,
             {
                 headers: {
@@ -107,7 +107,7 @@ class ProfilePageEdit extends React.Component {
     getUserData(token) {
         // const header = (token === undefined) ? null : { headers: { 'Authorization' : 'Token ' + token }};
 
-        const id = this.props.id;
+        const id = parseInt(localStorage.getItem('id'));
         axios.get(`http://127.0.0.1:8000/api/profile/${id}/`, {
             headers: { 'Authorization' : 'Token ' + token }
         })

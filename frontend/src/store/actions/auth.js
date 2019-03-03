@@ -48,7 +48,7 @@ const storeUserData = (dispatch, res) => {
 	const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
 
 	localStorage.setItem('token', token);
-	localStorage.setItem('id', id);
+	localStorage.setItem('id', JSON.stringify(id));
 	localStorage.setItem('expirationDate', expirationDate);
 	dispatch(authSuccess(token, id));
 
