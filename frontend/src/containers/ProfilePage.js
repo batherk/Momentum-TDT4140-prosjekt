@@ -1,9 +1,9 @@
 import React from 'react';
-import {Form, Icon, Input, Button, Spin, Card, Row, Col} from 'antd';
+import { Icon, Button, Spin, Card, Row, Col } from 'antd';
 import { connect } from 'react-redux'
-import {Link, NavLink, withRouter} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import * as actions from '../store/actions/auth';
+// import * as actions from '../store/actions/auth';
 import axios from "axios";
 
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;

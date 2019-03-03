@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, Spin, Card
+    Form, Input, Icon, Button, Spin
 } from 'antd';
 import { connect } from 'react-redux'
 
@@ -38,7 +38,9 @@ class ProfilePageEdit extends React.Component {
     }
 
     handleImageChange = (image) => {
-        this.state.image = image;
+        this.setState({
+            image: image
+        });
     }
 
     handleSubmit = (e) => {
@@ -127,7 +129,7 @@ class ProfilePageEdit extends React.Component {
     render() {
 
         const { getFieldDecorator } = this.props.form;
-        const { autoCompleteResult } = this.state;
+        // const { autoCompleteResult } = this.state;
 
         const formItemLayout = {
             labelCol: {

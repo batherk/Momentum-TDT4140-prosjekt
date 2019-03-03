@@ -44,8 +44,7 @@ class CustomLayout extends React.Component {
 		// const header = (token === undefined) ? null : { headers: { 'Authorization' : 'Token ' + token }};
 		// console.log(this.props);
 		//const id = this.props.id;
-        const id = parseInt(localStorage.getItem('id'));
-        // console.log("TEEEESTT#¤#",id);
+		const id = parseInt(localStorage.getItem('id'));
 		axios.get(`http://127.0.0.1:8000/api/profile/${id}/`, {
 			headers: { 'Authorization' : 'Token ' + token }
 		})
@@ -79,8 +78,9 @@ class CustomLayout extends React.Component {
 		if (this.props.isAuthenticated) {
 			return (
 				<Menu.Item key='4'>
-					<Link to='/profile' ><Avatar src={this.state.avatar} />
-                        </Link>
+					<Link to='/profile' >
+						<Avatar size={'default'} src={this.state.avatar} />
+					</Link>
 				</Menu.Item>
 			);
 		}
@@ -106,9 +106,9 @@ class CustomLayout extends React.Component {
 						{ this.renderPositions() }
 						{ this.renderLoginLogout() }
 
-						<div style={{"float":"right"}}>
+						<Menu.Item key='5' style={{"float":"right"}}>
 							<Searchbar ></Searchbar>
-						</div>
+						</Menu.Item>
 
 					</Menu>
 

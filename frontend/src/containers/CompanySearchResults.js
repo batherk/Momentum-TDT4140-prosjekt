@@ -19,14 +19,16 @@ import Companys from '../components/Companys';
 class CompanySearchResults extends Component {
 
 	state = {
-		search:null,
+		search: null,
 		companys: []
 	};
 
 	componentDidMount() {
 		this.getCompanys();
 
-		this.state.search = this.props.match.params.search;
+		this.setState({
+			search: this.props.match.params.search
+		});
 	}
 
 	// componentWillReceiveProps(nextProps) {
@@ -36,7 +38,7 @@ class CompanySearchResults extends Component {
 	// }
 
 	getCompanys() {
-		console.log("LIIIINK ", `http://127.0.0.1:8000/api/startups/?search=${this.props.match.params.search}`)
+		// console.log("LIIIINK ", `http://127.0.0.1:8000/api/startups/?search=${this.props.match.params.search}`)
 		axios.get(`http://127.0.0.1:8000/api/startups/?search=${this.props.match.params.search}`)
 		.then(res => {this.setState({ companys: res.data}); console.log("SEARCHIING",this.state.companys);})
 		.catch(err => console.error(err));

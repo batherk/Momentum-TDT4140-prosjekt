@@ -1,10 +1,10 @@
 import React from 'react';
-import { Layout, Input } from 'antd';
-import { Link, withRouter } from 'react-router-dom';
+import { Input } from 'antd';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
-import axios from "axios";
+// import axios from "axios";
 
-const { Header, Content, Footer } = Layout;
+// const { Header, Content, Footer } = Layout;
 
 
 const Search = Input.Search;

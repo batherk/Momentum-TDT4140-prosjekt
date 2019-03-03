@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import axios from 'axios';
-import { Button, Card, List, Avatar } from 'antd';
+import { Button, Card, List } from 'antd';
 
 import CompanyForm from '../components/CompanyForm';
-import Positions from '../components/Positions';
+// import Positions from '../components/Positions';
 
 class CompanyDetail extends Component {
 
@@ -31,7 +31,7 @@ class CompanyDetail extends Component {
 
 	getCompany(token) {
 		const companySlug = this.props.match.params.companySlug;
-		console.log(companySlug);
+		// console.log(companySlug);
 		axios.get(`http://127.0.0.1:8000/api/startups/${companySlug}/`, {
 			headers: { Authorization : 'Token ' + token }
 		})
@@ -117,7 +117,7 @@ class CompanyDetail extends Component {
 			return (
 				<div>
 					<CompanyForm 
-						requestType='put'
+						requestType='patch'
 						authToken={this.props.token}
 						companyURL={this.state.company.url}
 						buttonText='Update'

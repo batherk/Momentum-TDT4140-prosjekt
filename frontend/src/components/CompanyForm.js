@@ -45,8 +45,8 @@ class CompanyForm extends React.Component {
 				.then((res) => console.log(res))
 				.catch((err) => console.error(err));
 				break;
-			case 'put':
-				axios.put(companyURL, this.props.form.getFieldsValue(), {
+			case 'patch':
+				axios.patch(companyURL, this.props.form.getFieldsValue(), {
 					headers: { Authorization : 'Token ' + this.props.authToken }
 				})
 				.then((res) => console.log(res))
@@ -61,13 +61,6 @@ class CompanyForm extends React.Component {
 	}
 
 	render() {
-		let errorMessage = null;
-		if (this.props.error) {
-			errorMessage = (
-				<p>{this.props.error.message}</p>
-			);
-		}
-
 		const { getFieldDecorator } = this.props.form;
 		return (
 			<div>
