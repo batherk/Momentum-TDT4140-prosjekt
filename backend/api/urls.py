@@ -11,6 +11,7 @@ from api.views.logout import *
 from api.views.user_create import *
 from api.views.company_owner import CompanyOwnerView
 from api.views.profile import ProfileView
+from api.views.tags import TagsView
 
 
 router = routers.DefaultRouter()
@@ -19,6 +20,7 @@ router.register('api/positions', PositionView)
 router.register('api/applicants', ApplicantView)
 router.register('api/mycompanies',CompanyOwnerView,base_name='CompanyOwner')
 router.register('api/profile',ProfileView,base_name='profile')
+router.register('api/tags',TagsView,base_name='tags')
 
 urlpatterns = [
     path('', include(router.urls)),
