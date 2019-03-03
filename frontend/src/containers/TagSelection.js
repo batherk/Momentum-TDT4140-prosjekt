@@ -101,9 +101,6 @@ class TagSelection extends React.Component {
         }
 
 
-        const tag{
-            ""
-        }
 
         console.log(tags);
         this.setState({

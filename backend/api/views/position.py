@@ -9,3 +9,5 @@ class PositionView(viewsets.ModelViewSet):
     queryset = Position.objects.all()
     serializer_class = PositionSerializer
     permission_classes = [custom_perm.IsGet, custom_perm.IsApplicant]
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name','company')

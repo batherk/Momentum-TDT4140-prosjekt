@@ -80,7 +80,7 @@ class ProfilePage extends React.Component {
                                             />
                                         </Card>
                                     </Col>
-                                    <Col span={12}>Card content  {this.state.userdata.email}
+                                    <Col span={12}>
 
                                         <Button type="primary"><Link to='/profile/edit/' >Edit profile</Link></Button></Col>
                                 </Row>
@@ -88,7 +88,7 @@ class ProfilePage extends React.Component {
                             </Card>
 
 
-                            <TagSelection/>
+
                         </div>
                 }
             </div>
