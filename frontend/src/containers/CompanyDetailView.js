@@ -18,18 +18,39 @@ class CompanyDetail extends Component {
 		showForm: false
 	};
 
-	// componentDidMount() {
-		
-	// }
+	componentDidMount() {
+		if (this.props.token) {
+			this.getCompany(this.props.token, this.props.id);
+		}
+		// if (this.props.profile) {
+		// 	// this.getProfile(nextProps.token, nextProps.id);
+		// 	if (this.props.profile.role === 1) {
+		// 		this.getOwnedCompanies(this.props.token);
+		// 	} else if (this.props.profile.role === 3) {
+		// 		this.setState({
+		// 			isApplicant: true
+		// 		});
+		// 	}
+		// }
+	}
 
 	componentWillReceiveProps(nextProps) {
 		if (this.props.token === null && nextProps.token !== null) {
-			this.getProfile(nextProps.token, nextProps.id);
-			this.getCompany(nextProps.token);
+			this.getCompany(nextProps.token, nextProps.id);
 		}
+		// if (this.props.profile === null && nextProps.profile !== null ) {
+		// 	// this.getProfile(nextProps.token, nextProps.id);
+		// 	if (nextProps.profile.role === 1) {
+		// 		this.getOwnedCompanies(nextProps.token);
+		// 	} else if (nextProps.profile.role === 3) {
+		// 		this.setState({
+		// 			isApplicant: true
+		// 		});
+		// 	}
+		// }
 	}
 
-	getCompany(token) {
+	getCompany(token, id) {
 		const companySlug = this.props.match.params.companySlug;
 		// console.log(companySlug);
 		axios.get(`http://127.0.0.1:8000/api/startups/${companySlug}/`, {
@@ -38,6 +59,7 @@ class CompanyDetail extends Component {
 		.then(res => {
 			console.log('company', res);
 			this.setState({ company: res.data });
+			this.getProfile(token, id);
 		})
 		.catch(err => {
 			console.error(err);
@@ -74,6 +96,7 @@ class CompanyDetail extends Component {
 			console.log('My companies', res);
 			for (let i = 0; i < res.data.length; i++) {
 				if (res.data[i].id === this.state.company.id) {
+					console.log('is owner!!');
 					this.setState({
 						isOwner: true
 					});
@@ -91,15 +114,29 @@ class CompanyDetail extends Component {
 	}
 
 	handleDelete(event) {
-		const companyID = this.props.match.params.companyID;
-		axios.delete(`http://127.0.0.1:8000/api/startups/${companyID}/`);
+		// event.preventDefault();
+		console.log('handle delete', this.props);
+		const companySlug = this.props.match.params.companySlug;
+		axios.delete(`http://127.0.0.1:8000/api/startups/${companySlug}/`, {
+			headers: { 'Authorization' : 'Token ' + this.props.token }
+		})
+		.then(res => console.log('delete succsess', res))
+		.catch(err => console.error(err));
 		// kan bruke noe .then, og se om det er sukksess, og så gjøre noe
 
 		// Kunne brukt denne, men den refresher ikke den '/' siden!
-		// this.props.history.push('/');
+		this.props.history.push('/');
+		// this.props.history.pop();
 		// Kunne også brukt denne
-		this.forceUpdate();
+		// this.forceUpdate();
 		// men det blir litt 'messy'
+	}
+
+	updateCompany(data) {
+		this.props.history.push(`/companys/${data.slug}/`);
+		this.setState({
+			company: data
+		});
 	}
 
 	renderEditButton() {
@@ -120,11 +157,10 @@ class CompanyDetail extends Component {
 						requestType='patch'
 						authToken={this.props.token}
 						companyURL={this.state.company.url}
+						onSuccess={this.updateCompany.bind(this)}
 						buttonText='Update'
 					/>
-					<form onSubmit={this.handleDelete}>
-						<Button type='danger' htmlType='submit'>Delete</Button>
-					</form>
+					<Button type='danger' onClick={this.handleDelete.bind(this)}>Delete</Button>
 				</div>
 			);
 		}
@@ -151,7 +187,7 @@ class CompanyDetail extends Component {
 								key={item.id}
 							>
 								<List.Item.Meta
-									title={<a href={`/positions/${item.id}`}>{item.name}</a>}
+									title={<a href={`/positions/${item.id}/`}>{item.name}</a>}
 									description={item.description}
 								/>
 							</List.Item>
@@ -218,7 +254,8 @@ if (this.state.company.positions !== null) {
 const mapStateToProps = (state) => {
 	return {
 		token: state.token,
-		id: state.id
+		id: state.id,
+		profile: state.profile
 	};
 };
 

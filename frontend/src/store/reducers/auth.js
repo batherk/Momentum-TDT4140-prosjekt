@@ -5,7 +5,8 @@ const INITIAL_STATE = {
 	token: null,
 	id: null,
 	error: null, 
-	loading: false
+	loading: false,
+	profile: null
 };
 
 const authStart = (state, action) => {
@@ -35,7 +36,14 @@ const authFail = (state, action) => {
 const authLogout = (state, action) => {
 	return updateObject(state, {
 		token: null,
-		id: null
+		id: null,
+		profile: null
+	});
+}
+
+const storeProfile = (state, action) => {
+	return updateObject(state, {
+		profile: action.profile
 	});
 }
 
@@ -45,6 +53,7 @@ const reducer = (state = INITIAL_STATE, action) => {
 		case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
 		case actionTypes.AUTH_FAIL: return authFail(state, action);
 		case actionTypes.AUTH_LOGOUT: return authLogout(state, action);
+		case actionTypes.STORE_PROFILE: return storeProfile(state, action);
 		default: return state;
 	}
 }

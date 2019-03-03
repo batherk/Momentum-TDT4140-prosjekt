@@ -17,28 +17,18 @@ class CustomLayout extends React.Component {
 		avatar: null
 	};
 
-	renderPositions() {
-		if (this.props.isAuthenticated) {
-			return (
-				<Menu.Item key='3'>
-					<Link to='/positions'>Positions</Link>
-				</Menu.Item>
-			);
-		}
-		return null;
-	}
-	componentWillReceiveProps(nextProps) {
-
-		if (this.props.token === null && nextProps.token !== null) {
-			this.getUserAvatar(nextProps.token);
-		}
-	}
-
 	componentDidMount() {
 		if (this.props.token) {
 			this.getUserAvatar(this.props.token);
 		}
 	}
+	
+	componentWillReceiveProps(nextProps) {
+		if (this.props.token === null && nextProps.token !== null) {
+			this.getUserAvatar(nextProps.token);
+		}
+	}
+
 
 	getUserAvatar(token) {
 		// const header = (token === undefined) ? null : { headers: { 'Authorization' : 'Token ' + token }};
@@ -57,6 +47,16 @@ class CustomLayout extends React.Component {
 			.catch(err => {
 				console.error(err);
 			});
+	}
+
+	renderPositions() {
+		if (this.props.profile && this.props.profile.role === 3) {
+			return (
+				<Menu.Item key='3'>
+					<Link to='/positions'>Positions</Link>
+				</Menu.Item>
+			);
+		}
 	}
 
 	renderLoginLogout() {
@@ -142,7 +142,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
 	return {
-		token : state.token
+		token : state.token,
+		profile: state.profile
 	};
 };
 

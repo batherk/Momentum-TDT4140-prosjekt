@@ -18,8 +18,13 @@ class CompanyForm extends React.Component {
 	// 	this.setState({ formLayout: e.target.value });
 	// }
 
-	handleFormSubmit = (event, requestType, companyURL) => { // requestType is 'post' og 'put'
+	// handleFormSubmit = (event, requestType, companyURL) => { // requestType is 'post' og 'put'
+	handleFormSubmit(event) {
 		event.preventDefault();
+
+		console.log('props: ', this.props);
+
+		const { requestType, companyURL } = this.props;
 
 		// Value er '' (tom streng) hvis du ikke putter noe i inputet
 		// const name = event.target.elements.name.value;
@@ -42,14 +47,20 @@ class CompanyForm extends React.Component {
 				axios.post(companyURL, this.props.form.getFieldsValue(), {
 					headers: { Authorization : 'Token ' + this.props.authToken }
 				})
-				.then((res) => console.log(res))
+				.then((res) => { 
+					console.log(res);
+					this.props.onSuccess(res.data);
+				})
 				.catch((err) => console.error(err));
 				break;
 			case 'patch':
 				axios.patch(companyURL, this.props.form.getFieldsValue(), {
 					headers: { Authorization : 'Token ' + this.props.authToken }
 				})
-				.then((res) => console.log(res))
+				.then((res) => { 
+					console.log(res); 
+					this.props.onSuccess(res.data);
+				})
 				.catch((err) => {
 					console.log('We got an error');
 					console.error(err);
@@ -60,22 +71,23 @@ class CompanyForm extends React.Component {
 		}
 	}
 
-	render() {
-		const { getFieldDecorator } = this.props.form;
-		return (
-			<div>
-				<Form onSubmit={(event) => 
+	/*(event) => 
 					this.handleFormSubmit(
 						event, 
 						this.props.requestType,
 						this.props.companyURL 
-					)} 
-				>
+					)} */
+
+	render() {
+		const { getFieldDecorator } = this.props.form;
+		return (
+			<div>
+				<Form onSubmit={this.handleFormSubmit.bind(this)}>
 					<Form.Item
 						label="Name"
 					>	
 						{getFieldDecorator('name', {
-							rules: [{ required: true, message: 'Please input your Password!' }],
+							rules: [{ required: true, message: 'Please input the company name!' }],
 						})(
 							<Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} type="name" placeholder="Name" />
 						)}
