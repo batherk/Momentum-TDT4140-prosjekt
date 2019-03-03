@@ -26,13 +26,13 @@ class CustomLayout extends React.Component {
 		if (this.props.isAuthenticated) {
 			return (
 				<Menu.Item key='2' onClick={this.props.logout} >
-					Logout
+					<Link to='/'>Logout</Link>
 				</Menu.Item>
 			);
 		}
 		return (
 			<Menu.Item key='2'>
-				<Link to='/login' >Login</Link>
+				<Link to='/login'>Login</Link>
 			</Menu.Item>
 		);
 	}
