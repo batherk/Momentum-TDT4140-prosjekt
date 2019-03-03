@@ -106,7 +106,7 @@ class ProfilePage extends React.Component {
 						<Button onClick={(event) => this.toggleMyCompanys()} >Show my companys</Button>
 					</Col>
 					<Col>
-						<Button type='primary'><Link to='/companys/create/'>Create a new company</Link></Button>
+						<Button type='primary'><Link to='/companyscreate/'>Create a new company</Link></Button>
 					</Col>
 				</div>
 			);

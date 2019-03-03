@@ -7,16 +7,12 @@ import CompanyForm from '../components/CompanyForm';
 
 class CompanyCreate extends Component {
 
-
-	state = {
-		
-	};
-
 	redirect(data) {
 		this.props.history.push(`/profile`);
 	}
 
 	render() {
+		console.log('render haloo');
 		return (
 			<div> 
 				<h2>Create a company</h2>

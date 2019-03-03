@@ -15,7 +15,7 @@ import CompanySearchResults from './containers/CompanySearchResults';
 const BaseRouter = () => (
 	<div>
 		<Route exact path='/' component={CompanyList} />
-		<Route exact path='/companys/create/' component={CompanyCreate} />
+		<Route exact path='/companyscreate/' component={CompanyCreate} />
 		<Route exact path='/companys/:companySlug/' component={CompanyDetail} />
 		<Route exact path='/positions' component={PositionList} />
 		<Route exact path='/positions/:positionID/' component={PositionDetail} />
