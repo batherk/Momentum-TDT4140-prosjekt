@@ -5,10 +5,13 @@ import { Link } from 'react-router-dom';
 
 // import * as actions from '../store/actions/auth';
 import axios from "axios";
+import TagSelection from "../containers/TagSelection";
+import {Form} from "antd/lib/form";
 
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 const { Meta } = Card;
+
 
 class ProfilePage extends React.Component {
 
@@ -83,6 +86,9 @@ class ProfilePage extends React.Component {
                                 </Row>
 
                             </Card>
+
+
+                            <TagSelection/>
                         </div>
                 }
             </div>

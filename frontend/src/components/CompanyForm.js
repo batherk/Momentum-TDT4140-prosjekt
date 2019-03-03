@@ -103,6 +103,12 @@ class CompanyForm extends React.Component {
 							<Input prefix={<Icon type="info-circle" style={{ color: 'rgba(0,0,0,.25)' }} />} type="name" placeholder="Info" />
 						)}
 					</Form.Item>
+
+					<Form.Item
+						label="Tags"
+					>
+
+					</Form.Item>
 					<Form.Item>
 						<Button type="primary" htmlType="submit">{this.props.buttonText}</Button>
 					</Form.Item>
