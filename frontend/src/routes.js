@@ -9,6 +9,7 @@ import Login from './containers/Login';
 import Signup from './containers/Signup';
 import ProfilePage from './containers/ProfilePage';
 import EditProfilePage from './containers/ProfilePageEdit';
+import CompanySearchResults from './containers/CompanySearchResults';
 
 const BaseRouter = () => (
 	<div>
@@ -20,6 +21,7 @@ const BaseRouter = () => (
 		<Route exact path='/signup/' component={Signup} />
 		<Route exact path='/profile/' component={ProfilePage} />
 		<Route exact path='/profile/edit/' component={EditProfilePage} />
+		<Route exact path='/companys/search/:search/' component={CompanySearchResults} />
 	</div>
 );
 

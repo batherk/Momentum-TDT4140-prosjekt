@@ -7,6 +7,7 @@ import * as actions from '../store/actions/auth';
 import styles from '../styles/layout.css';
 import logo from '../assets/images/momentum.png';
 import axios from "axios";
+import Searchbar from "../containers/Searchbar"
 
 const { Header, Content, Footer } = Layout;
 
@@ -105,7 +106,13 @@ class CustomLayout extends React.Component {
 						{ this.renderPositions() }
 						{ this.renderLoginLogout() }
 
+						<div style={{"float":"right"}}>
+							<Searchbar ></Searchbar>
+						</div>
+
 					</Menu>
+
+
 				</Header>
 				<Content style={{ padding: '20px 20px' }}>
 					<div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
