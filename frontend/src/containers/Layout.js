@@ -27,6 +27,7 @@ class CustomLayout extends React.Component {
 		return null;
 	}
 	componentWillReceiveProps(nextProps) {
+
 		if (this.props.token === null && nextProps.token !== null) {
 			this.getUserAvatar(nextProps.token);
 		}
@@ -132,4 +133,10 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(CustomLayout));
+const mapStateToProps = (state) => {
+	return {
+		token : state.token
+	};
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CustomLayout));
