@@ -9,6 +9,14 @@ const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 
 class NormalLoginForm extends React.Component {
+
+
+	componentWillReceiveProps(nextProps) {
+	    if (this.props.token !== nextProps.token && nextProps.error === null) {
+	    	this.props.history.push('/');
+	    }
+	}
+
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
@@ -17,7 +25,6 @@ class NormalLoginForm extends React.Component {
 				this.props.onAuth(values.email, values.password);
 			}
 		});
-		this.props.history.push('/');
 	}
 
 	render() {
@@ -42,6 +49,8 @@ class NormalLoginForm extends React.Component {
 					:
 
 					<Form onSubmit={this.handleSubmit} className="login-form">
+						<h1>Login</h1>
+						<br/>	
 						<Form.Item>
 							{getFieldDecorator('email', {
 								rules: [{
@@ -82,7 +91,8 @@ const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(NormalLogin
 const mapStateToProps = (state) => {
 	return {
 		loading: state.loading,
-		error: state.error
+		error: state.error,
+		token: state.token
 	};
 };
 

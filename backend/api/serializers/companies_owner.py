@@ -10,10 +10,12 @@ class CompanyOwnerSerializer(ModelSerializer):
 
     class Meta:
         model = Company
-        fields = ('name', 'email', 'info', 'owner_url')
+        fields = ('id', 'name', 'email', 'info', 'owner_url', 'slug')
 
     def get_owner_url(self, obj):
         return 'http://' + str(self.context['request'].get_host()) + '/api/mycompanies/' + str(obj.id)
+
+    # def get_
 
     def create(self, validated_data):
         company = Company.objects.create(**validated_data)

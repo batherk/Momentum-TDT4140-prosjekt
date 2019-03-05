@@ -14,6 +14,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     admin = models.BooleanField(default=False)
     superuser = models.BooleanField(default=False)
     role = models.ForeignKey(Role, related_name='user', blank=True, null=True, on_delete=models.SET(None))
+    photo = models.ImageField(upload_to='api/photos')
+
     USERNAME_FIELD = 'email'
 
     REQUIRED_FIELDS = []

@@ -36,3 +36,13 @@ class IsGet(permissions.BasePermission):
 class IsAnonymous(permissions.BasePermission):
     def has_permission(self, request, view):
         return not request.user.is_authenticated
+
+
+class IsAuthenticated(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_authenticated
+
+
+class IsUser(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return request.user == obj
