@@ -46,3 +46,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def is_active(self):
         return self.active
+
+    @property
+    def is_business_owner(self):
+        if self.role is None: return False
+        return self.role.is_business_owner
+
+    @property
+    def is_applicant(self):
+        if self.role is None: return False
+        return self.role.is_applicant
+
+    @property
+    def is_investor(self):
+        if self.role is None: return False
+        return self.role.is_investor
