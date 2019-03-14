@@ -119,17 +119,6 @@ class CustomLayout extends React.Component {
 						{ this.renderPositions() }
 						{ this.renderApplicants()}
 						{ this.renderLoginLogout() }
-
-
-						<Menu.Item key='5' style={{"float":"right"}}>
-							<Search
-								placeholder="Søk på bedrifter"
-								onSearch={value => {this.props.history.push(`/companys/search/${value}/`)}}
-								style={{ width: 200 }}
-							/>
-						</Menu.Item>
-
-
 					</Menu>
 
 
