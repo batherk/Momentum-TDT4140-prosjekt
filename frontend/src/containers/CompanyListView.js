@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { Input } from 'antd';
 import axios from 'axios';
-
 import Companys from '../components/Companys';
+
+const Search = Input.Search;
 // import CompanyForm from '../components/CompanyForm';
 
 class CompanyList extends Component {
@@ -25,6 +27,11 @@ class CompanyList extends Component {
 	render() {
 		return (
 			<div>
+				<Search
+					placeholder="Søk på bedrifter"
+					onSearch={value => {this.props.history.push(`/companys/search/${value}/`)}}
+					style={{ width: 200 }}
+				/>
 				<Companys data={this.state.companys} />
 			</div>
 		);
