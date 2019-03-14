@@ -61,6 +61,17 @@ class CustomLayout extends React.Component {
 		}
 	}
 
+	renderApplicants(){
+		if (this.props.profile && this.props.profile.role === 1){
+			return(
+				<Menu.Item key='6'>
+					<Link to='/applicants'>Applicants</Link>
+				</Menu.Item>
+			);
+
+		}
+	}
+
 	renderLoginLogout() {
 		if (this.props.isAuthenticated) {
 			return (
@@ -106,7 +117,9 @@ class CustomLayout extends React.Component {
 					>
                         { this.renderProfilePage()}
 						{ this.renderPositions() }
+						{ this.renderApplicants()}
 						{ this.renderLoginLogout() }
+
 
 						<Menu.Item key='5' style={{"float":"right"}}>
 							<Search
