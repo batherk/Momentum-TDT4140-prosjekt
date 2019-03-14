@@ -2,6 +2,7 @@ import React from 'react';
 import { Layout, Menu, Avatar } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
+import { Input } from 'antd';
 // import { NavLink } from 'react-router-dom';
 import * as actions from '../store/actions/auth';
 import styles from '../styles/layout.css';
@@ -10,6 +11,7 @@ import axios from "axios";
 import Searchbar from "../containers/Searchbar"
 
 const { Header, Content, Footer } = Layout;
+const Search = Input.Search;
 
 class CustomLayout extends React.Component {
 
@@ -107,8 +109,13 @@ class CustomLayout extends React.Component {
 						{ this.renderLoginLogout() }
 
 						<Menu.Item key='5' style={{"float":"right"}}>
-							<Searchbar ></Searchbar>
+							<Search
+								placeholder="Søk på bedrifter"
+								onSearch={value => {this.props.history.push(`/companys/search/${value}/`)}}
+								style={{ width: 200 }}
+							/>
 						</Menu.Item>
+
 
 					</Menu>
 
