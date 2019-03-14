@@ -83,6 +83,8 @@ class ProfilePage extends React.Component {
                                     <Col span={12}>
 
                                         <Button type="primary"><Link to='/profile/edit/' >Edit profile</Link></Button></Col>
+
+                                        <TagSelection></TagSelection>
                                 </Row>
 
                             </Card>

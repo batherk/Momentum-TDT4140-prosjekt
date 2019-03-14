@@ -1,6 +1,7 @@
 from django.db import models
 from .company import Company
-
+from rest_framework import viewsets, mixins
+from rest_framework import filters
 
 class Position(models.Model):
     name = models.CharField(max_length=50)

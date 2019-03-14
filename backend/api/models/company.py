@@ -1,6 +1,8 @@
 from api.models.user import *
 from django.db import models
 from django.template.defaultfilters import slugify
+from api.models.tags import Tags
+
 
 
 class Company(models.Model):
@@ -9,6 +11,7 @@ class Company(models.Model):
     slug = models.SlugField(unique=True,editable=False)
     owner = models.ForeignKey(User, on_delete=models.SET(None), related_name='company', null=True)
     info = models.TextField(max_length=500)
+    tags = models.ManyToManyField(Tags)
 
     def __str__(self):
         return self.name

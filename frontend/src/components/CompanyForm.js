@@ -4,6 +4,7 @@ import {
 } from 'antd';
 
 import axios from 'axios';
+import TagSelection from "../containers/TagSelection";
 
 
 class CompanyForm extends React.Component {
@@ -109,6 +110,8 @@ class CompanyForm extends React.Component {
 					>
 
 					</Form.Item>
+
+					<TagSelection url={this.props.companyURL} ></TagSelection>
 					<Form.Item>
 						<Button type="primary" htmlType="submit">{this.props.buttonText}</Button>
 					</Form.Item>
