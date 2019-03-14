@@ -11,6 +11,7 @@ from api.views.logout import *
 from api.views.user_create import *
 from api.views.company_owner import CompanyOwnerView
 from api.views.profile import ProfileView
+from .views.positions_owner import PositionsOwnerView
 
 
 router = routers.DefaultRouter()
@@ -19,6 +20,7 @@ router.register('api/positions', PositionView)
 router.register('api/applicants', ApplicantView)
 router.register('api/mycompanies',CompanyOwnerView,base_name='CompanyOwner')
 router.register('api/profile',ProfileView,base_name='profile')
+router.register(r'api/mycompanies/(?P<slug>[-\w]+)/positions',PositionsOwnerView , base_name="position_owner")
 
 urlpatterns = [
     path('', include(router.urls)),
