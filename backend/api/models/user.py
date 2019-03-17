@@ -13,6 +13,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
     superuser = models.BooleanField(default=False)
+    certified = models.BooleanField(default=False, null=False)
     role = models.ForeignKey(Role, related_name='user', blank=True, null=True, on_delete=models.SET(None))
     photo = models.ImageField(upload_to='api/photos')
 

@@ -10,7 +10,7 @@ class CompanySerializer(ModelSerializer):
 
     class Meta:
         model = Company
-        fields = ('id', 'url', 'name', 'email', 'info', 'positions','slug')
+        fields = ('id', 'url', 'name', 'email', 'info', 'positions','slug','certified')
         depth = 1
         lookup_field = 'slug'
         extra_kwargs = {
