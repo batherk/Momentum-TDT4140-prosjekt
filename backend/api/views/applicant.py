@@ -9,8 +9,8 @@ User = get_user_model()
 
 
 class ApplicantView(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin):
-    queryset = User.objects.filter(role__name="Applicant")
+    queryset = User.objects.filter(role__name="Applicant", visible=True)
     serializer_class = UserSerializer
     permission_classes = (IsBusinessOwner,)
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('first_name', 'last_name')
+    search_fields = ('first_name', 'last_name', 'education')

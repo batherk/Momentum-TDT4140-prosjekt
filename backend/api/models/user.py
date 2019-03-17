@@ -14,6 +14,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     admin = models.BooleanField(default=False)
     superuser = models.BooleanField(default=False)
     certified = models.BooleanField(default=False, null=False)
+    visible = models.BooleanField(default=True, null=False)
+    cv = models.FileField(upload_to="api/cv_files", blank=True, null=True, default=None)
+    education = models.CharField(max_length=250)
     role = models.ForeignKey(Role, related_name='user', blank=True, null=True, on_delete=models.SET(None))
     photo = models.ImageField(upload_to='api/photos')
 
