@@ -6,10 +6,12 @@ from api.forms.user_admin_creation import UserAdminCreationForm
 from api.models.company import Company
 from api.models.position import Position
 from api.models.user import *
+from .models.application import Application
 
 admin.site.register(Company)
 admin.site.register(Position)
 admin.site.register(Role)
+admin.site.register(Application)
 
 
 class UserAdmin(BaseUserAdmin):
