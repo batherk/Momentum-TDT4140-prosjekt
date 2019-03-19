@@ -8,6 +8,9 @@ import axios from "axios";
 
 import Companys from '../components/Companys';
 
+import profilePlaceholder from '../assets/images/profile-placeholder.png';
+import certifiedImage from '../assets/images/certified.png';
+
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 const { Meta } = Card;
@@ -69,6 +72,13 @@ class ProfilePage extends React.Component {
 			});
 	}
 
+	getUserImage() {
+		if (this.state.userdata.photo !== null) {
+			return this.state.userdata.photo;
+		}
+		return '../assets/images/certified.png';
+	}
+
 	getOwnedCompanies(token) {
 		axios.get('http://127.0.0.1:8000/api/mycompanies/', {
 			headers: { Authorization : 'Token ' + token }
@@ -88,10 +98,22 @@ class ProfilePage extends React.Component {
 		});
 	}
 
+	renderCreateCompany() {
+		if (this.state.isOwner) {
+			return (
+				<Button type='primary' style={{ marginTop: '10px' }}>
+					<Link to='/companyscreate/'>Create company</Link>
+				</Button>
+			);
+		}
+	}
+
 	renderMyCompanys() {
 		if (this.state.showMyCompanies && this.state.isOwner) {
 			return (
 				<Row>
+					<br />
+					<h2>My Companies</h2>
 					<Companys data={this.state.companys} />
 				</Row>
 			);
@@ -101,54 +123,61 @@ class ProfilePage extends React.Component {
 	renderMyCompanysButtons() {
 		if (this.state.isOwner) {
 			return (
-				<div>
+				<Row>
 					<Col>
-						<Button onClick={(event) => this.toggleMyCompanys()} >Show my companys</Button>
+						<Button onClick={(event) => this.toggleMyCompanys()}>
+							Show my companys
+						</Button>
 					</Col>
-					<Col>
-						<Button type='primary'><Link to='/companyscreate/'>Create a new company</Link></Button>
-					</Col>
-				</div>
+				</Row>
 			);
 		}
 	}
 
 	render() {
+		const { photo } = this.state.userdata;
+		const profileimg =  (photo !== null) ? photo : profilePlaceholder;
 		return (
-
 			<div>
 				{
 					this.props.loading ?
 					<Spin indicator={antIcon} />
+
 					:
 
 					<div>
 
-						<Card type ="flex" style={{ "width": "100%", margin:0,alignItems: 'center'}}>
-
-							<Row>
-								<Col span={12}>
-									<Card
-										hoverable
-										style={{ width: 300}}
-										cover={<img alt="example" src={this.state.userdata.photo}/>}
-									>
-										<Meta
-											title={`${this.state.userdata.first_name} ${this.state.userdata.last_name}`}
-											description={`Email:  ${this.state.userdata.email}`}
-										/>
+						<Card 
+							type ="flex" 
+							style={{ 
+								"width": "100%", 
+								alignItems: 'center'
+							}}
+						>
+							<Row style={{ marginBottom: '20px' }}>
+								<Col span={8}>
+									<img alt="example" src={profileimg} style={{ width: '100%' }}/>
+								</Col>
+								<Col span={16} >
+									<Card>
+										<Row>
+											<Col span={14}>
+												<Meta
+													title={`${this.state.userdata.first_name} ${this.state.userdata.last_name}`}
+													description={`Email:  ${this.state.userdata.email}`}
+												/>
+											</Col>
+											<Col span={10} style={{ float: 'right' }}>
+												<Button type='primary' >
+													<Link to='/profile/edit/' >Edit profile</Link>
+												</Button>
+												{ this.renderCreateCompany() }
+											</Col>
+										</Row>
 									</Card>
 								</Col>
-								
-
 							</Row>
-							<Row type ="flex" justify="space-between" style={{ marginTop: '20px' }}>
-								
-								<Col>
-									<Button type='primary'><Link to='/profile/edit/' >Edit profile</Link></Button>
-								</Col>
-								{ this.renderMyCompanysButtons() }
-							</Row>
+							{ this.renderMyCompanysButtons() }
 							{ this.renderMyCompanys() }
 						</Card>
 					</div>
@@ -158,6 +187,13 @@ class ProfilePage extends React.Component {
 	}
 }
 
+/*
+<Card
+	hoverable
+	style={{ width: '100%', minHeighth: '300px' }}
+	cover={<img alt="example" src={profilePlaceholder} />}
+/>
+*/
 
 
 const mapStateToProps = (state) => {
