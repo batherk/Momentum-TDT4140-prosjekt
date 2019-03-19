@@ -24,21 +24,29 @@ class UserAdmin(BaseUserAdmin):
     # that reference specific fields on auth.User.
     list_display = ('email', 'first_name', 'last_name', 'admin', 'certified', 'role')
     list_filter = ('admin', 'role', 'certified')
-    fieldsets = (
-        ('Info', {'fields': ('email', 'first_name', 'last_name','role', 'certified','password')}),
-        ('Permissions', {'fields': ('admin', 'staff')}),
-    )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'first_name', 'last_name', 'password1', 'password2', 'role','certified')}
+            'fields': ('email', 'first_name', 'last_name', 'password1', 'password2', 'role', 'certified')}
          ),
     )
     search_fields = ('email', 'first_name', 'last_name')
     ordering = ('email',)
     filter_horizontal = ()
+
+    def get_fieldsets(self, request, obj):
+        if obj.is_applicant:
+            return (
+                ('Info', {'fields': ('email', 'first_name', 'last_name', 'role', 'certified', 'password','education','cv')}),
+                ('Permissions', {'fields': ('admin', 'staff')}),
+            )
+        else:
+            return (
+                ('Info', {'fields': ('email', 'first_name', 'last_name', 'role', 'certified', 'password')}),
+                ('Permissions', {'fields': ('admin', 'staff')}),
+            )
 
 
 admin.site.register(User, UserAdmin)
