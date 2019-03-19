@@ -6,17 +6,7 @@ import {
 import axios from 'axios';
 import TagSelection from "../containers/TagSelection";
 
-function removeObject(obj, list) {
-	var i;
-	for (i = 0; i < list.length; i++) {
-		if (list[i] === obj) {
-			delete list[i];
-			return true;
-		}
-	}
 
-	return false;
-}
 class CompanyForm extends React.Component {
 	selected_tags = [];
 
@@ -34,21 +24,9 @@ class CompanyForm extends React.Component {
 	// 	this.setState({ formLayout: e.target.value });
 	// }
 
-	//Prevent submit on enter, required to make tags work
-	/*onKeyPress(event) {
-		if (event.which === 13 ) {
-			event.preventDefault();
-		}
-	}*/
 	// handleFormSubmit = (event, requestType, companyURL) => { // requestType is 'post' og 'put'
 	handleFormSubmit(event) {
-
-		if(event.target.keyCode === 13){
-			return;
-		}
-
 		event.preventDefault();
-
 
 		console.log('props: ', this.props);
 
@@ -77,7 +55,6 @@ class CompanyForm extends React.Component {
 					headers: { Authorization : 'Token ' + this.props.authToken }
 				})
 				.then((res) => {
-
 					console.log(res);
 					this.props.onSuccess(res.data);
 				})
@@ -88,8 +65,7 @@ class CompanyForm extends React.Component {
 					headers: { Authorization : 'Token ' + this.props.authToken }
 				})
 				.then((res) => {
-					console.log("DATALOAD");
-					console.log(res); 
+					console.log(res);
 					this.props.onSuccess(res.data);
 				})
 				.catch((err) => {
@@ -102,19 +78,18 @@ class CompanyForm extends React.Component {
 		}
 	}
 
-	/*(event) => 
+	/*(event) =>
 					this.handleFormSubmit(
-						event, 
+						event,
 						this.props.requestType,
-						this.props.companyURL 
+						this.props.companyURL
 					)} */
 
-	/*onSubmit={this.handleFormSubmit.bind(this)}*/
 	render() {
 		const { getFieldDecorator } = this.props.form;
 		return (
 			<div>
-				<Form  >
+				<Form onSubmit={this.handleFormSubmit.bind(this)}>
 					<Form.Item
 						label="Name"
 					>	
@@ -156,7 +131,7 @@ class CompanyForm extends React.Component {
 
 					<TagSelection url={this.props.companyURL} addTag={this.addTag} removeTag={this.removeTag}/>
 					<Form.Item>
-						<Button type="primary" htmlType="submit" onClick={this.handleFormSubmit.bind(this)}>{this.props.buttonText}</Button>
+						<Button type="primary" htmlType="submit">{this.props.buttonText}</Button>
 					</Form.Item>
 				</Form>
 			</div>

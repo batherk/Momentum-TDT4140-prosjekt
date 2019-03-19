@@ -13,7 +13,7 @@ class CompanyOwnerSerializer(ModelSerializer):
 
     class Meta:
         model = Company
-        fields = ('id', 'name', 'email', 'info', 'owner_url', 'positions', 'slug')
+        fields = ('id', 'name', 'email', 'info', 'owner_url', 'positions', 'slug', 'certified')
 
     def get_owner_url(self, obj):
         return 'http://' + str(self.context['request'].get_host()) + '/api/mycompanies/' + str(obj.slug)

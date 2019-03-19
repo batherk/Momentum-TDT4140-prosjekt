@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-	Form, Input, Icon, Button, Spin
+	Form, Input, Icon, Button, Spin, Checkbox
 } from 'antd';
 import { connect } from 'react-redux'
 
@@ -8,6 +8,7 @@ import axios from "axios";
 import * as actions from "../store/actions/auth";
 
 import ProfilePageAvatarUpload from '../containers/ProfilePageAvatarUpload';
+// import Checkbox from "antd/es/checkbox";
 
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 /*
@@ -57,9 +58,11 @@ class ProfilePageEdit extends React.Component {
 
 		let data = form.getFieldsValue();
 		data["role"] = this.state.userdata.role;
-		data["photo"] = this.state.image;
+		if(this.state.image != null){
+			data["photo"] = this.state.image;
+		}
 		console.log("TEST:",data)
-		axios.put(`http://127.0.0.1:8000/api/profile/${id}/`,
+		axios.patch(`http://127.0.0.1:8000/api/profile/${id}/`,
 			data,
 			{
 				headers: {
@@ -93,10 +96,10 @@ class ProfilePageEdit extends React.Component {
 		const userdata = this.state.userdata;
 		console.log('SET INITIAL VALUES ', userdata);
 		form.setFieldsValue({
-
 			first_name: userdata.first_name,
-			last_name : userdata.last_name,
-			email : userdata.email
+			last_name: userdata.last_name,
+			email: userdata.email,
+			visible: userdata.visible,
 		});
 
 	};
@@ -164,11 +167,12 @@ class ProfilePageEdit extends React.Component {
 									<span> Avatar </span>
 								)}
 							>
-								{getFieldDecorator('first_name', {
+								<ProfilePageAvatarUpload handleImageChange={this.handleImageChange}/>
+								{/*getFieldDecorator('first_name', {
 									rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
 								})(
-									<ProfilePageAvatarUpload handleImageChange={this.handleImageChange}/>
-								)}
+									
+								) */}
 							</Form.Item>
 
 							<Form.Item
@@ -212,6 +216,17 @@ class ProfilePageEdit extends React.Component {
 								)}
 							</Form.Item>
 
+
+							<Form.Item
+								{...formItemLayout}
+								label="Is searchable"
+							>
+								{getFieldDecorator('visible', {
+									required: true, message: 'Give a value to the boolean field',
+								})(
+									<Checkbox />
+								)}
+							</Form.Item>
 
 
 							<Form.Item {...tailFormItemLayout}>

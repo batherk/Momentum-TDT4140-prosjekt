@@ -14,8 +14,7 @@ class CompanySerializer(ModelSerializer):
 
     class Meta:
         model = Company
-        fields = ('id', 'url', 'name', 'email', 'info', 'positions','slug','tags','tags_id')
-        #fields = '__all__'
+        fields = ('id', 'url', 'name', 'email', 'info', 'positions','slug','tags','tags_id','certified')
         depth = 1
         lookup_field = 'slug'
         extra_kwargs = {
@@ -26,7 +25,7 @@ class CompanySerializer(ModelSerializer):
         req = self.context['request']
         if req.user.is_anonymous:
             return None
-        if req.user.role.is_applicant:
+        if req.user.is_applicant or req.user.is_admin:
             positions_queryset = Position.objects.filter(company=obj)
             return PositionSerializerDepth0(positions_queryset, context={'request': req}, many=True).data
         else:

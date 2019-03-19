@@ -11,6 +11,10 @@ import Signup from './containers/Signup';
 import ProfilePage from './containers/ProfilePage';
 import EditProfilePage from './containers/ProfilePageEdit';
 import CompanySearchResults from './containers/CompanySearchResults';
+import PositionSearchResults from './containers/PositionSearchResults';
+
+import ApplicantsList from './containers/ApplicantsList'
+import ApplicantsSearchResults from './containers/ApplicantsSearchResults';
 
 const BaseRouter = () => (
 	<div>
@@ -24,6 +28,9 @@ const BaseRouter = () => (
 		<Route exact path='/profile/' component={ProfilePage} />
 		<Route exact path='/profile/edit/' component={EditProfilePage} />
 		<Route exact path='/companys/search/:search/' component={CompanySearchResults} />
+		<Route exact path='/positions/search/:search/' component={PositionSearchResults} />
+		<Route exact path='/applicants/' component={ApplicantsList} />
+		<Route exact path='/applicants/search/:search/' component={ApplicantsSearchResults} />
 	</div>
 );
 

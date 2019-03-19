@@ -19,7 +19,8 @@ class CompanyDetail extends Component {
 	};
 
 	componentDidMount() {
-		if (this.props.token) {
+		if (this.props.token && this.props.id !== 2) { 
+			// id 2 er investor, hotfix for at de skal få se firma
 			this.getCompany(this.props.token, this.props.id);
 		} else {
 			this.getOnlyTheCompany();
