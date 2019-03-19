@@ -3,19 +3,20 @@ import { connect } from 'react-redux'
 // import axios from 'axios';
 // import { Button, Card, List } from 'antd';
 
-import CompanyForm from '../components/CompanyForm';
+import PositionForm from '../components/PositionForm';
 
-class CompanyCreate extends Component {
+class PositionCreate extends Component {
 
 	redirect(data) {
 		this.props.history.push(`/profile`);
 	}
 
 	render() {
+		console.log('render haloo');
 		return (
 			<div> 
-				<h2>Create a company</h2>
-				<CompanyForm 
+				<h2>Create a position</h2>
+				<PositionForm 
 					requestType='post'
 					authToken={this.props.token}
 					companyURL={'http://127.0.0.1:8000/api/mycompanies/'}
@@ -34,4 +35,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps)(CompanyCreate);
+export default connect(mapStateToProps)(PositionCreate);

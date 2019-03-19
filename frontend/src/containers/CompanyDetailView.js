@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import axios from 'axios';
 import { Button, Card, List } from 'antd';
-
+import { Link } from 'react-router-dom';
 import CompanyForm from '../components/CompanyForm';
 // import Positions from '../components/Positions';
 
@@ -195,8 +195,8 @@ class CompanyDetail extends Component {
 	}
 
 	renderPositions() {
-		console.log('Heihalo: ', (this.state.isApplicant || this.state.isOwner));
-		console.log('Company: ', this.state.company.positions !== null);
+		// console.log('Heihalo: ', (this.state.isApplicant || this.state.isOwner));
+		// console.log('Company: ', this.state.company.positions !== null);
 		if ((this.state.isApplicant || this.state.isOwner) && this.state.company.positions !== null) {
 			return (
 				<div>
@@ -224,6 +224,16 @@ class CompanyDetail extends Component {
 						)}
 					/>
 				</div>
+			);
+		}
+	}
+
+	renderAddPosition() {
+		if (this.state.isOwner) {
+			return (
+				<Button type='primary' style={{ marginTop: '10px' }}>
+					<Link to='/positionscreate/'>Create position</Link>
+				</Button>
 			);
 		}
 	}
@@ -272,10 +282,11 @@ if (this.state.company.positions !== null) {
 				<Card title={this.state.company.name} >
 					<p>{this.state.company.info}</p>
 					<p>{this.state.company.email}</p>
+					{ this.renderEditButton() }
 				</Card>
 				{ this.renderPositions() }
-				{ this.renderEditButton() }
-				{ this.renderUpdateDeleteForm() }	
+				{ this.renderAddPosition() }
+				{ this.renderUpdateDeleteForm() }
 			</div>
 		);
 	}
