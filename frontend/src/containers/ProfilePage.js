@@ -22,7 +22,7 @@ class ProfilePage extends React.Component {
 		showMyCompanies: false,
 		companys: [],
 		isOwner: false,
-		isApplicant: false
+		isApplicant: false,
 	};
 
 
@@ -98,6 +98,18 @@ class ProfilePage extends React.Component {
 		});
 	}
 
+	renderCertified() {
+		if (this.state.userdata.is_certified) {
+			return (
+				<img 
+					alt='certified' 
+					src={certifiedImage}
+					style={{ height: '20px', width: '20px' }}
+				/>
+			);
+		}
+	}
+
 	renderCreateCompany() {
 		if (this.state.isOwner) {
 			return (
@@ -162,10 +174,15 @@ class ProfilePage extends React.Component {
 									<Card>
 										<Row>
 											<Col span={14}>
-												<Meta
-													title={`${this.state.userdata.first_name} ${this.state.userdata.last_name}`}
-													description={`Email:  ${this.state.userdata.email}`}
-												/>
+												<Row>
+													<h3>
+														{`${this.state.userdata.first_name} ${this.state.userdata.last_name}`}
+													</h3>
+													{ this.renderCertified() }
+												</Row>
+												<p>
+													{`Email:  ${this.state.userdata.email}`}
+												</p>
 											</Col>
 											<Col span={10} style={{ float: 'right' }}>
 												<Link to='/profile/edit/' >
