@@ -39,9 +39,7 @@ class CompanyForm extends React.Component {
 
 	// handleFormSubmit = (event, requestType, companyURL) => { // requestType is 'post' og 'put'
 	handleFormSubmit(event) {
-		if(event.keyCode === 13) {
-			return;
-		}
+
 		event.preventDefault();
 
 		console.log('props: ', this.props);

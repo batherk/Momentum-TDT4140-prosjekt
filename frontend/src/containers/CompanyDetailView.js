@@ -20,7 +20,7 @@ class CompanyDetail extends Component {
 	};
 
 	componentDidMount() {
-		if (this.props.token && this.props.id !== 2) { 
+		if (this.props.token && this.props.id !== 2) {
 			// id 2 er investor, hotfix for at de skal få se firma
 			this.getCompany(this.props.token, this.props.id);
 		} else {
@@ -115,7 +115,6 @@ class CompanyDetail extends Component {
 			console.log('My companies', res);
 			for (let i = 0; i < res.data.length; i++) {
 				if (res.data[i].id === this.state.company.id) {
-					console.log('is owner!!');
 					this.setState({
 						isOwner: true
 					});
@@ -286,9 +285,7 @@ if (this.state.company.positions !== null) {
 					<p>{this.state.company.email}</p>
 					{this.renderTags()}
 				</Card>
-
 				{ this.renderPositions() }
-
 				{ this.renderEditButton() }
 				{ this.renderUpdateDeleteForm() }
 

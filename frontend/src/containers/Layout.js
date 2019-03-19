@@ -7,7 +7,6 @@ import * as actions from '../store/actions/auth';
 import styles from '../styles/layout.css';
 import logo from '../assets/images/momentum.png';
 import axios from "axios";
-import Searchbar from "../containers/Searchbar"
 
 const { Header, Content, Footer } = Layout;
 
@@ -28,6 +27,13 @@ class CustomLayout extends React.Component {
 			this.getUserAvatar(nextProps.token);
 		}
 	}
+
+	componentWillReceiveProps(nextProps) {
+		if (this.props.token === null && nextProps.token !== null) {
+			this.getUserAvatar(nextProps.token);
+		}
+	}
+
 
 
 	getUserAvatar(token) {
