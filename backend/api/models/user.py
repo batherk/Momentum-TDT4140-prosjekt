@@ -13,6 +13,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
     superuser = models.BooleanField(default=False)
+    certified = models.BooleanField(default=False, null=False)
+    visible = models.BooleanField(default=True, null=False)
+    cv = models.FileField(upload_to="api/cv_files", blank=True, null=True, default=None)
+    education = models.CharField(max_length=250)
     role = models.ForeignKey(Role, related_name='user', blank=True, null=True, on_delete=models.SET(None))
     photo = models.ImageField(upload_to='api/photos')
 
@@ -46,3 +50,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def is_active(self):
         return self.active
+
+    @property
+    def is_business_owner(self):
+        if self.role is None: return False
+        return self.role.is_business_owner
+
+    @property
+    def is_applicant(self):
+        if self.role is None: return False
+        return self.role.is_applicant
+
+    @property
+    def is_investor(self):
+        if self.role is None: return False
+        return self.role.is_investor

@@ -8,6 +8,7 @@ class Company(models.Model):
     email = models.EmailField()
     slug = models.SlugField(unique=True,editable=False)
     owner = models.ForeignKey(User, on_delete=models.SET(None), related_name='company', null=True)
+    certified = models.BooleanField(default=False,null=False)
     info = models.TextField(max_length=500)
 
     def __str__(self):

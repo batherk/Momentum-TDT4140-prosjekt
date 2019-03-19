@@ -2,6 +2,7 @@ import React from 'react';
 import { Layout, Menu, Avatar } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
+import { Input } from 'antd';
 // import { NavLink } from 'react-router-dom';
 import * as actions from '../store/actions/auth';
 import styles from '../styles/layout.css';
@@ -10,6 +11,7 @@ import axios from "axios";
 import Searchbar from "../containers/Searchbar"
 
 const { Header, Content, Footer } = Layout;
+const Search = Input.Search;
 
 class CustomLayout extends React.Component {
 
@@ -59,6 +61,17 @@ class CustomLayout extends React.Component {
 		}
 	}
 
+	renderApplicants(){
+		if (this.props.profile && this.props.profile.role === 1){
+			return(
+				<Menu.Item key='6'>
+					<Link to='/applicants'>Applicants</Link>
+				</Menu.Item>
+			);
+
+		}
+	}
+
 	renderLoginLogout() {
 		if (this.props.isAuthenticated) {
 			return (
@@ -104,12 +117,8 @@ class CustomLayout extends React.Component {
 					>
                         { this.renderProfilePage()}
 						{ this.renderPositions() }
+						{ this.renderApplicants()}
 						{ this.renderLoginLogout() }
-
-						<Menu.Item key='5' style={{"float":"right"}}>
-							<Searchbar ></Searchbar>
-						</Menu.Item>
-
 					</Menu>
 
 
