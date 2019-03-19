@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { List, Avatar } from 'antd';
+import { List } from 'antd';
 
 
 // const IconText = ({ type, text }) => (
