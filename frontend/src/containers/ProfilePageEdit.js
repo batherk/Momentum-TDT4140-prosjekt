@@ -8,6 +8,7 @@ import axios from "axios";
 import * as actions from "../store/actions/auth";
 
 import ProfilePageAvatarUpload from '../containers/ProfilePageAvatarUpload';
+import Checkbox from "antd/es/checkbox";
 
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 /*
@@ -57,9 +58,11 @@ class ProfilePageEdit extends React.Component {
 
 		let data = form.getFieldsValue();
 		data["role"] = this.state.userdata.role;
-		data["photo"] = this.state.image;
+		if(this.state.image != null){
+			data["photo"] = this.state.image;
+		}
 		console.log("TEST:",data)
-		axios.put(`http://127.0.0.1:8000/api/profile/${id}/`,
+		axios.patch(`http://127.0.0.1:8000/api/profile/${id}/`,
 			data,
 			{
 				headers: {
@@ -212,6 +215,13 @@ class ProfilePageEdit extends React.Component {
 								)}
 							</Form.Item>
 
+
+							<Form.Item
+								{...formItemLayout}
+								label="Is searchable"
+							>
+                                <Checkbox />
+							</Form.Item>
 
 
 							<Form.Item {...tailFormItemLayout}>

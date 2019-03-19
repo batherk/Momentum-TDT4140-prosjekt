@@ -168,9 +168,9 @@ class ProfilePage extends React.Component {
 												/>
 											</Col>
 											<Col span={10} style={{ float: 'right' }}>
-												<Button type='primary' >
-													<Link to='/profile/edit/' >Edit profile</Link>
-												</Button>
+												<Link to='/profile/edit/' >
+													<Button type='primary'>Edit profile</Button>
+												</Link>
 												{ this.renderCreateCompany() }
 											</Col>
 										</Row>
