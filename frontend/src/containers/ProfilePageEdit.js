@@ -99,7 +99,7 @@ class ProfilePageEdit extends React.Component {
 			first_name: userdata.first_name,
 			last_name: userdata.last_name,
 			email: userdata.email,
-			visible: userdata.visible
+			visible: userdata.visible,
 		});
 
 	};
