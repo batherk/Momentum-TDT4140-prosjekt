@@ -39,6 +39,7 @@ class CompanyDetail extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		if (this.props.token === null && nextProps.token !== null) {
+			console.log('get company on will recieve');
 			this.getCompany(nextProps.token, nextProps.id);
 		}
 		// if (this.props.profile === null && nextProps.profile !== null ) {
@@ -54,6 +55,7 @@ class CompanyDetail extends Component {
 	}
 
 	getCompany(token, id) {
+		console.log('get the whole company');
 		const companySlug = this.props.match.params.companySlug;
 		// console.log(companySlug);
 		axios.get(`http://127.0.0.1:8000/api/startups/${companySlug}/`, {
@@ -99,7 +101,7 @@ class CompanyDetail extends Component {
 				this.getOwnedCompanies(token);
 			} else if (res.data.role === 3) {
 				this.setState({
-					isApplicant: true
+					isApplicant: true,	
 				});
 			}
 		})
@@ -115,9 +117,17 @@ class CompanyDetail extends Component {
 			for (let i = 0; i < res.data.length; i++) {
 				if (res.data[i].id === this.state.company.id) {
 					console.log('is owner!!');
-					this.setState({
-						isOwner: true
-					});
+
+					// Lagrer at man er eier av firmaet, og oppdaterer slik
+					// at positions også vises
+					this.setState(prevState => ({
+						isOwner: true,
+						company: {
+							...prevState.company,
+							positions: res.data[i].positions
+						}
+					}));
+					return;
 				}
 			}
 		})
@@ -185,7 +195,9 @@ class CompanyDetail extends Component {
 	}
 
 	renderPositions() {
-		if (this.state.isApplicant && this.state.company.positions !== null) {
+		console.log('Heihalo: ', (this.state.isApplicant || this.state.isOwner));
+		console.log('Company: ', this.state.company.positions !== null);
+		if ((this.state.isApplicant || this.state.isOwner) && this.state.company.positions !== null) {
 			return (
 				<div>
 					<br />
