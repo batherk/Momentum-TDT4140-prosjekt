@@ -10,6 +10,11 @@ import { List, Avatar } from 'antd';
 // 	</span>
 // );
 
+function renderEducation(item){
+    console.log(item);
+    return item.education === "" ? <p>no education</p> : <p>{item.education}</p>;
+};
+
 const Applicants = (props) => {
 	return (
 		<List
@@ -35,6 +40,9 @@ const Applicants = (props) => {
 						title={`${item.first_name} ${item.last_name}`}
                         description={item.email}
 					/>
+
+                        { renderEducation(item) }
+
 					{/*`${item.company.name}: ${item.content}`*/}
 				</List.Item>
 			)}

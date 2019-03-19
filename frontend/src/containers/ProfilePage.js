@@ -145,7 +145,9 @@ class ProfilePage extends React.Component {
 							<Row type ="flex" justify="space-between" style={{ marginTop: '20px' }}>
 								
 								<Col>
-									<Button type='primary'><Link to='/profile/edit/' >Edit profile</Link></Button>
+									<Link to='/profile/edit/' >
+											<Button type='primary'>Edit profile</Button>
+									</Link>
 								</Col>
 								{ this.renderMyCompanysButtons() }
 							</Row>
