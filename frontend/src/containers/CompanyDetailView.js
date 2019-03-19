@@ -177,6 +177,7 @@ class CompanyDetail extends Component {
 						requestType='patch'
 						authToken={this.props.token}
 						companyURL={this.state.company.url}
+						tags={this.state.company.tags}
 						onSuccess={this.updateCompany.bind(this)}
 						buttonText='Update'
 					/>

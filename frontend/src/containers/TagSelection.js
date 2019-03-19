@@ -16,7 +16,7 @@ const { Meta } = Card;
 function containsObject(obj, list) {
     var i;
     for (i = 0; i < list.length; i++) {
-        if (list[i] === obj) {
+        if (list[i].name.toLowerCase() === obj.name.toLowerCase()) {
             return true;
         }
     }
@@ -48,7 +48,6 @@ class TagSelection extends React.Component {
         super(props);
         this.state={
             tags:[],
-            selected_tags:[],
             displayed_tags:[],
             inputVisible: false,
         };
@@ -164,22 +163,25 @@ class TagSelection extends React.Component {
     }
 
     select_tag(tag){
-        let selected_tags = this.state.selected_tags;
-        selected_tags.push(tag);
+        //let selected_tags = this.state.selected_tags;
+        //selected_tags.push(tag);
         this.props.addTag(tag);
-        this.setState({selected_tags:selected_tags})
+        this.setState({});
+        //this.setState({selected_tags:selected_tags})
     }
     unselect_tag(tag){
-        let selected_tags = this.state.selected_tags;
-        TagSelection.removeObject(tag,selected_tags);
+        //let selected_tags = this.state.selected_tags;
+        //TagSelection.removeObject(tag,selected_tags);
         this.props.removeTag(tag);
-        this.setState({selected_tags:selected_tags})
+
+        this.setState({});
+       //this.setState({selected_tags:selected_tags})
     }
 
 
 
     handleClickOnTag = (tag) => {
-        let tags = this.state.selected_tags;
+        let tags = this.props.selected_tags;
         if(containsObject(tag,tags)){
             this.unselect_tag(tag);
             /*removeObject(tag,tags);
@@ -229,11 +231,10 @@ class TagSelection extends React.Component {
         }
         let original_tag = sameTagName(tag,this.state.tags);
         if(original_tag != null){
-            if(containsObject(original_tag,this.state.selected_tags) === false){
+            if(containsObject(original_tag,this.props.selected_tags) === false){
                 this.select_tag(original_tag);
                 //this.state.selected_tags.push(original_tag);
                 this.setState({
-                    selected_tags: this.state.selected_tags,
                     tags: this.state.tags,
                     inputVisible: false,
                     inputValue: '',
@@ -248,7 +249,6 @@ class TagSelection extends React.Component {
                     //this.state.selected_tags.push(tag);
                     this.select_tag(tag);
                     this.setState({
-                        selected_tags: this.state.selected_tags,
                         tags: this.state.tags,
                         inputVisible: false,
                         inputValue: '',
@@ -267,7 +267,7 @@ class TagSelection extends React.Component {
     onSubmitForm = () => {
 
         //axios.put(`http://127.0.0.1:8000/api/tags/38`, {id:'38',name:'p',times_used:'20',color:'1'})
-        axios.all(this.state.selected_tags.map(u => {u.times_used ++;axios.put(`http://127.0.0.1:8000/api/tags/${u.id}/`,u);}))
+        axios.all(this.props.selected_tags.map(u => {u.times_used ++;axios.put(`http://127.0.0.1:8000/api/tags/${u.id}/`,u);}))
             .then(axios.spread((...res) => {
 
 
@@ -295,7 +295,7 @@ class TagSelection extends React.Component {
     render() {
         return (
 
-            <div style={{height:"250px", width:"600px",   overflowY: "scroll"}}>
+            <div style={{height:"250px", width:"auto",   overflowY: "scroll"}}>
 
                 {
                     this.props.loading ?
@@ -306,7 +306,7 @@ class TagSelection extends React.Component {
                         <Card style={{paddingTop:"0px"}}>
 
 
-                            <CustomTag data={this.state.selected_tags} handleClickOnTag={this.handleClickOnTag}/>
+                            <CustomTag data={this.props.selected_tags} handleClickOnTag={this.handleClickOnTag}/>
 
 
                             {this.state.inputVisible && (

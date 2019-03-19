@@ -8,15 +8,28 @@ import TagSelection from "../containers/TagSelection";
 
 
 class CompanyForm extends React.Component {
-	selected_tags = [];
+
+	constructor(props){
+		super(props);
+		this.state={
+			selected_tags: this.props.tags
+		};
+
+	}
+
 
 	 addTag = (tag) =>{
-		 this.selected_tags.push(tag);
-		 console.log(this.selected_tags);
+	 	 let tags = this.state.selected_tags;
+	 	 tags.push(tag);
+	 	 this.setState({selected_tags:tags});
+		 console.log(this.state.selected_tags);
 	 }
 	 removeTag = (tag) => {
-		 TagSelection.removeObject(tag,this.selected_tags);
-		 console.log(this.selected_tags);
+		 let tags = this.state.selected_tags;
+		 TagSelection.removeObject(tag,tags);
+		 this.setState({selected_tags:tags});
+
+		 console.log(this.state.selected_tags);
 	 }
 
 
@@ -49,8 +62,8 @@ class CompanyForm extends React.Component {
 
 		// console.log(data);
 		let data = this.props.form.getFieldsValue();
-		data['tags_id'] = TagSelection.format_to_data(this.selected_tags);
-		TagSelection.increment_tag_times_used(this.selected_tags);
+		data['tags_id'] = TagSelection.format_to_data(this.state.selected_tags);
+		TagSelection.increment_tag_times_used(this.state.selected_tags);
 		console.log(data);
 
 		switch (requestType) {
@@ -91,6 +104,7 @@ class CompanyForm extends React.Component {
 
 	render() {
 		const { getFieldDecorator } = this.props.form;
+		let tags = this.state.selected_tags;
 		return (
 			<div>
 				<Form >
@@ -133,7 +147,7 @@ class CompanyForm extends React.Component {
 
 					</Form.Item>
 
-					<TagSelection url={this.props.companyURL} addTag={this.addTag} removeTag={this.removeTag}/>
+					<TagSelection url={this.props.companyURL} addTag={this.addTag} removeTag={this.removeTag} selected_tags = {tags}/>
 					<Form.Item>
 						<Button type="primary"  onClick={this.handleFormSubmit.bind(this)}>{this.props.buttonText}</Button>
 					</Form.Item>
