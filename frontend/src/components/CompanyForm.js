@@ -6,22 +6,49 @@ import {
 import axios from 'axios';
 import TagSelection from "../containers/TagSelection";
 
+function removeObject(obj, list) {
+	var i;
+	for (i = 0; i < list.length; i++) {
+		if (list[i] === obj) {
+			delete list[i];
+			return true;
+		}
+	}
 
+	return false;
+}
 class CompanyForm extends React.Component {
-	// constructor() {
-	// 	super();
-	// 	this.state = {
-	// 		formLayout: 'horizontal',
-	// 	};
-	// }
+	selected_tags = [];
+
+	 addTag = (tag) =>{
+		 this.selected_tags.push(tag);
+		 console.log(this.selected_tags);
+	 }
+	 removeTag = (tag) => {
+		 TagSelection.removeObject(tag,this.selected_tags);
+		 console.log(this.selected_tags);
+	 }
+
 
 	// handleFormLayoutChange = (e) => {
 	// 	this.setState({ formLayout: e.target.value });
 	// }
 
+	//Prevent submit on enter, required to make tags work
+	/*onKeyPress(event) {
+		if (event.which === 13 ) {
+			event.preventDefault();
+		}
+	}*/
 	// handleFormSubmit = (event, requestType, companyURL) => { // requestType is 'post' og 'put'
 	handleFormSubmit(event) {
+
+		if(event.target.keyCode === 13){
+			return;
+		}
+
 		event.preventDefault();
+
 
 		console.log('props: ', this.props);
 
@@ -40,25 +67,28 @@ class CompanyForm extends React.Component {
 		// if (info !== '') data['info'] = info;
 
 		// console.log(data);
-
-		console.log(this.props.form.getFieldsValue());
+		let data = this.props.form.getFieldsValue();
+		data['tags_id'] = TagSelection.format_to_data(this.selected_tags);
+		console.log(data);
 
 		switch (requestType) {
 			case 'post':
-				axios.post(companyURL, this.props.form.getFieldsValue(), {
+				axios.post(companyURL, data, {
 					headers: { Authorization : 'Token ' + this.props.authToken }
 				})
-				.then((res) => { 
+				.then((res) => {
+
 					console.log(res);
 					this.props.onSuccess(res.data);
 				})
 				.catch((err) => console.error(err));
 				break;
 			case 'patch':
-				axios.patch(companyURL, this.props.form.getFieldsValue(), {
+				axios.patch(companyURL, data, {
 					headers: { Authorization : 'Token ' + this.props.authToken }
 				})
-				.then((res) => { 
+				.then((res) => {
+					console.log("DATALOAD");
 					console.log(res); 
 					this.props.onSuccess(res.data);
 				})
@@ -79,11 +109,12 @@ class CompanyForm extends React.Component {
 						this.props.companyURL 
 					)} */
 
+	/*onSubmit={this.handleFormSubmit.bind(this)}*/
 	render() {
 		const { getFieldDecorator } = this.props.form;
 		return (
 			<div>
-				<Form onSubmit={this.handleFormSubmit.bind(this)}>
+				<Form  >
 					<Form.Item
 						label="Name"
 					>	
@@ -123,9 +154,9 @@ class CompanyForm extends React.Component {
 
 					</Form.Item>
 
-					<TagSelection url={this.props.companyURL} ></TagSelection>
+					<TagSelection url={this.props.companyURL} addTag={this.addTag} removeTag={this.removeTag}/>
 					<Form.Item>
-						<Button type="primary" htmlType="submit">{this.props.buttonText}</Button>
+						<Button type="primary" htmlType="submit" onClick={this.handleFormSubmit.bind(this)}>{this.props.buttonText}</Button>
 					</Form.Item>
 				</Form>
 			</div>

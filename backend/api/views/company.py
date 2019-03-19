@@ -12,4 +12,4 @@ class CompanyView(viewsets.GenericViewSet, mixins.DestroyModelMixin, mixins.List
     serializer_class = CompanySerializer
     lookup_field = 'slug'
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('name','info')
+    search_fields = ('name','info', 'tags.name')

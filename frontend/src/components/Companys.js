@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { List, Avatar } from 'antd';
+import {List, Avatar, Tag} from 'antd';
+
+import TagSelection from "../containers/TagSelection";
 
 
 // const IconText = ({ type, text }) => (
@@ -35,6 +37,24 @@ const Companys = (props) => {
 						description={item.info}
 					/>
 					{item.content}
+
+					<List
+						itemLayout="vertical"
+						size="large"
+						pagination={{
+							onChange: (page) => {
+								console.log(page);
+							},
+							pageSize: 10,
+						}}
+						dataSource={item.tags}
+						// footer={<div><b>ant design</b> footer part</div>}
+						renderItem={item => ( <Tag key={item.id} color={TagSelection.getColorPreset(item.color)}  >
+								{item.name} ({item.times_used})
+							</Tag>
+
+						)}/>
+
 				</List.Item>
 			)}
 		/>

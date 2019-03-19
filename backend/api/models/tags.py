@@ -8,6 +8,7 @@ class Tags(models.Model):
     times_used = models.IntegerField()
     color = models.IntegerField(default=0)
 
+
     def __str__(self):
         return self.name
 

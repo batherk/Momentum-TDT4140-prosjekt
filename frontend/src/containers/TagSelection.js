@@ -24,17 +24,7 @@ function containsObject(obj, list) {
     return false;
 }
 
-function removeObject(obj, list) {
-    var i;
-    for (i = 0; i < list.length; i++) {
-        if (list[i] === obj) {
-            delete list[i];
-            return true;
-        }
-    }
 
-    return false;
-}
 
 function sameTagName(obj, list) {
     if(obj === undefined)
@@ -54,12 +44,94 @@ function sameTagName(obj, list) {
 
 class TagSelection extends React.Component {
 
-    state = {
-        tags:[],
-        selected_tags:[],
-        displayed_tags:[],
-        inputVisible: false,
-    };
+    constructor(props){
+        super(props);
+        this.state={
+            tags:[],
+            selected_tags:[],
+            displayed_tags:[],
+            inputVisible: false,
+        };
+    }
+    static getColorPreset(id){
+        if(id === 0){
+            return "magenta";
+        }
+        if(id === 1){
+            return "red";
+        }
+        if(id === 2){
+            return "volcano";
+        }
+        if(id === 3){
+            return "orange";
+        }
+        if(id === 4){
+            return "gold";
+        }
+        if(id === 5){
+            return "lime";
+        }
+        if(id === 6){
+            return "green";
+        }
+        if(id === 7){
+            return "cyan";
+        }
+        if(id === 8){
+            return "blue";
+        }
+        if(id === 9){
+            return "geekblue";
+        }
+        if(id === 10){
+            return "purple";
+        }
+        return "magenta";
+    }
+    static removeObject(obj, list) {
+        var i;
+        for (i = 0; i < list.length; i++) {
+            if (list[i] === obj) {
+                //delete list[i];
+                list = list.splice(i,1);
+                list.length = list.length - 1;
+                return true;
+            }
+        }
+
+        return false;
+    }
+    static format_to_data(list) {
+        let data = [];
+        //let data = "[";
+        var i;
+        for (i = 0; i < list.length; i++) {
+
+            data.push(list[i].id);
+            /*
+            if(i== 0)
+                data += "" + list[i].id;
+            else
+                data += "," + list[i].id;*/
+            //data
+        }
+        //data += "]";
+        return data;
+    }
+
+    static get_tags_from_IDs(list,callback){
+        let data = [];
+        axios.all(list.map(u => {axios.get(`http://127.0.0.1:8000/api/tags/${u}/`);}))
+            .then( () => {axios.spread((...res) => {
+                data.push(res.data);
+            });
+            callback(data)
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
 
 
 
@@ -95,33 +167,53 @@ class TagSelection extends React.Component {
             });
     }
 
+    select_tag(tag){
+        let selected_tags = this.state.selected_tags;
+        selected_tags.push(tag);
+        this.props.addTag(tag);
+        this.setState({selected_tags:selected_tags})
+    }
+    unselect_tag(tag){
+        let selected_tags = this.state.selected_tags;
+        TagSelection.removeObject(tag,selected_tags);
+        this.props.removeTag(tag);
+        this.setState({selected_tags:selected_tags})
+    }
+
+
+
     handleClickOnTag = (tag) => {
         let tags = this.state.selected_tags;
         if(containsObject(tag,tags)){
-            removeObject(tag,tags);
+            this.unselect_tag(tag);
+            /*removeObject(tag,tags);
             this.setState({
                 selected_tags: tags
-            })
+            })*/
         }
         else{
-            this.state.selected_tags.push(tag);
+            this.select_tag(tag);
+            /*this.state.selected_tags.push(tag);
             this.setState({
                 selected_tags: tags
-            })
+            })*/
 
         }
     }
 
     showInput = () => {
         this.setState({ inputVisible: true }, () => this.input.focus());
+
     }
 
     handleInputChange = (e) => {
         this.setState({ inputValue: e.target.value });
     }
 
-    handleInputConfirm = () => {
 
+
+    handleInputConfirm = () => {
+        console.log("I AM ACTULALLY HERE");
         const state = this.state;
         const inputValue = state.inputValue;
         if(inputValue === "" || inputValue === " "){
@@ -142,7 +234,8 @@ class TagSelection extends React.Component {
         let original_tag = sameTagName(tag,this.state.tags);
         if(original_tag != null){
             if(containsObject(original_tag,this.state.selected_tags) === false){
-                this.state.selected_tags.push(original_tag);
+                this.select_tag(original_tag);
+                //this.state.selected_tags.push(original_tag);
                 this.setState({
                     selected_tags: this.state.selected_tags,
                     tags: this.state.tags,
@@ -157,13 +250,15 @@ class TagSelection extends React.Component {
                     console.log('DATA RESPONSE FROM AXIOS POST: ', res);
                     tag = res.data;
                     this.state.tags.push(tag);
-                    this.state.selected_tags.push(tag);
+                    //this.state.selected_tags.push(tag);
+                    this.select_tag(tag);
                     this.setState({
                         selected_tags: this.state.selected_tags,
                         tags: this.state.tags,
                         inputVisible: false,
                         inputValue: '',
                     })
+
                 })
                 .catch(err => {
                     console.error(err);
@@ -175,7 +270,7 @@ class TagSelection extends React.Component {
     }
 
     onSubmitForm = () => {
-
+        console.log("AM I HERERERERRERERER");
 
         //axios.put(`http://127.0.0.1:8000/api/tags/38`, {id:'38',name:'p',times_used:'20',color:'1'})
         axios.all(this.state.selected_tags.map(u => {u.times_used ++;console.log("TAG ELEEMENT",u);axios.put(`http://127.0.0.1:8000/api/tags/${u.id}/`,u);}))
@@ -189,7 +284,7 @@ class TagSelection extends React.Component {
                 console.error(err);
             });
 
-        axios.patch(this.props.url, {tags:this.state.selected_tags}, {
+       /* axios.patch(this.props.url, {tags:this.state.selected_tags}, {
             headers: { Authorization : 'Token ' + this.props.token }
 
         })
@@ -197,12 +292,11 @@ class TagSelection extends React.Component {
             .catch((err) => {
                 console.log('We got an error');
                 console.error(err);
-            });
+            });*/
     }
 
 
     saveInputRef = input => this.input = input
-
 
     render() {
         return (
@@ -215,7 +309,6 @@ class TagSelection extends React.Component {
                         :
 
                         <div >
-                            <h2>Velg tags</h2>
                         <Card style={{paddingTop:"0px"}}>
 
 
@@ -229,8 +322,11 @@ class TagSelection extends React.Component {
                                     size="small"
                                     style={{ width: 78 }}
                                     value={this.state.inputValue}
-                                    onChange={this.handleInputChange}
+                                    onChange={(e) => {
+                                        this.handleInputChange(e);
+                                    }}
                                     onBlur={this.handleInputConfirm}
+
                                     onPressEnter={this.handleInputConfirm}
                                 />
                             )}
@@ -256,7 +352,7 @@ class TagSelection extends React.Component {
                             </div>
                             <CustomTag data={this.state.displayed_tags} handleClickOnTag={this.handleClickOnTag}/>
 
-                            <Button onAction={this.onSubmitForm}>Submit</Button>
+
                         </Card>
 
                         </div>
