@@ -120,19 +120,15 @@ class TagSelection extends React.Component {
         return data;
     }
 
-    static get_tags_from_IDs(list,callback){
-        let data = [];
-        axios.all(list.map(u => {axios.get(`http://127.0.0.1:8000/api/tags/${u}/`);}))
-            .then( () => {axios.spread((...res) => {
-                data.push(res.data);
-            });
-            callback(data)
-            })
+    static increment_tag_times_used(list){
+        axios.all(list.map(u => {u.times_used ++;axios.put(`http://127.0.0.1:8000/api/tags/${u.id}/`,u);}))
+            .then(axios.spread((...res) => {
+
+            }))
             .catch(err => {
                 console.error(err);
             });
     }
-
 
 
     componentWillReceiveProps(nextProps) {
@@ -212,8 +208,8 @@ class TagSelection extends React.Component {
 
 
 
-    handleInputConfirm = () => {
-        console.log("I AM ACTULALLY HERE");
+    handleInputConfirm = (e) => {
+        e.preventDefault();
         const state = this.state;
         const inputValue = state.inputValue;
         if(inputValue === "" || inputValue === " "){
@@ -247,7 +243,6 @@ class TagSelection extends React.Component {
         else{
             axios.post(`http://127.0.0.1:8000/api/tags/`, tag)
                 .then(res => {
-                    console.log('DATA RESPONSE FROM AXIOS POST: ', res);
                     tag = res.data;
                     this.state.tags.push(tag);
                     //this.state.selected_tags.push(tag);
@@ -270,10 +265,9 @@ class TagSelection extends React.Component {
     }
 
     onSubmitForm = () => {
-        console.log("AM I HERERERERRERERER");
 
         //axios.put(`http://127.0.0.1:8000/api/tags/38`, {id:'38',name:'p',times_used:'20',color:'1'})
-        axios.all(this.state.selected_tags.map(u => {u.times_used ++;console.log("TAG ELEEMENT",u);axios.put(`http://127.0.0.1:8000/api/tags/${u.id}/`,u);}))
+        axios.all(this.state.selected_tags.map(u => {u.times_used ++;axios.put(`http://127.0.0.1:8000/api/tags/${u.id}/`,u);}))
             .then(axios.spread((...res) => {
 
 

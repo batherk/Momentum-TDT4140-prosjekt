@@ -10,7 +10,7 @@ from api.models.tags import Tags
 class CompanySerializer(ModelSerializer):
     positions = SerializerMethodField()
     tags = TagsSerializer(many=True, read_only=True)
-    tags_id = serializers.PrimaryKeyRelatedField(many=True, write_only=True, source='tags',queryset=Tags.objects.all())
+    tags_id = serializers.PrimaryKeyRelatedField(many=True, write_only=True, source='tags',queryset=Tags.objects.all().extra( order_by=['-times_used']))
 
     class Meta:
         model = Company

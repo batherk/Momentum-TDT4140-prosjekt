@@ -26,6 +26,9 @@ class CompanyForm extends React.Component {
 
 	// handleFormSubmit = (event, requestType, companyURL) => { // requestType is 'post' og 'put'
 	handleFormSubmit(event) {
+		if(event.keyCode === 13) {
+			return;
+		}
 		event.preventDefault();
 
 		console.log('props: ', this.props);
@@ -47,6 +50,7 @@ class CompanyForm extends React.Component {
 		// console.log(data);
 		let data = this.props.form.getFieldsValue();
 		data['tags_id'] = TagSelection.format_to_data(this.selected_tags);
+		TagSelection.increment_tag_times_used(this.selected_tags);
 		console.log(data);
 
 		switch (requestType) {
@@ -89,7 +93,7 @@ class CompanyForm extends React.Component {
 		const { getFieldDecorator } = this.props.form;
 		return (
 			<div>
-				<Form onSubmit={this.handleFormSubmit.bind(this)}>
+				<Form >
 					<Form.Item
 						label="Name"
 					>	
@@ -131,7 +135,7 @@ class CompanyForm extends React.Component {
 
 					<TagSelection url={this.props.companyURL} addTag={this.addTag} removeTag={this.removeTag}/>
 					<Form.Item>
-						<Button type="primary" htmlType="submit">{this.props.buttonText}</Button>
+						<Button type="primary"  onClick={this.handleFormSubmit.bind(this)}>{this.props.buttonText}</Button>
 					</Form.Item>
 				</Form>
 			</div>

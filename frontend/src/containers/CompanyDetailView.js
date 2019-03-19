@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import axios from 'axios';
-import { Button, Card, List } from 'antd';
+import {Button, Card, List, Tag} from 'antd';
 
 import CompanyForm from '../components/CompanyForm';
+import TagSelection from "./TagSelection";
 // import Positions from '../components/Positions';
 
 class CompanyDetail extends Component {
@@ -155,6 +156,7 @@ class CompanyDetail extends Component {
 		this.setState({
 			company: data
 		});
+		this.toggleEdit(null);
 	}
 
 	renderEditButton() {
@@ -181,6 +183,27 @@ class CompanyDetail extends Component {
 					<Button type='danger' onClick={this.handleDelete.bind(this)}>Delete</Button>
 				</div>
 			);
+		}
+	}
+
+	renderTags(){
+		let tags = this.state.company.tags;
+		if(tags == null)
+			return;
+		if(tags.length !== 0){
+			return (
+				<div>
+				<List
+					  size="large"
+					  dataSource={tags}
+					  renderItem={item => ( <Tag key={item.id} color={TagSelection.getColorPreset(item.color)}  >
+							  {item.name} ({item.times_used})
+						  </Tag>
+
+					  )}/>
+				</div>
+
+			)
 		}
 	}
 
@@ -260,10 +283,14 @@ if (this.state.company.positions !== null) {
 				<Card title={this.state.company.name} >
 					<p>{this.state.company.info}</p>
 					<p>{this.state.company.email}</p>
+					{this.renderTags()}
 				</Card>
+
 				{ this.renderPositions() }
+
 				{ this.renderEditButton() }
-				{ this.renderUpdateDeleteForm() }	
+				{ this.renderUpdateDeleteForm() }
+
 			</div>
 		);
 	}

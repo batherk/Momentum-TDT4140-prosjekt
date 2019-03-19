@@ -43,21 +43,27 @@ const Companys = (props) => {
 
 
                     <div>
-                            {item.tags.length != 0 ?
-                                <List style={{marginLeft:"40px", width:"100%"}}
+						{item.tags != null ?
 
-                                      size="large"
+								item.tags.length != 0 ?
+									<List style={{marginLeft: "40px", width: "100%"}}
 
-                                      dataSource={item.tags}
-                                    // footer={<div><b>ant design</b> footer part</div>}
-                                      renderItem={item => ( <Tag key={item.id} color={TagSelection.getColorPreset(item.color)}  >
-                                              {item.name} ({item.times_used})
-                                          </Tag>
+										  size="large"
 
-                                      )}/>
-                                : <div></div>
+										  dataSource={item.tags}
+										// footer={<div><b>ant design</b> footer part</div>}
+										  renderItem={item => (
+											  <Tag key={item.id} color={TagSelection.getColorPreset(item.color)}>
+												  {item.name} ({item.times_used})
+											  </Tag>
 
-                            }
+										  )}/>
+									: <div></div>
+
+
+							:
+							<div></div>
+						}
                         </div>
 
 

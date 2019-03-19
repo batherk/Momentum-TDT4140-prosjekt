@@ -8,7 +8,8 @@ class Tags(models.Model):
     times_used = models.IntegerField()
     color = models.IntegerField(default=0)
 
-
+    class Meta:
+        ordering = ['-times_used']
     def __str__(self):
         return self.name
 
