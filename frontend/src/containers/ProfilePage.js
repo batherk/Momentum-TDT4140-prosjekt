@@ -104,7 +104,7 @@ class ProfilePage extends React.Component {
 				<img 
 					alt='certified' 
 					src={certifiedImage}
-					style={{ height: '20px', width: '20px' }}
+					style={{ height: '30px', width: '30px', padding: 5 }}
 				/>
 			);
 		}
@@ -171,14 +171,15 @@ class ProfilePage extends React.Component {
 									<img alt="example" src={profileimg} style={{ width: '100%' }}/>
 								</Col>
 								<Col span={16} >
-									<Card>
+									<Card style={{ marginLeft: '20px' }}>
 										<Row>
 											<Col span={14}>
 												<Row>
-													<h3>
+													<h3 style={{ alignSelf: 'center' }} >
 														{`${this.state.userdata.first_name} ${this.state.userdata.last_name}`}
+														{ this.renderCertified() }
 													</h3>
-													{ this.renderCertified() }
+													
 												</Row>
 												<p>
 													{`Email:  ${this.state.userdata.email}`}
