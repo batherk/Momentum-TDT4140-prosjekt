@@ -4,6 +4,7 @@ import { List, Tag, Button } from 'antd';
 import TagSelection from "../containers/TagSelection";
 
 const CustomTag = (props) => {
+    if(props.data === undefined){return null;}
     return props.data.map((item) =>
             <Tag key={item.id} color={TagSelection.getColorPreset(item.color)} onClick={props.handleClickOnTag.bind(item,item)} >
                 {item.name} ({item.times_used})

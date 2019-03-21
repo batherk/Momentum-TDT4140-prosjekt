@@ -180,6 +180,10 @@ class CompanyDetail extends Component {
 	}
 
 	renderUpdateDeleteForm() {
+		let tags = this.state.company.tags;
+		if(tags === undefined){
+			tags = [];
+		}
 		if (this.state.isOwner && this.state.showForm) {
 			return (
 				<div>
@@ -187,7 +191,7 @@ class CompanyDetail extends Component {
 						requestType='patch'
 						authToken={this.props.token}
 						companyURL={this.state.company.url}
-						tags={this.state.company.tags}
+						tags={tags}
 						onSuccess={this.updateCompany.bind(this)}
 						buttonText='Update'
 					/>
