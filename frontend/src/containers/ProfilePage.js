@@ -13,8 +13,6 @@ import certifiedImage from '../assets/images/certified.png';
 
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
-const { Meta } = Card;
-
 class ProfilePage extends React.Component {
 
 	state = {

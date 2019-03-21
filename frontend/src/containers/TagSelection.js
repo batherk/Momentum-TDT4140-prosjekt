@@ -1,16 +1,12 @@
 import React from 'react';
 import CustomTag from '../components/CustomTag';
-import {Icon, Spin, Card, Tag, Avatar, Input, Button} from 'antd';
+import {Icon, Spin, Card, Tag, Input } from 'antd';
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom';
 
 // import * as actions from '../store/actions/auth';
 import axios from "axios";
-import {List} from "antd/lib/list";
 const Search = Input.Search;
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
-
-const { Meta } = Card;
 
 
 function containsObject(obj, list) {

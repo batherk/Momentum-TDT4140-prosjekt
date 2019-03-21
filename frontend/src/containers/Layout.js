@@ -28,14 +28,6 @@ class CustomLayout extends React.Component {
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if (this.props.token === null && nextProps.token !== null) {
-			this.getUserAvatar(nextProps.token);
-		}
-	}
-
-
-
 	getUserAvatar(token) {
 		// const header = (token === undefined) ? null : { headers: { 'Authorization' : 'Token ' + token }};
 		// console.log(this.props);
