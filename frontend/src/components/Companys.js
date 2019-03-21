@@ -12,6 +12,47 @@ import TagSelection from "../containers/TagSelection";
 // 	</span>
 // );
 
+
+const renderTags = (item) => {
+	if ((item.tags !== null) && (item.tags !== undefined) && (item.tags.length !== 0)) {
+		return (
+			<List 
+				style={{marginLeft: "40px", width: "100%"}}
+				size="large"
+				dataSource={item.tags}
+				// footer={<div><b>ant design</b> footer part</div>}
+				renderItem={item => (
+					<Tag key={item.id} color={TagSelection.getColorPreset(item.color)}>
+						{item.name} ({item.times_used})
+					</Tag>
+				)}
+			/>
+		);
+	}
+
+						// {item.tags != null ?
+
+						// 		item.tags.length !== 0 ?
+						// 			<List style={{marginLeft: "40px", width: "100%"}}
+
+						// 				  size="large"
+
+						// 				  dataSource={item.tags}
+						// 				// footer={<div><b>ant design</b> footer part</div>}
+						// 				  renderItem={item => (
+						// 					  <Tag key={item.id} color={TagSelection.getColorPreset(item.color)}>
+						// 						  {item.name} ({item.times_used})
+						// 					  </Tag>
+
+						// 				  )}/>
+						// 			: <div></div>
+
+
+						// 	:
+						// 	<div></div>
+						// }
+}
+
 const Companys = (props) => {
 	return (
 		<List
@@ -33,42 +74,12 @@ const Companys = (props) => {
 				>
 					<List.Item.Meta
 						avatar={<Avatar src={item.avatar} />}
-						title={<a href={`/companys/${item.slug}`} >{item.name}</a>
-
-						}
-
+						title={<a href={`/companys/${item.slug}`} >{item.name}</a>}
 						description={item.info}
 					/>
 					{item.content}
-
-
-                    <div>
-						{item.tags != null ?
-
-								item.tags.length != 0 ?
-									<List style={{marginLeft: "40px", width: "100%"}}
-
-										  size="large"
-
-										  dataSource={item.tags}
-										// footer={<div><b>ant design</b> footer part</div>}
-										  renderItem={item => (
-											  <Tag key={item.id} color={TagSelection.getColorPreset(item.color)}>
-												  {item.name} ({item.times_used})
-											  </Tag>
-
-										  )}/>
-									: <div></div>
-
-
-							:
-							<div></div>
-						}
-                        </div>
-
-
-
-                        </List.Item>
+					{ renderTags(item) }
+				</List.Item>
 			)}
 		/>
 	);

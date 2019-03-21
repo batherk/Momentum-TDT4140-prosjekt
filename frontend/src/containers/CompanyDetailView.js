@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import {Button, Card, List, Tag} from 'antd';
-
 import CompanyForm from '../components/CompanyForm';
 import TagSelection from "./TagSelection";
 // import Positions from '../components/Positions';
@@ -40,6 +40,7 @@ class CompanyDetail extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		if (this.props.token === null && nextProps.token !== null) {
+			console.log('get company on will recieve');
 			this.getCompany(nextProps.token, nextProps.id);
 		}
 		// if (this.props.profile === null && nextProps.profile !== null ) {
@@ -55,6 +56,7 @@ class CompanyDetail extends Component {
 	}
 
 	getCompany(token, id) {
+		console.log('get the whole company');
 		const companySlug = this.props.match.params.companySlug;
 		// console.log(companySlug);
 		axios.get(`http://127.0.0.1:8000/api/startups/${companySlug}/`, {
@@ -100,7 +102,7 @@ class CompanyDetail extends Component {
 				this.getOwnedCompanies(token);
 			} else if (res.data.role === 3) {
 				this.setState({
-					isApplicant: true
+					isApplicant: true,	
 				});
 			}
 		})
@@ -115,9 +117,18 @@ class CompanyDetail extends Component {
 			console.log('My companies', res);
 			for (let i = 0; i < res.data.length; i++) {
 				if (res.data[i].id === this.state.company.id) {
-					this.setState({
-						isOwner: true
-					});
+					console.log('is owner!!');
+
+					// Lagrer at man er eier av firmaet, og oppdaterer slik
+					// at positions også vises
+					this.setState(prevState => ({
+						isOwner: true,
+						company: {
+							...prevState.company,
+							positions: res.data[i].positions
+						}
+					}));
+					return;
 				}
 			}
 		})
@@ -208,7 +219,9 @@ class CompanyDetail extends Component {
 	}
 
 	renderPositions() {
-		if (this.state.isApplicant && this.state.company.positions !== null) {
+		// console.log('Heihalo: ', (this.state.isApplicant || this.state.isOwner));
+		// console.log('Company: ', this.state.company.positions !== null);
+		if ((this.state.isApplicant || this.state.isOwner) && this.state.company.positions !== null) {
 			return (
 				<div>
 					<br />
@@ -235,6 +248,16 @@ class CompanyDetail extends Component {
 						)}
 					/>
 				</div>
+			);
+		}
+	}
+
+	renderAddPosition() {
+		if (this.state.isOwner) {
+			return (
+				<Button type='primary' style={{ marginTop: '10px' }}>
+					<Link to='/positionscreate/'>Create position</Link>
+				</Button>
 			);
 		}
 	}
@@ -283,10 +306,10 @@ if (this.state.company.positions !== null) {
 				<Card title={this.state.company.name} >
 					<p>{this.state.company.info}</p>
 					<p>{this.state.company.email}</p>
+					{ this.renderEditButton() }
 					{this.renderTags()}
 				</Card>
 				{ this.renderPositions() }
-				{ this.renderEditButton() }
 				{ this.renderUpdateDeleteForm() }
 
 			</div>

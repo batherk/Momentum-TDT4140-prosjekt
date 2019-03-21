@@ -4,34 +4,15 @@ import {
 } from 'antd';
 
 import axios from 'axios';
-import TagSelection from "../containers/TagSelection";
 
 
-class CompanyForm extends React.Component {
-
-	constructor(props){
-		super(props);
-		this.state={
-			selected_tags: this.props.tags
-		};
-
-	}
-
-
-	 addTag = (tag) =>{
-	 	 let tags = this.state.selected_tags;
-	 	 tags.push(tag);
-	 	 this.setState({selected_tags:tags});
-		 console.log(this.state.selected_tags);
-	 }
-	 removeTag = (tag) => {
-		 let tags = this.state.selected_tags;
-		 TagSelection.removeObject(tag,tags);
-		 this.setState({selected_tags:tags});
-
-		 console.log(this.state.selected_tags);
-	 }
-
+class PositionForm extends React.Component {
+	// constructor() {
+	// 	super();
+	// 	this.state = {
+	// 		formLayout: 'horizontal',
+	// 	};
+	// }
 
 	// handleFormLayoutChange = (e) => {
 	// 	this.setState({ formLayout: e.target.value });
@@ -39,7 +20,6 @@ class CompanyForm extends React.Component {
 
 	// handleFormSubmit = (event, requestType, companyURL) => { // requestType is 'post' og 'put'
 	handleFormSubmit(event) {
-
 		event.preventDefault();
 
 		console.log('props: ', this.props);
@@ -59,30 +39,27 @@ class CompanyForm extends React.Component {
 		// if (info !== '') data['info'] = info;
 
 		// console.log(data);
-		let data = this.props.form.getFieldsValue();
-		data['tags_id'] = TagSelection.format_to_data(this.state.selected_tags);
-		console.log(data);
+
+		console.log(this.props.form.getFieldsValue());
 
 		switch (requestType) {
 			case 'post':
-				axios.post(companyURL, data, {
+				axios.post(companyURL, this.props.form.getFieldsValue(), {
 					headers: { Authorization : 'Token ' + this.props.authToken }
 				})
-				.then((res) => {
+				.then((res) => { 
 					console.log(res);
 					this.props.onSuccess(res.data);
-					TagSelection.increment_tag_times_used(this.state.selected_tags);
 				})
 				.catch((err) => console.error(err));
 				break;
 			case 'patch':
-				axios.patch(companyURL, data, {
+				axios.patch(companyURL, this.props.form.getFieldsValue(), {
 					headers: { Authorization : 'Token ' + this.props.authToken }
 				})
-				.then((res) => {
-					console.log(res);
+				.then((res) => { 
+					console.log(res); 
 					this.props.onSuccess(res.data);
-					TagSelection.increment_tag_times_used(this.state.selected_tags);
 				})
 				.catch((err) => {
 					console.log('We got an error');
@@ -94,19 +71,18 @@ class CompanyForm extends React.Component {
 		}
 	}
 
-	/*(event) =>
+	/*(event) => 
 					this.handleFormSubmit(
-						event,
+						event, 
 						this.props.requestType,
-						this.props.companyURL
+						this.props.companyURL 
 					)} */
 
 	render() {
 		const { getFieldDecorator } = this.props.form;
-		let tags = this.state.selected_tags;
 		return (
 			<div>
-				<Form >
+				<Form onSubmit={this.handleFormSubmit.bind(this)}>
 					<Form.Item
 						label="Name"
 					>	
@@ -139,16 +115,8 @@ class CompanyForm extends React.Component {
 							<Input prefix={<Icon type="info-circle" style={{ color: 'rgba(0,0,0,.25)' }} />} type="name" placeholder="Info" />
 						)}
 					</Form.Item>
-
-					<Form.Item
-						label="Tags"
-					>
-
-					</Form.Item>
-
-					<TagSelection url={this.props.companyURL} addTag={this.addTag} removeTag={this.removeTag} selected_tags = {tags}/>
 					<Form.Item>
-						<Button type="primary"  onClick={this.handleFormSubmit.bind(this)}>{this.props.buttonText}</Button>
+						<Button type="primary" htmlType="submit">{this.props.buttonText}</Button>
 					</Form.Item>
 				</Form>
 			</div>
@@ -159,6 +127,6 @@ class CompanyForm extends React.Component {
 // <Input name="email" placeholder="Put your email here" />
 // <Input name="name" placeholder="Put a name here" />
 
-const WrappedCompanyForm = Form.create({ name: 'company_form' })(CompanyForm);
+const WrappedCompanyForm = Form.create({ name: 'company_form' })(PositionForm);
 
 export default WrappedCompanyForm;
