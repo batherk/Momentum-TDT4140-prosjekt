@@ -14,6 +14,8 @@ from api.views.profile import ProfileView
 from .views.application_applicant import ApplicantApplicationView
 from .views.positions_owner import PositionsOwnerView
 from .views.application_business_owner import ApplicationBusinessOwnerView
+from api.views.tags import TagsView
+
 
 router = routers.DefaultRouter()
 router.register('api/startups', CompanyView)
@@ -21,12 +23,12 @@ router.register('api/startups/(?P<slug>[-\w]+)/positions', CompanyPositionView)
 router.register('api/myapplications', ApplicantApplicationView, base_name="applications_applicant")
 router.register('api/positions', PositionView)
 router.register('api/applicants', ApplicantView)
-router.register('api/mycompanies', CompanyOwnerView, base_name='CompanyOwner')
-router.register('api/profile', ProfileView, base_name='profile')
+router.register('api/mycompanies',CompanyOwnerView,base_name='CompanyOwner')
+router.register('api/profile',ProfileView,base_name='profile')
+router.register('api/tags',TagsView,base_name='tags')
 router.register(r'api/mycompanies/(?P<slug>[-\w]+)/positions', PositionsOwnerView, base_name="position_owner")
 router.register(r'api/mycompanies/(?P<slug>[-\w]+)/positions/(?P<id_pos>[0-9]+)/applications', ApplicationBusinessOwnerView,
                 base_name="application_business_owner")
-
 urlpatterns = [
                   path('', include(router.urls)),
                   path('api/login/', LoginView.as_view()),

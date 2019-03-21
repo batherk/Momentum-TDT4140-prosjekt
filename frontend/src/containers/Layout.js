@@ -21,12 +21,19 @@ class CustomLayout extends React.Component {
 			this.getUserAvatar(this.props.token);
 		}
 	}
-	
+
 	componentWillReceiveProps(nextProps) {
 		if (this.props.token === null && nextProps.token !== null) {
 			this.getUserAvatar(nextProps.token);
 		}
 	}
+
+	componentWillReceiveProps(nextProps) {
+		if (this.props.token === null && nextProps.token !== null) {
+			this.getUserAvatar(nextProps.token);
+		}
+	}
+
 
 
 	getUserAvatar(token) {

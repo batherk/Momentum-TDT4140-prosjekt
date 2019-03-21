@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import axios from 'axios';
-import { Button, Card, List } from 'antd';
 import { Link } from 'react-router-dom';
+import {Button, Card, List, Tag} from 'antd';
 import CompanyForm from '../components/CompanyForm';
+import TagSelection from "./TagSelection";
 // import Positions from '../components/Positions';
 
 class CompanyDetail extends Component {
@@ -19,7 +20,7 @@ class CompanyDetail extends Component {
 	};
 
 	componentDidMount() {
-		if (this.props.token && this.props.id !== 2) { 
+		if (this.props.token && this.props.id !== 2) {
 			// id 2 er investor, hotfix for at de skal få se firma
 			this.getCompany(this.props.token, this.props.id);
 		} else {
@@ -165,6 +166,7 @@ class CompanyDetail extends Component {
 		this.setState({
 			company: data
 		});
+		this.toggleEdit(null);
 	}
 
 	renderEditButton() {
@@ -185,12 +187,34 @@ class CompanyDetail extends Component {
 						requestType='patch'
 						authToken={this.props.token}
 						companyURL={this.state.company.url}
+						tags={this.state.company.tags}
 						onSuccess={this.updateCompany.bind(this)}
 						buttonText='Update'
 					/>
 					<Button type='danger' onClick={this.handleDelete.bind(this)}>Delete</Button>
 				</div>
 			);
+		}
+	}
+
+	renderTags(){
+		let tags = this.state.company.tags;
+		if(tags == null)
+			return;
+		if(tags.length !== 0){
+			return (
+				<div>
+				<List
+					  size="large"
+					  dataSource={tags}
+					  renderItem={item => ( <Tag key={item.id} color={TagSelection.getColorPreset(item.color)}  >
+							  {item.name} ({item.times_used})
+						  </Tag>
+
+					  )}/>
+				</div>
+
+			)
 		}
 	}
 
@@ -283,10 +307,11 @@ if (this.state.company.positions !== null) {
 					<p>{this.state.company.info}</p>
 					<p>{this.state.company.email}</p>
 					{ this.renderEditButton() }
+					{this.renderTags()}
 				</Card>
 				{ this.renderPositions() }
-				{ this.renderAddPosition() }
 				{ this.renderUpdateDeleteForm() }
+
 			</div>
 		);
 	}
