@@ -87,32 +87,18 @@ class PositionForm extends React.Component {
 						label="Name"
 					>	
 						{getFieldDecorator('name', {
-							rules: [{ required: true, message: 'Please input the company name!' }],
+							rules: [{ required: true, message: 'Please input the position name!' }],
 						})(
 							<Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} type="name" placeholder="Name" />
 						)}
-						
 					</Form.Item>
 					<Form.Item
-						label="Email"
+						label="Description"
 					>
-						{getFieldDecorator('email', {
-							rules: [{
-								type: 'email', message: 'The input is not valid E-mail!',
-							}, {
-								required: true, message: 'Please input your E-mail!',
-							}],
+						{getFieldDecorator('description', {
+							rules: [{ required: true, message: 'Please write a description about the position!' }],
 						})(
-							<Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email" />
-						)}
-					</Form.Item>
-					<Form.Item
-						label="Info"
-					>
-						{getFieldDecorator('info', {
-							rules: [{ required: true, message: 'Please input some info!' }],
-						})(
-							<Input prefix={<Icon type="info-circle" style={{ color: 'rgba(0,0,0,.25)' }} />} type="name" placeholder="Info" />
+							<Input prefix={<Icon type="info-circle" style={{ color: 'rgba(0,0,0,.25)' }} />} type="name" placeholder="Description" />
 						)}
 					</Form.Item>
 					<Form.Item>

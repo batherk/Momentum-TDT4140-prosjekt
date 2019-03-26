@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Tag, Button } from 'antd';
+import { Tag } from 'antd';
 
 import TagSelection from "../containers/TagSelection";
 

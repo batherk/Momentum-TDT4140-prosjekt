@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import {Button, Card, List, Tag} from 'antd';
+import {Button, Card, List, Tag, Row } from 'antd';
 import CompanyForm from '../components/CompanyForm';
 import TagSelection from "./TagSelection";
+import Certified from './Certified';
 // import Positions from '../components/Positions';
 
 class CompanyDetail extends Component {
@@ -119,6 +120,7 @@ class CompanyDetail extends Component {
 				if (res.data[i].id === this.state.company.id) {
 					console.log('is owner!!');
 
+					// console.log(res.data);
 					// Lagrer at man er eier av firmaet, og oppdaterer slik
 					// at positions også vises
 					this.setState(prevState => ({
@@ -223,41 +225,48 @@ class CompanyDetail extends Component {
 		// console.log('Heihalo: ', (this.state.isApplicant || this.state.isOwner));
 		// console.log('Company: ', this.state.company.positions !== null);
 		if ((this.state.isApplicant || this.state.isOwner) && this.state.company.positions !== null) {
+			const slug = this.props.match.params.companySlug;
 			return (
 				<div>
-					<br />
-					<h2>Positions</h2>
-					<List
-						itemLayout='vertical'
-						size='large'
-						// pagination={{
-						// 	onChange: (page) => {
-						// 		console.log(page);
-						// 	},
-						// 	pageSize: 3
-						// }}
-						dataSource={this.state.company.positions}
-						renderItem={item => (
-							<List.Item
-								key={item.id}
-							>
-								<List.Item.Meta
-									title={<a href={`/positions/${item.id}/`}>{item.name}</a>}
-									description={item.description}
-								/>
-							</List.Item>
-						)}
-					/>
+					<Row>
+						<br />
+						<h2>Positions</h2>
+						{ this.renderAddPosition() }
+					</Row>
+					<Row>
+						<List
+							itemLayout='vertical'
+							size='large'
+							// pagination={{
+							// 	onChange: (page) => {
+							// 		console.log(page);
+							// 	},
+							// 	pageSize: 3
+							// }}
+							dataSource={this.state.company.positions}
+							renderItem={item => (
+								<List.Item
+									key={item.id}
+								>
+									<List.Item.Meta
+										title={<a href={`/positions/${item.id}/`}>{item.name}</a>}
+										description={item.description}
+									/>
+								</List.Item>
+							)}
+						/>
+					</Row>
 				</div>
 			);
 		}
 	}
 
 	renderAddPosition() {
-		if (this.state.isOwner) {
+		if (this.state.isOwner) { // Legg til slug på linken
+			const companySlug = this.props.match.params.companySlug;
 			return (
-				<Button type='primary' style={{ marginTop: '10px' }}>
-					<Link to='/positionscreate/'>Create position</Link>
+				<Button type='primary' style={{ /* float: 'right' */ }}>
+					<Link to={`/positionscreate/${companySlug}/`}>Create position</Link> 
 				</Button>
 			);
 		}
@@ -304,15 +313,20 @@ if (this.state.company.positions !== null) {
 	render() {
 		return (
 			<div> 
-				<Card title={this.state.company.name} >
+				<Card 
+					title={this.state.company.name} 
+					extra={<Certified certified={this.state.company.certified} />} 
+				>
+					<h3>About us</h3>
 					<p>{this.state.company.info}</p>
+					<br />
+					<h4>Contact us</h4>
 					<p>{this.state.company.email}</p>
 					{ this.renderEditButton() }
 					{this.renderTags()}
 				</Card>
 				{ this.renderPositions() }
 				{ this.renderUpdateDeleteForm() }
-
 			</div>
 		);
 	}
