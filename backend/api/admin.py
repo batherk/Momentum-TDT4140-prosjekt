@@ -39,7 +39,9 @@ class UserAdmin(BaseUserAdmin):
     def get_fieldsets(self, request, obj):
         if obj.is_applicant:
             return (
-                ('Info', {'fields': ('email', 'first_name', 'last_name', 'role', 'certified', 'password','education','cv')}),
+                ('Info', {'fields': (
+                    'email', 'first_name', 'last_name', 'role', 'certified', 'visible', 'password', 'education',
+                    'cv')}),
                 ('Permissions', {'fields': ('admin', 'staff')}),
             )
         else:
