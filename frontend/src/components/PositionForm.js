@@ -53,8 +53,8 @@ class PositionForm extends React.Component {
 				})
 				.catch((err) => console.error(err));
 				break;
-			case 'patch':
-				axios.patch(companyURL, this.props.form.getFieldsValue(), {
+			case 'put':
+				axios.put(companyURL, this.props.form.getFieldsValue(), {
 					headers: { Authorization : 'Token ' + this.props.authToken }
 				})
 				.then((res) => { 
