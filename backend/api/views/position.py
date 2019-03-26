@@ -34,7 +34,7 @@ class PositionView(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Retrie
         serializer = PositionOwnerSerializer(pos, context={'request': request}, many=False)
         return Response(serializer.data)
 
-    def destroy(self, request, slug, pk):
+    def destroy(self, request, pk):
         if not Position.objects.filter(id=pk).exists():
             return Response({'msg': 'Denne stillingen finnes ikke'})
         pos = Position.objects.get(id=pk)
