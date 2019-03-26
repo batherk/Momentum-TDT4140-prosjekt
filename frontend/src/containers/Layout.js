@@ -96,6 +96,19 @@ class CustomLayout extends React.Component {
 
 	}
 
+	renderMyApplications() {
+		if (this.props.profile && this.props.profile.role === 3) {
+			return (
+				<Menu.Item key='7'>
+					<Link to='/myapplications' >
+						My Applications
+					</Link>
+				</Menu.Item>
+			);
+		}
+
+	}
+
 	render () {
 		return (
 			<Layout className="layout">
@@ -115,6 +128,7 @@ class CustomLayout extends React.Component {
 						{ this.renderPositions() }
 						{ this.renderApplicants()}
 						{ this.renderLoginLogout() }
+						{ this.renderMyApplications()}
 					</Menu>
 
 

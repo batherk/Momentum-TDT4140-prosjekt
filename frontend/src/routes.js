@@ -19,6 +19,7 @@ import EditProfilePage from './containers/ProfilePageEdit';
 
 import ApplicantsList from './containers/ApplicantsList'
 import ApplicantsSearchResults from './containers/ApplicantsSearchResults';
+import MyApplications from "./containers/MyApplications";
 
 const BaseRouter = () => (
 	<div>
@@ -40,6 +41,7 @@ const BaseRouter = () => (
 
 		
 		<Route exact path='/applicants/' component={ApplicantsList} />
+		<Route exact path='/myapplications/' component={MyApplications} />
 		<Route exact path='/applicants/search/:search/' component={ApplicantsSearchResults} />
 	</div>
 );

@@ -6,6 +6,7 @@ import {Card, Button, Form, Input, Icon, TextArea} from 'antd';
 import PositionForm from '../components/PositionForm';
 import PositionApplyForm from '../components/PositionApplyForm';
 import TagSelection from "../components/CompanyForm";
+import Applicants from "./ApplicantsList";
 
 
 class PositionDetail extends Component {
@@ -121,69 +122,25 @@ class PositionDetail extends Component {
         }
     }
 
-    handleApply(event) {
-
-        event.preventDefault();
-
-        console.log('props: ', this.props);
-
-        const { requestType, companyURL } = this.props;
-
-        // Value er '' (tom streng) hvis du ikke putter noe i inputet
-        // const name = event.target.elements.name.value;
-        // const email = event.target.elements.email.value;
-        // const info = event.target.elements.info.value;
-
-        // // console.log(name, email, info);
-        // // const data = {  };
-        // let data = {};
-        // if (name !== '') data['name'] = name;
-        // if (email !== '') data['email'] = email;
-        // if (info !== '') data['info'] = info;
-
-        // console.log(data);
-        let data = this.props.form.getFieldsValue();
-        data['tags_id'] = TagSelection.format_to_data(this.state.selected_tags);
-        console.log(data);
-
-        switch (requestType) {
-            case 'post':
-                axios.post(companyURL, data, {
-                    headers: { Authorization : 'Token ' + this.props.authToken }
-                })
-                    .then((res) => {
-                        console.log(res);
-                        this.props.onSuccess(res.data);
-                        TagSelection.increment_tag_times_used(this.state.selected_tags);
-                    })
-                    .catch((err) => console.error(err));
-                break;
-            case 'patch':
-                axios.patch(companyURL, data, {
-                    headers: { Authorization : 'Token ' + this.props.authToken }
-                })
-                    .then((res) => {
-                        console.log(res);
-                        this.props.onSuccess(res.data);
-                        TagSelection.increment_tag_times_used(this.state.selected_tags);
-                    })
-                    .catch((err) => {
-                        console.log('We got an error');
-                        console.error(err);
-                    });
-
-                break;
-            default:
-                console.log('what');
-        }
-    }
 
     renderApplyForm() {
         if (!this.state.position.is_owner && this.state.showApply) {
             // const slug = this.state.position.company.slug;
             const positionID = this.props.match.params.positionID;
-            return (<div> <PositionApplyForm id={positionID}>
+            return (<div> <PositionApplyForm id={positionID} onSuccess={()=>{this.props.history.push('/')}}>
                 </PositionApplyForm>
+                </div>
+            );
+        }
+    }
+
+
+    renderApplicants() {
+        if (this.state.position.is_owner) {
+            // const slug = this.state.position.company.slug;
+            const positionID = this.props.match.params.positionID;
+            return (<div>
+                    <Applicants data={this.state.applicants}/>
                 </div>
             );
         }
@@ -201,6 +158,7 @@ class PositionDetail extends Component {
                 {this.renderUpdateDeleteForm()}
                 {this.renderApplyButton()}
                 {this.renderApplyForm()}
+                {this.renderApplicants()}
             </div>
         );
     }
