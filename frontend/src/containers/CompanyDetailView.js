@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import {Button, Card, List, Tag, Col, Row } from 'antd';
+import {Button, Card, List, Tag, Row } from 'antd';
 import CompanyForm from '../components/CompanyForm';
 import TagSelection from "./TagSelection";
+import Certified from './Certified';
 // import Positions from '../components/Positions';
 
 class CompanyDetail extends Component {
@@ -119,7 +120,7 @@ class CompanyDetail extends Component {
 				if (res.data[i].id === this.state.company.id) {
 					console.log('is owner!!');
 
-					console.log(res.data);
+					// console.log(res.data);
 					// Lagrer at man er eier av firmaet, og oppdaterer slik
 					// at positions også vises
 					this.setState(prevState => ({
@@ -227,6 +228,7 @@ class CompanyDetail extends Component {
 		// console.log('Heihalo: ', (this.state.isApplicant || this.state.isOwner));
 		// console.log('Company: ', this.state.company.positions !== null);
 		if ((this.state.isApplicant || this.state.isOwner) && this.state.company.positions !== null) {
+			const slug = this.props.match.params.companySlug;
 			return (
 				<div>
 					<Row>
@@ -314,15 +316,20 @@ if (this.state.company.positions !== null) {
 	render() {
 		return (
 			<div> 
-				<Card title={this.state.company.name} >
+				<Card 
+					title={this.state.company.name} 
+					extra={<Certified certified={this.state.company.certified} />} 
+				>
+					<h3>About us</h3>
 					<p>{this.state.company.info}</p>
+					<br />
+					<h4>Contact us</h4>
 					<p>{this.state.company.email}</p>
 					{ this.renderEditButton() }
 					{this.renderTags()}
 				</Card>
 				{ this.renderPositions() }
 				{ this.renderUpdateDeleteForm() }
-
 			</div>
 		);
 	}

@@ -8,6 +8,8 @@ import axios from "axios";
 
 import Companys from '../components/Companys';
 
+import Certified from './Certified';
+
 import profilePlaceholder from '../assets/images/profile-placeholder.png';
 import certifiedImage from '../assets/images/certified.png';
 
@@ -96,18 +98,6 @@ class ProfilePage extends React.Component {
 		});
 	}
 
-	renderCertified() {
-		if (this.state.userdata.is_certified) {
-			return (
-				<img 
-					alt='certified' 
-					src={certifiedImage}
-					style={{ height: '30px', width: '30px', padding: 5 }}
-				/>
-			);
-		}
-	}
-
 	renderCreateCompany() {
 		if (this.state.isOwner) {
 			return (
@@ -178,7 +168,7 @@ class ProfilePage extends React.Component {
 												<Row>
 													<h3 style={{ alignSelf: 'center' }} >
 														{`${this.state.userdata.first_name} ${this.state.userdata.last_name}`}
-														{ this.renderCertified() }
+														<Certified certified={this.state.userdata.is_certified} />
 													</h3>
 													
 												</Row>
