@@ -4,10 +4,15 @@ from rest_framework.serializers import ModelSerializer, CharField, SerializerMet
 
 
 class PositionSerializer(ModelSerializer):
+    is_owner = SerializerMethodField()
+
     class Meta:
         model = Position
-        fields = ('id', 'url', 'name', 'description', 'company')
+        fields = ('id', 'url', 'name', 'description', 'company','is_owner')
         depth = 1
+
+    def get_is_owner(self,obj):
+        return self.context['request'].user == obj.company.owner
 
 
 class PositionSerializerDepth0(ModelSerializer):
