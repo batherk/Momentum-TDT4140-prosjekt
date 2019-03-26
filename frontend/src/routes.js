@@ -31,7 +31,7 @@ const BaseRouter = () => (
 		<Route exact path='/companys/search/:search/' component={CompanySearchResults} />
 
 		<Route exact path='/positions' component={PositionList} />
-		<Route exact path='/positionscreate/' component={PositionCreate} />
+		<Route exact path='/positionscreate/:companySlug/' component={PositionCreate} />
 		<Route exact path='/positions/:positionID/' component={PositionDetail} />
 		<Route exact path='/positions/search/:search/' component={PositionSearchResults} />
 

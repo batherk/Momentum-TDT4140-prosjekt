@@ -111,9 +111,12 @@ class ProfilePage extends React.Component {
 	renderCreateCompany() {
 		if (this.state.isOwner) {
 			return (
-				<Button type='primary' style={{ marginTop: '10px' }}>
-					<Link to='/companyscreate/'>Create company</Link>
-				</Button>
+
+					<Link to='/companyscreate/'>
+						<Button type='primary' style={{ marginTop: '10px' }}>
+							Create company
+						</Button>
+					</Link>
 			);
 		}
 	}

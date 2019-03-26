@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import {Button, Card, List, Tag} from 'antd';
+import {Button, Card, List, Tag, Col, Row } from 'antd';
 import CompanyForm from '../components/CompanyForm';
 import TagSelection from "./TagSelection";
 // import Positions from '../components/Positions';
@@ -119,6 +119,7 @@ class CompanyDetail extends Component {
 				if (res.data[i].id === this.state.company.id) {
 					console.log('is owner!!');
 
+					console.log(res.data);
 					// Lagrer at man er eier av firmaet, og oppdaterer slik
 					// at positions også vises
 					this.setState(prevState => ({
@@ -180,6 +181,10 @@ class CompanyDetail extends Component {
 	}
 
 	renderUpdateDeleteForm() {
+		let tags = this.state.company.tags;
+		if(tags === undefined){
+			tags = [];
+		}
 		if (this.state.isOwner && this.state.showForm) {
 			return (
 				<div>
@@ -187,7 +192,7 @@ class CompanyDetail extends Component {
 						requestType='patch'
 						authToken={this.props.token}
 						companyURL={this.state.company.url}
-						tags={this.state.company.tags}
+						tags={tags}
 						onSuccess={this.updateCompany.bind(this)}
 						buttonText='Update'
 					/>
@@ -224,39 +229,45 @@ class CompanyDetail extends Component {
 		if ((this.state.isApplicant || this.state.isOwner) && this.state.company.positions !== null) {
 			return (
 				<div>
-					<br />
-					<h2>Positions</h2>
-					<List
-						itemLayout='vertical'
-						size='large'
-						// pagination={{
-						// 	onChange: (page) => {
-						// 		console.log(page);
-						// 	},
-						// 	pageSize: 3
-						// }}
-						dataSource={this.state.company.positions}
-						renderItem={item => (
-							<List.Item
-								key={item.id}
-							>
-								<List.Item.Meta
-									title={<a href={`/positions/${item.id}/`}>{item.name}</a>}
-									description={item.description}
-								/>
-							</List.Item>
-						)}
-					/>
+					<Row>
+						<br />
+						<h2>Positions</h2>
+						{ this.renderAddPosition() }
+					</Row>
+					<Row>
+						<List
+							itemLayout='vertical'
+							size='large'
+							// pagination={{
+							// 	onChange: (page) => {
+							// 		console.log(page);
+							// 	},
+							// 	pageSize: 3
+							// }}
+							dataSource={this.state.company.positions}
+							renderItem={item => (
+								<List.Item
+									key={item.id}
+								>
+									<List.Item.Meta
+										title={<a href={`/positions/${item.id}/`}>{item.name}</a>}
+										description={item.description}
+									/>
+								</List.Item>
+							)}
+						/>
+					</Row>
 				</div>
 			);
 		}
 	}
 
 	renderAddPosition() {
-		if (this.state.isOwner) {
+		if (this.state.isOwner) { // Legg til slug på linken
+			const companySlug = this.props.match.params.companySlug;
 			return (
-				<Button type='primary' style={{ marginTop: '10px' }}>
-					<Link to='/positionscreate/'>Create position</Link>
+				<Button type='primary' style={{ /* float: 'right' */ }}>
+					<Link to={`/positionscreate/${companySlug}/`}>Create position</Link> 
 				</Button>
 			);
 		}
