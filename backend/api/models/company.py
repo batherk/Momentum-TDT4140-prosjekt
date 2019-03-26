@@ -18,10 +18,9 @@ class Company(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        if not hasattr(self, 'slug'):
-            slug = slugify(self.name)
-            num_existing = Company.objects.filter(slug=slug).count()
-            if num_existing > 0:
-                slug = "{}-{}".format(slug, num_existing + 1)
-            self.slug = slug
+        slug = slugify(self.name)
+        num_existing = Company.objects.filter(slug=slug).count()
+        if num_existing > 0:
+            slug = "{}-{}".format(slug, num_existing + 1)
+        self.slug = slug
         return super(Company, self).save(*args, **kwargs)
