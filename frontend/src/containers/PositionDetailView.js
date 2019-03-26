@@ -77,7 +77,7 @@ class PositionDetail extends Component {
         console.log(data);
 
 /*
-        axios.post(, data, {
+        axios.post('/api/positions/:id/apply', data, {
             headers: { Authorization : 'Token ' + this.props.token }
         })
             .then((res) => {
