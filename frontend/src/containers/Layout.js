@@ -2,16 +2,13 @@ import React from 'react';
 import { Layout, Menu, Avatar } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
-import { Input } from 'antd';
 // import { NavLink } from 'react-router-dom';
 import * as actions from '../store/actions/auth';
 import styles from '../styles/layout.css';
 import logo from '../assets/images/momentum.png';
 import axios from "axios";
-import Searchbar from "../containers/Searchbar"
 
 const { Header, Content, Footer } = Layout;
-const Search = Input.Search;
 
 class CustomLayout extends React.Component {
 
@@ -24,13 +21,12 @@ class CustomLayout extends React.Component {
 			this.getUserAvatar(this.props.token);
 		}
 	}
-	
+
 	componentWillReceiveProps(nextProps) {
 		if (this.props.token === null && nextProps.token !== null) {
 			this.getUserAvatar(nextProps.token);
 		}
 	}
-
 
 	getUserAvatar(token) {
 		// const header = (token === undefined) ? null : { headers: { 'Authorization' : 'Token ' + token }};
@@ -75,13 +71,13 @@ class CustomLayout extends React.Component {
 	renderLoginLogout() {
 		if (this.props.isAuthenticated) {
 			return (
-				<Menu.Item key='2' onClick={this.props.logout} >
+				<Menu.Item key='2' onClick={this.props.logout} style={{ float: 'right' }}>
 					<Link to='/'>Logout</Link>
 				</Menu.Item>
 			);
 		}
 		return (
-			<Menu.Item key='2'>
+			<Menu.Item key='2' style={{ float: 'right' }}>
 				<Link to='/login'>Login</Link>
 			</Menu.Item>
 		);
@@ -112,7 +108,7 @@ class CustomLayout extends React.Component {
 					<Menu
 						theme="dark"
 						mode="horizontal"
-						defaultSelectedKeys={['2']}
+						selectedKeys={['2']}
 						style={{ lineHeight: '64px' }}
 					>
                         { this.renderProfilePage()}

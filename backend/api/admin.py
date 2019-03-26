@@ -7,10 +7,13 @@ from api.models.company import Company
 from api.models.position import Position
 from api.models.user import *
 from .models.application import Application
+from api.models.tags import *
+
 
 admin.site.register(Company)
 admin.site.register(Position)
 admin.site.register(Role)
+admin.site.register(Tags)
 admin.site.register(Application)
 
 

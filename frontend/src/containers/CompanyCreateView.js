@@ -12,13 +12,13 @@ class CompanyCreate extends Component {
 	}
 
 	render() {
-		console.log('render haloo');
 		return (
 			<div> 
 				<h2>Create a company</h2>
 				<CompanyForm 
 					requestType='post'
 					authToken={this.props.token}
+					tags={[]}
 					companyURL={'http://127.0.0.1:8000/api/mycompanies/'}
 					onSuccess={this.redirect.bind(this)}
 					buttonText='Create'

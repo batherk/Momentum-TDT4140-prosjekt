@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import axios from 'axios';
 
 import Applicants from '../components/Applicants';
+import {Input} from "antd";
 
+const Search = Input.Search;
 
 class ApplicantsList extends Component {
 
@@ -44,6 +46,11 @@ class ApplicantsList extends Component {
     render(){
         return(
             <div>
+                <Search
+					placeholder="Søk på applicants"
+					onSearch={value => {this.props.history.push(`/applicants/search/${value}/`)}}
+					style={{ width: 200 }}
+				/>
                 <Applicants data={this.state.applicants}/>
             </div>
         );

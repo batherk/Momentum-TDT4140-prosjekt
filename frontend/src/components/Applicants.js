@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { List, Avatar } from 'antd';
+import { List } from 'antd';
 
 
 // const IconText = ({ type, text }) => (
@@ -9,6 +9,11 @@ import { List, Avatar } from 'antd';
 // 		{text}
 // 	</span>
 // );
+
+function renderEducation(item){
+    console.log(item);
+    return item.education === "" ? <p>no education</p> : <p>{item.education}</p>;
+};
 
 const Applicants = (props) => {
 	return (
@@ -35,6 +40,9 @@ const Applicants = (props) => {
 						title={`${item.first_name} ${item.last_name}`}
                         description={item.email}
 					/>
+
+                        { renderEducation(item) }
+
 					{/*`${item.company.name}: ${item.content}`*/}
 				</List.Item>
 			)}
