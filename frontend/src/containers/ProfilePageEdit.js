@@ -18,7 +18,9 @@ import FormData from 'form-data'*/
 class ProfilePageEdit extends React.Component {
 
 	state = {
-		userdata: {},
+		userdata: {
+			visible: false
+		},
 		image : null
 	};
 
@@ -57,8 +59,9 @@ class ProfilePageEdit extends React.Component {
 		const { form } = this.props;
 
 		let data = form.getFieldsValue();
-		data["role"] = this.state.userdata.role;
-		if(this.state.image != null){
+		data['role'] = this.state.userdata.role;
+		data['visible'] = this.state.userdata.visible;
+		if(this.state.image != null) {
 			data["photo"] = this.state.image;
 		}
 		console.log("TEST:",data)
@@ -99,7 +102,7 @@ class ProfilePageEdit extends React.Component {
 			first_name: userdata.first_name,
 			last_name: userdata.last_name,
 			email: userdata.email,
-			visible: userdata.visible,
+			// visible: userdata.visible,
 		});
 
 	};
@@ -224,7 +227,15 @@ class ProfilePageEdit extends React.Component {
 								{getFieldDecorator('visible', {
 									required: true, message: 'Give a value to the boolean field',
 								})(
-									<Checkbox />
+									<Checkbox 
+										checked={this.state.userdata.visible}
+										onChange={(prevState) => this.setState({ 
+											userdata: {
+												...prevState,
+												visible: !this.state.userdata.visible
+											}
+										})}
+									/>
 								)}
 							</Form.Item>
 
