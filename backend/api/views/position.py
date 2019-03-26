@@ -40,7 +40,7 @@ class PositionView(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Retrie
         pos = Position.objects.get(id=pk)
         if pos.company.owner != request.user:
             return Response({'msg': 'Du er ikke eieren til dette firmaet'})
-        return super(viewsets.ModelViewSet, self).destroy(self, request, pk)
+        return super(viewsets.GenericViewSet, self).destroy(self, request, pk)
 
     @action(detail=True, url_path="apply", serializer_class=ApplicantPositionSerializer, methods=('GET', 'POST'))
     def apply(self, request, pk):

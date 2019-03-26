@@ -35,8 +35,8 @@ class PositionDetail extends Component {
 		}
 	}
 
-	redirect(data) {
-		this.props.history.pop();
+	redirect() {
+		this.props.history.goBack();
 	}
 
 	getPosition = (token) => {
@@ -56,11 +56,12 @@ class PositionDetail extends Component {
 		const positionID = this.props.match.params.positionID;
 		axios.delete(`http://127.0.0.1:8000/api/positions/${positionID}/`, {
 			headers: { 'Authorization' : 'Token ' + this.props.token }
-		});
+		})
+		.then(this.redirect());
 		// Kunne brukt denne, men den refresher ikke den '/' siden!
 		// this.props.history.push('/');
 		// Kunne også brukt denne
-		// this.forceUpdate();
+		this.forceUpdate();
 		// men det blir litt 'messy'
 
 	}
@@ -83,12 +84,14 @@ class PositionDetail extends Component {
 
 	renderUpdateDeleteForm() {
 		if (this.state.position.is_owner && this.state.showForm) {
+			// const slug = this.state.position.company.slug;
+			const positionID = this.props.match.params.positionID;
 			return (
 				<div>
 					<PositionForm
-						requestType='patch'
+						requestType='put'
 						authToken={this.props.token}
-						companyURL={`http://127.0.0.1:8000/api/mycompanies/${this.state.companySlug}/positions/`}
+						companyURL={`http://127.0.0.1:8000/api/positions/${positionID}/`}
 						onSuccess={this.redirect.bind(this)}
 						buttonText='Update'
 					/>
