@@ -18,6 +18,7 @@ class CompanyCreate extends Component {
 				<CompanyForm 
 					requestType='post'
 					authToken={this.props.token}
+					tags={[]}
 					companyURL={'http://127.0.0.1:8000/api/mycompanies/'}
 					onSuccess={this.redirect.bind(this)}
 					buttonText='Create'

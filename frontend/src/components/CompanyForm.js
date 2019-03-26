@@ -88,6 +88,7 @@ class CompanyForm extends React.Component {
 					console.log('We got an error');
 					console.error(err);
 				});
+				
 				break;
 			default:
 				console.log('what');
