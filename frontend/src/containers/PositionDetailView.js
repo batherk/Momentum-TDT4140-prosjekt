@@ -6,7 +6,7 @@ import {Card, Button, Form, Input, Icon, TextArea} from 'antd';
 import PositionForm from '../components/PositionForm';
 import PositionApplyForm from '../components/PositionApplyForm';
 import TagSelection from "../components/CompanyForm";
-import Applicants from "./ApplicantsList";
+import ApplicantsOnPosition from "../components/ApplicationsOnPosition";
 
 
 class PositionDetail extends Component {
@@ -25,8 +25,10 @@ class PositionDetail extends Component {
                 company: {name: ''},
                 name: '',
                 description: '',
-                is_owner: false
-            },
+                is_owner: false,
+                applications: []
+            }
+            ,
             showForm: false,
             showApply: false,
             // companySlug: props.match.params.companySlug
@@ -135,12 +137,57 @@ class PositionDetail extends Component {
     }
 
 
+
+    remove(id, list) {
+        var i;
+        for (i = 0; i < list.length; i++) {
+            if (list[i].id === id) {
+                //delete list[i];
+                list = list.splice(i,1);
+                list.length = list.length - 1;
+                return true;
+            }
+        }
+
+        return false;
+    }
+    removeApplication = (item) =>{
+
+        console.log("AM I HERERER1");
+        let position = this.state.position;
+        if(position === undefined){
+            return;
+        }
+        console.log("AM I HERERER2");
+        let list = position.applications;
+        console.log("Old POSITION", position);
+        console.log("ID ", item);
+        this.remove(item.id,list);
+        position['applications'] = list;
+        const positionID = this.props.match.params.positionID;
+        console.log("NEW POSITION", position);
+        axios.put(`http://127.0.0.1:8000/api/positions/${positionID}/`, position, {
+            headers: {'Authorization': 'Token ' + this.props.token}
+        })
+            .then((res) => {
+                console.log('Data om posisjonen 2 22: ', res);
+                this.state.position['applications'] = res.data.applications;
+                this.forceUpdate();
+                /*this.setState({
+                    position:{
+                        applications:res.data.applications
+                    }
+                });*/
+            });
+
+    }
     renderApplicants() {
         if (this.state.position.is_owner) {
             // const slug = this.state.position.company.slug;
             const positionID = this.props.match.params.positionID;
             return (<div>
-                    <Applicants data={this.state.applicants}/>
+                    <h2 style={{marginTop:"20px"}}>The applicants on this position:</h2>
+                    <ApplicantsOnPosition data={this.state.position.applications} removeApplication={this.removeApplication}/>
                 </div>
             );
         }
