@@ -13,7 +13,7 @@ class UserTest(TestCase):
         self.assertEqual(user.get_full_name(), "Ola Nordmann")
         self.assertNotEqual(user.get_full_name(), "OlaNordmann")
 
-class RoleTest(TestCase):
+class RoleTestBO(TestCase):
     def setUp(self):
         Role.objects.create(name="Business Owner")
 
@@ -21,4 +21,24 @@ class RoleTest(TestCase):
         role = Role.objects.get(name="Business Owner")
         self.assertTrue(role.is_business_owner)
         self.assertFalse(role.is_investor)
+        self.assertFalse(role.is_applicant)
+
+class RoleTestApp(TestCase):
+    def setUp(self):
+        Role.objects.create(name="Applicant")
+
+    def test_is_applicant(self):
+        role = Role.objects.get(name="Applicant")
+        self.assertTrue(role.is_applicant)
+        self.assertFalse(role.is_investor)
+        self.assertFalse(role.is_business_owner)
+
+class RoleTestInv(TestCase):
+    def setUp(self):
+        Role.objects.create(name="Investor")
+
+    def test_is_investor(self):
+        role = Role.objects.get(name="Investor")
+        self.assertTrue(role.is_investor)
+        self.assertFalse(role.is_business_owner)
         self.assertFalse(role.is_applicant)
