@@ -17,6 +17,9 @@ class PositionDetail extends Component {
 	constructor(props) {
 		super(props);
 
+		// console.log('construct pos detail');
+		// console.log('token', props.token);
+		this.getPosition(props.token);
 		this.state = {
 			position: {
 				company: { name: '' },
@@ -36,7 +39,8 @@ class PositionDetail extends Component {
 	}
 
 	redirect() {
-		this.props.history.goBack();
+		const slug = this.props.match.params.companySlug;
+		this.props.history.push(`/companys/${slug}/`);
 	}
 
 	getPosition = (token) => {
@@ -86,6 +90,8 @@ class PositionDetail extends Component {
 		if (this.state.position.is_owner && this.state.showForm) {
 			// const slug = this.state.position.company.slug;
 			const positionID = this.props.match.params.positionID;
+
+			console.log('state.position', this.state.position);
 			return (
 				<div>
 					<PositionForm
@@ -94,6 +100,7 @@ class PositionDetail extends Component {
 						companyURL={`http://127.0.0.1:8000/api/positions/${positionID}/`}
 						onSuccess={this.redirect.bind(this)}
 						buttonText='Update'
+						data={this.state.position}
 					/>
 					<Button type='danger' onClick={this.handleDelete.bind(this)}>Delete</Button>
 				</div>

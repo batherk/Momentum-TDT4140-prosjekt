@@ -14,6 +14,24 @@ class PositionForm extends React.Component {
 	// 	};
 	// }
 
+	componentDidMount() {
+
+		console.log('props', this.props);
+
+	    this.setInitialValues();
+	}
+
+	setInitialValues = () => {
+		const { form } = this.props;
+		const position = this.props.data;
+		console.log('SET INITIAL VALUES ', position);
+		form.setFieldsValue({
+			name: position.name,
+			description: position.description
+		});
+
+	};
+
 	// handleFormLayoutChange = (e) => {
 	// 	this.setState({ formLayout: e.target.value });
 	// }

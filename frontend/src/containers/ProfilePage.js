@@ -11,7 +11,7 @@ import Companys from '../components/Companys';
 import Certified from './Certified';
 
 import profilePlaceholder from '../assets/images/profile-placeholder.png';
-import certifiedImage from '../assets/images/certified.png';
+// import certifiedImage from '../assets/images/certified.png';
 
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 

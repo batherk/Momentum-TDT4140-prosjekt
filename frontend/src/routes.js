@@ -32,7 +32,7 @@ const BaseRouter = () => (
 
 		<Route exact path='/positions' component={PositionList} />
 		<Route exact path='/positionscreate/:companySlug/' component={PositionCreate} />
-		<Route exact path='/positions/:positionID/' component={PositionDetail} />
+		<Route exact path='/positions/:companySlug/:positionID/' component={PositionDetail} />
 		<Route exact path='/positions/search/:search/' component={PositionSearchResults} />
 
 		<Route exact path='/profile/' component={ProfilePage} />
