@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Input } from 'antd';
 import axios from 'axios';
+
 import Companys from '../components/Companys';
 
 const Search = Input.Search;

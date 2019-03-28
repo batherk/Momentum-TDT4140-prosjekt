@@ -14,6 +14,22 @@ class PositionForm extends React.Component {
 	// 	};
 	// }
 
+	componentDidMount() {
+	    this.setInitialValues();
+	}
+
+	setInitialValues = () => {
+		const { form } = this.props;
+		const position = this.props.data;
+		console.log('SET INITIAL VALUES ', this.props);
+		if (this.props.data !== null) {
+			form.setFieldsValue({
+				name: position.name,
+				description: position.description
+			});
+		}
+	};
+
 	// handleFormLayoutChange = (e) => {
 	// 	this.setState({ formLayout: e.target.value });
 	// }
@@ -21,8 +37,6 @@ class PositionForm extends React.Component {
 	// handleFormSubmit = (event, requestType, companyURL) => { // requestType is 'post' og 'put'
 	handleFormSubmit(event) {
 		event.preventDefault();
-
-		console.log('props: ', this.props);
 
 		const { requestType, companyURL } = this.props;
 

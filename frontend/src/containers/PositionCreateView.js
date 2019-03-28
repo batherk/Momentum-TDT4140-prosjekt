@@ -36,6 +36,7 @@ class PositionCreate extends Component {
 					companyURL={`http://127.0.0.1:8000/api/mycompanies/${this.state.companySlug}/positions/`}
 					onSuccess={this.redirect.bind(this)}
 					buttonText='Create'
+					data={null}
 				/>
 			</div>
 		);

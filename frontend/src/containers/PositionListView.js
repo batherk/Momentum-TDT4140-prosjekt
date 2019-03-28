@@ -51,6 +51,9 @@ class PositionList extends Component {
 	}
 
 	render() {
+
+		console.log('data', this.state.positions);
+
 		return (
 			<div>
 				<Search

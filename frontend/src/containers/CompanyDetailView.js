@@ -171,7 +171,7 @@ class CompanyDetail extends Component {
 		this.toggleEdit(null);
 	}
 
-renderEditButton() {
+	renderEditButton() {
 		if (this.state.isOwner) {
 			return (
 				<Button onClick={(event) => this.toggleEdit()} style={{ marginTop: '10px' }}>
@@ -248,10 +248,12 @@ renderEditButton() {
 								<List.Item
 									key={item.id}
 								>
-									<List.Item.Meta
-										title={<a href={`/positions/${item.id}/`}>{item.name}</a>}
-										description={item.description}
-									/>
+									<Link to={`/positions/${slug}/${item.id}/`}>
+										<List.Item.Meta
+											title={item.name}// <a href={`/positions/${item.id}/`}></a>
+											description={item.description}
+										/>
+									</Link>
 								</List.Item>
 							)}
 						/>
