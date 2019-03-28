@@ -21,12 +21,13 @@ class PositionForm extends React.Component {
 	setInitialValues = () => {
 		const { form } = this.props;
 		const position = this.props.data;
-		console.log('SET INITIAL VALUES ', position);
-		form.setFieldsValue({
-			name: position.name,
-			description: position.description
-		});
-
+		console.log('SET INITIAL VALUES ', this.props);
+		if (this.props.data !== null) {
+			form.setFieldsValue({
+				name: position.name,
+				description: position.description
+			});
+		}
 	};
 
 	// handleFormLayoutChange = (e) => {

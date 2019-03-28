@@ -2,6 +2,8 @@ import React from 'react';
 
 import {List, Avatar, Tag} from 'antd';
 
+import { Link } from 'react-router-dom';
+
 import TagSelection from "../containers/TagSelection";
 
 
@@ -74,7 +76,7 @@ const Companys = (props) => {
 				>
 					<List.Item.Meta
 						avatar={<Avatar src={item.avatar} />}
-						title={<a href={`/companys/${item.slug}`} >{item.name}</a>}
+						title={<a href={`/companys/${item.slug}`} >{item.name}</a>} //  <a href={`/companys/${item.slug}`} > </a>
 						description={item.info}
 					/>
 					{item.content}

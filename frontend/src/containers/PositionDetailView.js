@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import axios from 'axios';
-import {Card, Button, Form, Input, Icon, TextArea} from 'antd';
+import {Card, Button } from 'antd';
 
 import PositionForm from '../components/PositionForm';
 import PositionApplyForm from '../components/PositionApplyForm';
-import TagSelection from "../components/CompanyForm";
+// import TagSelection from "../components/CompanyForm";
 import ApplicantsOnPosition from "../components/ApplicationsOnPosition";
 
 
@@ -92,6 +92,7 @@ class PositionDetail extends Component {
     constructor(props) {
         super(props);
         this.getPosition(props.token);
+        console.log('hei');
         this.state = {
             position: {
                 company: {name: ''},
@@ -105,6 +106,10 @@ class PositionDetail extends Component {
             showApply: false,
             // companySlug: props.match.params.companySlug
         }
+    }
+
+    componentWillMount() {
+        this.getPosition(this.props.token);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -153,6 +158,7 @@ class PositionDetail extends Component {
     }
 
     toggleApply(event) {
+    	console.log('toggle');
         this.setState({
             showApply: !this.state.showApply
         });
