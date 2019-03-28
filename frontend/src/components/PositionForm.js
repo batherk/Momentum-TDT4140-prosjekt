@@ -15,9 +15,6 @@ class PositionForm extends React.Component {
 	// }
 
 	componentDidMount() {
-
-		console.log('props', this.props);
-
 	    this.setInitialValues();
 	}
 
@@ -39,8 +36,6 @@ class PositionForm extends React.Component {
 	// handleFormSubmit = (event, requestType, companyURL) => { // requestType is 'post' og 'put'
 	handleFormSubmit(event) {
 		event.preventDefault();
-
-		console.log('props: ', this.props);
 
 		const { requestType, companyURL } = this.props;
 

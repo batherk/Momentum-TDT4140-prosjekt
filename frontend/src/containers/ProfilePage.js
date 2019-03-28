@@ -20,7 +20,7 @@ class ProfilePage extends React.Component {
 	state = {
 		userdata: {},
 		showMyCompanies: false,
-		companys: [],
+		applications: [],
 		isOwner: false,
 		isApplicant: false,
 	};
@@ -86,7 +86,7 @@ class ProfilePage extends React.Component {
 		.then(res => {
 			console.log('owned on profile', res.data);
 			this.setState({
-				companys: res.data
+				applications: res.data
 			});
 		})
 		.catch(err => console.error(err));
@@ -117,7 +117,7 @@ class ProfilePage extends React.Component {
 				<Row>
 					<br />
 					<h2>My Companies</h2>
-					<Companys data={this.state.companys} />
+					<Companys data={this.state.applications} />
 				</Row>
 			);
 		}	

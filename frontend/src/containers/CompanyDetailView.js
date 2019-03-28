@@ -171,7 +171,7 @@ class CompanyDetail extends Component {
 		this.toggleEdit(null);
 	}
 
-	renderEditButton() {
+renderEditButton() {
 		if (this.state.isOwner) {
 			return (
 				<Button onClick={(event) => this.toggleEdit()} style={{ marginTop: '10px' }}>

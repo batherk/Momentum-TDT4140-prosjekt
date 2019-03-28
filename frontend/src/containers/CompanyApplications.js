@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Input } from 'antd';
 import axios from 'axios';
-import Companys from '../components/Companys';
+import Applications from '../components/Applications';
 
 const Search = Input.Search;
 // import CompanyForm from '../components/CompanyForm';
 
-class CompanyList extends Component {
+class CompanyApplications extends Component {
 
 	state = {
 		applications: [],
@@ -19,32 +19,34 @@ class CompanyList extends Component {
 	}
 
 	getCompanys() {
-		axios.get('http://127.0.0.1:8000/api/startups/')
-		.then(res => this.setState({ applications: res.data }))
-		.catch(err => console.error(err));
+		axios.get('http://127.0.0.1:8000/api/myapplications/',{
+			headers: {'Authorization': 'Token ' + this.props.token}
+		})
+			.then(res => this.setState({ applications: res.data }))
+			.catch(err => console.error(err));
 	}
 
 	render() {
 		return (
 			<div>
-				<Search
-					placeholder="Søk på bedrifter"
-					onSearch={value => {this.props.history.push(`/companys/search/${value}/`)}}
-					style={{ width: 200 }}
-				/>
-				<Companys data={this.state.applications} />
+
+				<Applications data={this.state.applications} />
 			</div>
 		);
 	}
 }
-
+/*<Search
+					placeholder="Søk på bedrifter"
+					onSearch={value => {this.props.history.push(`/companys/search/${value}/`)}}
+					style={{ width: 200 }}
+				/>*/
 /*
 
 Skal brukes inn på en BO sin profilside, der han kan velge å lage en ny profil
 
 				<br />
 				<h2>Create a company</h2>
-				<CompanyForm 
+				<CompanyForm
 					requestType='post'
 					companyID={null}
 					buttonText='Create'
@@ -60,4 +62,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps)(CompanyList);
+export default connect(mapStateToProps)(CompanyApplications);
