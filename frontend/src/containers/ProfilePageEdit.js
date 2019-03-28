@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-	Form, Input, Icon, Button, Spin, Checkbox
+	Form, Input, Icon, Button, Spin, Checkbox, Upload
 } from 'antd';
 import { connect } from 'react-redux'
 
@@ -19,7 +19,8 @@ class ProfilePageEdit extends React.Component {
 
 	state = {
 		userdata: {
-			visible: false
+			visible: false,
+			cv : null
 		},
 		image : null
 	};
@@ -61,10 +62,16 @@ class ProfilePageEdit extends React.Component {
 		let data = form.getFieldsValue();
 		data['role'] = this.state.userdata.role;
 		data['visible'] = this.state.userdata.visible;
+
+		//let cvs = form.getFieldsValue().cv;
+		//if(cvs.length > 0){
+
+		//}
+
 		if(this.state.image != null) {
 			data["photo"] = this.state.image;
 		}
-		console.log("TEST:",data)
+		console.log("TEST:",data);
 		axios.patch(`http://127.0.0.1:8000/api/profile/${id}/`,
 			data,
 			{
@@ -125,6 +132,70 @@ class ProfilePageEdit extends React.Component {
 			.catch(err => {
 				console.error(err);
 			});
+	}
+
+
+	handleChange = (info) => {
+		let fileList = info.fileList;
+
+		// 1. Limit the number of uploaded files
+		// Only to show two recent uploaded files, and old ones will be replaced by the new
+		fileList = fileList.slice(-1);
+
+
+		// 2. Read from response and show file link
+		/*fileList = fileList.map((file) => {
+			if (file.response) {
+				// Component will show file.url as link
+				file.url = file.response.url;
+			}
+			return file;
+		});*/
+
+		// 3. Filter successfully uploaded files according to response from server
+		/*fileList = fileList.filter((file) => {
+			if (file.response) {
+				return file.response.status === 'success';
+			}
+			return false;
+		});*/
+
+		this.setState({ fileList });
+	}
+
+
+	renderCV(){
+
+		if(this.props.profile.role === 3){
+			const props = {
+				action: '//jsonplaceholder.typicode.com/posts/',
+				onChange: this.handleChange,
+				multiple: true,
+			};
+			const { getFieldDecorator } = this.props.form;
+			const formItemLayout = {
+				labelCol: {
+					xs: { span: 24 },
+					sm: { span: 8 },
+				},
+				wrapperCol: {
+					xs: { span: 24 },
+					sm: { span: 16 },
+				},
+			};
+			return (<Form.Item
+				{...formItemLayout}
+				label={(
+					<span>Education </span>
+				)}
+			>
+				{getFieldDecorator('education', {
+					rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
+				})(
+					<Input />
+				)}
+			</Form.Item>);
+		}
 	}
 
 	render() {
@@ -239,6 +310,10 @@ class ProfilePageEdit extends React.Component {
 								)}
 							</Form.Item>
 
+							{this.renderCV()}
+
+
+
 
 							<Form.Item {...tailFormItemLayout}>
 								<Button type="primary" htmlType="submit">Submit Changes</Button>
@@ -257,7 +332,8 @@ const mapStateToProps = (state) => {
 	console.log(state);
 	return {
 		token: state.token,
-		id: state.id
+		id: state.id,
+		profile: state.profile
 	};
 };
 

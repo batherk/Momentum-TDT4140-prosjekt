@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { List } from 'antd';
+import {Card, List} from 'antd';
+import Certified from '../containers/Certified';
 
 
 // const IconText = ({ type, text }) => (
@@ -37,7 +38,7 @@ const Applicants = (props) => {
 					<List.Item.Meta
 						//avatar={<Avatar src={item.avatar} />}
 						//title={<a href={`/positions/${item.id}`}>{`${item.company.name}: ${item.name}`}</a>}
-						title={`${item.first_name} ${item.last_name}`}
+						title={<div>{item.first_name} {item.last_name} <Certified certified={item.is_certified} /></div>}
                         description={item.email}
 					/>
 

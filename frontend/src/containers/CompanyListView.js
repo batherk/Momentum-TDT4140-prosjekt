@@ -15,7 +15,8 @@ class CompanyList extends Component {
 	};
 
 	componentDidMount() {
-		this.getCompanys();
+		this.getCompanys()
+
 	}
 
 	getCompanys() {

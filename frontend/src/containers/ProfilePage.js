@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Button, Spin, Card, Row, Col } from 'antd';
+import { Icon, Button, Spin, Card, Row, Col, Upload } from 'antd';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 
@@ -137,6 +137,14 @@ class ProfilePage extends React.Component {
 		}
 	}
 
+	renderApplicantData() {
+		if (this.props.profile.role === 3) {
+			return (
+				<p>{`Education:  ${this.state.userdata.education}`}</p>
+			);
+		}
+	}
+
 	render() {
 		const { photo } = this.state.userdata;
 		const profileimg =  (photo !== null) ? photo : profilePlaceholder;
@@ -175,6 +183,9 @@ class ProfilePage extends React.Component {
 												<p>
 													{`Email:  ${this.state.userdata.email}`}
 												</p>
+
+													{this.renderApplicantData()}
+
 											</Col>
 											<Col span={10} style={{ float: 'right' }}>
 												<Link to='/profile/edit/' >
@@ -209,7 +220,8 @@ const mapStateToProps = (state) => {
 	console.log(state);
 	return {
 		token: state.token,
-		id: state.id
+		id: state.id,
+		profile: state.profile
 	};
 };
 

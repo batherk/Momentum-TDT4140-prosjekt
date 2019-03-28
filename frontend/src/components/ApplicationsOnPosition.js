@@ -3,6 +3,7 @@ import React from 'react';
 import {List, Avatar, Tag, Button} from 'antd';
 
 import TagSelection from "../containers/TagSelection";
+import Certified from "./Applicants";
 
 
 // const IconText = ({ type, text }) => (
@@ -27,13 +28,14 @@ const ApplicationsOnPosition = (props) => {
 			// footer={<div><b>ant design</b> footer part</div>}
 			renderItem={item => (
 				<List.Item
-					key={item.applicant.first_name + " " + item.applicant.last_name + "         "
+					key={<div>{item.applicant.first_name} {item.applicant.last_name} <Certified certified={item.applicant.is_certified} /></div>
 					}
 					extra={item.applicant.email}
 				>
 					<List.Item.Meta
 						title={item.applicant.first_name + " " + item.applicant.last_name}
 					/>
+					{"education" + item.applicant.education}
 
 					{item.text}
 
