@@ -140,14 +140,21 @@ class CompanyForm extends React.Component {
 							<Input prefix={<Icon type="info-circle" style={{ color: 'rgba(0,0,0,.25)' }} />} type="name" placeholder="Info" />
 						)}
 					</Form.Item>
-
+					{this.props.requestType === 'patch' ?
+						<div>
 					<Form.Item
 						label="Tags"
 					>
 
 					</Form.Item>
 
-					<TagSelection url={this.props.companyURL} addTag={this.addTag} removeTag={this.removeTag} selected_tags = {tags}/>
+
+						<TagSelection url={this.props.companyURL} addTag={this.addTag} removeTag={this.removeTag} selected_tags = {tags}/>
+						</div>
+						:
+						<div></div>
+					}
+
 					<Form.Item>
 						<Button type="primary"  onClick={this.handleFormSubmit.bind(this)}>{this.props.buttonText}</Button>
 					</Form.Item>
