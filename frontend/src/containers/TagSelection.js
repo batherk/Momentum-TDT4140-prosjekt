@@ -221,7 +221,7 @@ class TagSelection extends React.Component {
         let randomNumb = Math.floor((Math.random() * 10) );
         let tag = {
             name: inputValue,
-            times_used: 1,
+            times_used: 0,
             color: randomNumb
 
         }
