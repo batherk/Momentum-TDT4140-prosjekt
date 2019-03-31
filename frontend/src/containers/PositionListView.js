@@ -58,7 +58,7 @@ class PositionList extends Component {
 			<div>
 				<Search
 					placeholder="Søk på jobber"
-					onSearch={value => {this.props.history.push(`/positions/search/${value}/`)}}
+					onSearch={value => {this.props.history.push(`/p/search/${value}/`)}}
 					style={{ width: 200 }}
 				/>
 				<Positions data={this.state.positions} />
