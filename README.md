@@ -97,4 +97,24 @@ Frontend is now running on http://localhost:3000/. Visit this page to see the ac
 
 ## How to run tests (optional)
 
+### Running tests localy
 
+Open terminal
+
+```
+cd to/my/folder/backend
+
+python manage.py test
+```
+
+### Running tests on gitlab
+
+Make sure you have active runners installed in gitlab, either by setting them up manually or using the shared runners
+
+On gitlab, go to settings -> CI/CD, click expand on runners
+
+Check if you have any active shared runners
+I
+If you do you're all set and if you don't you'll have to manually set up a runner by following the instructions given on gitlab
+
+The tests will automatically run on the available runners every time a commit is pushed to gitlab
