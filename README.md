@@ -8,14 +8,14 @@ startups to see applicant profiles*
 
 ## Build stats
 [![build status](https://gitlab.stud.idi.ntnu.no/programvareutvikling-v19/gruppe-42/badges/master/build.svg)](https://gitlab.stud.idi.ntnu.no/programvareutvikling-v19/gruppe-42/commits/master)
-[![coverage](https://gitlab.stud.idi.ntnu.no/programvareutvikling-v19/gruppe-42/badges/master/coverage.svg)](https://gitlab.stud.idi.ntnu.no/programvareutvikling-v19/gruppe-42/commits/master)
+[![coverage report](https://gitlab.stud.idi.ntnu.no/programvareutvikling-v19/gruppe-42/badges/master/coverage.svg)](https://gitlab.stud.idi.ntnu.no/programvareutvikling-v19/gruppe-42/commits/master)
 
 ## Tech/framework uesd
 
 This project iand its technology is mainly divided into two parts; Frontend and backend.
 
 We have written the frontend in the JavaScript libary [React](https://reactjs.org). For 
-state management we use Redux, and for design elements we use [ant.design](https://ant.design).
+state management we use [Redux](https://redux.js.org), and for design elements we use [ant.design](https://ant.design).
 
 The backend is written with the Python Web framework [Django](https://www.djangoproject.com). 
 To make the backend and frontend seperatable, we have used the Django module 
