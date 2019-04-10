@@ -10,8 +10,5 @@
 # Virutualt environment
 env
 
-# Migrations
-*/migrations/
-
 # Python shit
 __pycache__

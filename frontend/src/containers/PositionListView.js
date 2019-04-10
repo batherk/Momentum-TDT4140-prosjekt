@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { Input } from 'antd';
 import axios from 'axios';
 
 import Positions from '../components/Positions';
+const Search = Input.Search;
+
 
 
 class PositionList extends Component {
@@ -48,8 +51,16 @@ class PositionList extends Component {
 	}
 
 	render() {
+
+		console.log('data', this.state.positions);
+
 		return (
 			<div>
+				<Search
+					placeholder="Søk på jobber"
+					onSearch={value => {this.props.history.push(`/p/search/${value}/`)}}
+					style={{ width: 200 }}
+				/>
 				<Positions data={this.state.positions} />
 			</div>
 		);

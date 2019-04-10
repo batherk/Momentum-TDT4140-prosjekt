@@ -7,7 +7,6 @@ import * as actions from '../store/actions/auth';
 import styles from '../styles/layout.css';
 import logo from '../assets/images/momentum.png';
 import axios from "axios";
-import Searchbar from "../containers/Searchbar"
 
 const { Header, Content, Footer } = Layout;
 
@@ -22,13 +21,12 @@ class CustomLayout extends React.Component {
 			this.getUserAvatar(this.props.token);
 		}
 	}
-	
+
 	componentWillReceiveProps(nextProps) {
 		if (this.props.token === null && nextProps.token !== null) {
 			this.getUserAvatar(nextProps.token);
 		}
 	}
-
 
 	getUserAvatar(token) {
 		// const header = (token === undefined) ? null : { headers: { 'Authorization' : 'Token ' + token }};
@@ -59,16 +57,27 @@ class CustomLayout extends React.Component {
 		}
 	}
 
+	renderApplicants(){
+		if (this.props.profile && this.props.profile.role === 1){
+			return(
+				<Menu.Item key='6'>
+					<Link to='/applicants'>Applicants</Link>
+				</Menu.Item>
+			);
+
+		}
+	}
+
 	renderLoginLogout() {
 		if (this.props.isAuthenticated) {
 			return (
-				<Menu.Item key='2' onClick={this.props.logout} >
+				<Menu.Item key='2' onClick={this.props.logout} style={{ float: 'right' }}>
 					<Link to='/'>Logout</Link>
 				</Menu.Item>
 			);
 		}
 		return (
-			<Menu.Item key='2'>
+			<Menu.Item key='2' style={{ float: 'right' }}>
 				<Link to='/login'>Login</Link>
 			</Menu.Item>
 		);
@@ -80,6 +89,19 @@ class CustomLayout extends React.Component {
 				<Menu.Item key='4'>
 					<Link to='/profile' >
 						<Avatar size={'default'} src={this.state.avatar} />
+					</Link>
+				</Menu.Item>
+			);
+		}
+
+	}
+
+	renderMyApplications() {
+		if (this.props.profile && this.props.profile.role === 3) {
+			return (
+				<Menu.Item key='7'>
+					<Link to='/myapplications' >
+						My Applications
 					</Link>
 				</Menu.Item>
 			);
@@ -99,17 +121,14 @@ class CustomLayout extends React.Component {
 					<Menu
 						theme="dark"
 						mode="horizontal"
-						defaultSelectedKeys={['2']}
+						selectedKeys={['2']}
 						style={{ lineHeight: '64px' }}
 					>
                         { this.renderProfilePage()}
 						{ this.renderPositions() }
+						{ this.renderApplicants()}
 						{ this.renderLoginLogout() }
-
-						<Menu.Item key='5' style={{"float":"right"}}>
-							<Searchbar ></Searchbar>
-						</Menu.Item>
-
+						{ this.renderMyApplications()}
 					</Menu>
 
 

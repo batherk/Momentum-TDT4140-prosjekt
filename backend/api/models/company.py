@@ -1,14 +1,18 @@
 from api.models.user import *
 from django.db import models
 from django.template.defaultfilters import slugify
+from api.models.tags import Tags
+
 
 
 class Company(models.Model):
     name = models.CharField(max_length=30)
     email = models.EmailField()
-    slug = models.SlugField(unique=True,editable=False)
+    slug = models.SlugField(unique=True, editable=False)
     owner = models.ForeignKey(User, on_delete=models.SET(None), related_name='company', null=True)
+    certified = models.BooleanField(default=False, null=False)
     info = models.TextField(max_length=500)
+    tags = models.ManyToManyField(Tags)
 
     def __str__(self):
         return self.name

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Button, Spin, Card, Row, Col } from 'antd';
+import { Icon, Button, Spin, Card, Row, Col, Upload } from 'antd';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 
@@ -8,18 +8,21 @@ import axios from "axios";
 
 import Companys from '../components/Companys';
 
-const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
+import Certified from './Certified';
 
-const { Meta } = Card;
+import profilePlaceholder from '../assets/images/profile-placeholder.png';
+// import certifiedImage from '../assets/images/certified.png';
+
+const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 class ProfilePage extends React.Component {
 
 	state = {
 		userdata: {},
 		showMyCompanies: false,
-		companys: [],
+		applications: [],
 		isOwner: false,
-		isApplicant: false
+		isApplicant: false,
 	};
 
 
@@ -69,6 +72,13 @@ class ProfilePage extends React.Component {
 			});
 	}
 
+	getUserImage() {
+		if (this.state.userdata.photo !== null) {
+			return this.state.userdata.photo;
+		}
+		return '../assets/images/certified.png';
+	}
+
 	getOwnedCompanies(token) {
 		axios.get('http://127.0.0.1:8000/api/mycompanies/', {
 			headers: { Authorization : 'Token ' + token }
@@ -76,7 +86,7 @@ class ProfilePage extends React.Component {
 		.then(res => {
 			console.log('owned on profile', res.data);
 			this.setState({
-				companys: res.data
+				applications: res.data
 			});
 		})
 		.catch(err => console.error(err));
@@ -88,11 +98,26 @@ class ProfilePage extends React.Component {
 		});
 	}
 
+	renderCreateCompany() {
+		if (this.state.isOwner) {
+			return (
+
+					<Link to='/companyscreate/'>
+						<Button type='primary' style={{ marginTop: '10px' }}>
+							Create company
+						</Button>
+					</Link>
+			);
+		}
+	}
+
 	renderMyCompanys() {
 		if (this.state.showMyCompanies && this.state.isOwner) {
 			return (
 				<Row>
-					<Companys data={this.state.companys} />
+					<br />
+					<h2>My Companies</h2>
+					<Companys data={this.state.applications} />
 				</Row>
 			);
 		}	
@@ -101,54 +126,78 @@ class ProfilePage extends React.Component {
 	renderMyCompanysButtons() {
 		if (this.state.isOwner) {
 			return (
-				<div>
+				<Row>
 					<Col>
-						<Button onClick={(event) => this.toggleMyCompanys()} >Show my companys</Button>
+						<Button onClick={(event) => this.toggleMyCompanys()}>
+							Show my companys
+						</Button>
 					</Col>
-					<Col>
-						<Button type='primary'><Link to='/companyscreate/'>Create a new company</Link></Button>
-					</Col>
-				</div>
+				</Row>
+			);
+		}
+	}
+
+	renderApplicantData() {
+		if (this.props.profile.role === 3) {
+			return (
+				<p>{`Education:  ${this.state.userdata.education}`}</p>
 			);
 		}
 	}
 
 	render() {
+		const { photo } = this.state.userdata;
+		const profileimg =  (photo !== null) ? photo : profilePlaceholder;
 		return (
-
 			<div>
 				{
 					this.props.loading ?
 					<Spin indicator={antIcon} />
+
 					:
 
 					<div>
 
-						<Card type ="flex" style={{ "width": "100%", margin:0,alignItems: 'center'}}>
+						<Card 
+							type ="flex" 
+							style={{ 
+								"width": "100%", 
+								alignItems: 'center'
+							}}
+						>
+							<Row style={{ marginBottom: '20px' }}>
+								<Col span={8}>
+									<img alt="example" src={profileimg} style={{ width: '100%' }}/>
+								</Col>
+								<Col span={16} >
+									<Card style={{ marginLeft: '20px' }}>
+										<Row>
+											<Col span={14}>
+												<Row>
+													<h3 style={{ alignSelf: 'center' }} >
+														{`${this.state.userdata.first_name} ${this.state.userdata.last_name}`}
+														<Certified certified={this.state.userdata.is_certified} />
+													</h3>
+													
+												</Row>
+												<p>
+													{`Email:  ${this.state.userdata.email}`}
+												</p>
 
-							<Row>
-								<Col span={12}>
-									<Card
-										hoverable
-										style={{ width: 300}}
-										cover={<img alt="example" src={this.state.userdata.photo}/>}
-									>
-										<Meta
-											title={`${this.state.userdata.first_name} ${this.state.userdata.last_name}`}
-											description={`Email:  ${this.state.userdata.email}`}
-										/>
+													{this.renderApplicantData()}
+
+											</Col>
+											<Col span={10} style={{ float: 'right' }}>
+												<Link to='/profile/edit/' >
+													<Button type='primary'>Edit profile</Button>
+												</Link>
+												{ this.renderCreateCompany() }
+											</Col>
+										</Row>
 									</Card>
 								</Col>
-								
-
 							</Row>
-							<Row type ="flex" justify="space-between" style={{ marginTop: '20px' }}>
-								
-								<Col>
-									<Button type='primary'><Link to='/profile/edit/' >Edit profile</Link></Button>
-								</Col>
-								{ this.renderMyCompanysButtons() }
-							</Row>
+							{ this.renderMyCompanysButtons() }
 							{ this.renderMyCompanys() }
 						</Card>
 					</div>
@@ -158,13 +207,21 @@ class ProfilePage extends React.Component {
 	}
 }
 
+/*
+<Card
+	hoverable
+	style={{ width: '100%', minHeighth: '300px' }}
+	cover={<img alt="example" src={profilePlaceholder} />}
+/>
+*/
 
 
 const mapStateToProps = (state) => {
 	console.log(state);
 	return {
 		token: state.token,
-		id: state.id
+		id: state.id,
+		profile: state.profile
 	};
 };
 

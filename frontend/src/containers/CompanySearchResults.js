@@ -20,7 +20,7 @@ class CompanySearchResults extends Component {
 
 	state = {
 		search: null,
-		companys: []
+		applications: []
 	};
 
 	componentDidMount() {
@@ -40,7 +40,7 @@ class CompanySearchResults extends Component {
 	getCompanys() {
 		// console.log("LIIIINK ", `http://127.0.0.1:8000/api/startups/?search=${this.props.match.params.search}`)
 		axios.get(`http://127.0.0.1:8000/api/startups/?search=${this.props.match.params.search}`)
-		.then(res => {this.setState({ companys: res.data}); console.log("SEARCHIING",this.state.companys);})
+		.then(res => {this.setState({ applications: res.data}); console.log("SEARCHIING",this.state.applications);})
 		.catch(err => console.error(err));
 	}
 
@@ -48,7 +48,7 @@ class CompanySearchResults extends Component {
 		return (
 			<div>
 				<div>
-					<Companys data={this.state.companys} />
+					<Companys data={this.state.applications} />
 				</div>
 			</div>
 		);
