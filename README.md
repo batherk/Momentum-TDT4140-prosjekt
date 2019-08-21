@@ -4,12 +4,14 @@
 
 The project is a website where startups and job applicants can connect. 
 Basically, the application tries to reproduce the functionality of LinkedIn. 
+The functionality is described in *Brukermanual* in the [wiki (in norwegian)](https://github.com/batherk/Momentum-TDT4140-prosjekt/wiki/Brukermanual).
 
 ## What did I do?
 
 I was assigned the role as Backend Developer in our team of six. 
 The other person assigned to the backend worked solely on backend testing.
 Therefore, I developed the backend on my own. 
+You can read more about the structure of the backend [here (in norwegian)](https://github.com/batherk/Momentum-TDT4140-prosjekt/wiki/Kodemanual-for-tjenersiden-(Django-REST)).
 
 ## What did I learn?
 
