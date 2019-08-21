@@ -1,10 +1,21 @@
 # MOMENTUM
 
-*This project is a website where startups and job applicants can connect. Among others, it offers
+## What is it?
+
+This project is a website where startups and job applicants can connect. Among others, it offers
 the possibillity for applicants to view startups and their open positions, and the possibility for 
-startups to see applicant profiles*
+startups to see applicant profiles
+
+## What did I do?
+
+I did most of backend work
+
+## What did I learn?
+
+I learned the importance of
 
 
+# Original README.md file
 
 ## Build stats
 [![build status](https://gitlab.stud.idi.ntnu.no/programvareutvikling-v19/gruppe-42/badges/master/build.svg)](https://gitlab.stud.idi.ntnu.no/programvareutvikling-v19/gruppe-42/commits/master)
