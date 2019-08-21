@@ -2,17 +2,23 @@
 
 ## What is it?
 
-This project is a website where startups and job applicants can connect. Among others, it offers
-the possibillity for applicants to view startups and their open positions, and the possibility for 
-startups to see applicant profiles
+The project is a website where startups and job applicants can connect. 
+Basically, the application tries to reproduce the functionality of LinkedIn. 
 
 ## What did I do?
 
-I did most of backend work
+I was assigned the role as Backend Developer in our team of six. 
+The other person assigned to the backend worked solely on backend testing.
+Therefore, I developed the backend on my own. 
 
 ## What did I learn?
 
-I learned the importance of
+Technical:
+* How to logically structure a Django project
+* How to use the permissions-class in Django REST when restricting access to users
+
+Non-technical:
+* Good documentation and communication between backend- and frontend developers is vital!
 
 
 # Original README.md file
